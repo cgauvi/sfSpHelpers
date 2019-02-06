@@ -67,7 +67,7 @@ readShpFileWrapper <- function(rdataPath, rdataName, pathName,layerName,readSP=F
 #' @examples
 getShpLayerNameInDir <- function(abspath){
 
-  abspath %<>% GeneralHelpers::convertAbsPath
+  abspath %<>% GeneralHelpers::convertAbsPath()
   stopifnot(dir.exists(abspath))
 
   listShpFiles <- GeneralHelpers::getListFilesExt(dirPath = abspath, ".shp") %>%

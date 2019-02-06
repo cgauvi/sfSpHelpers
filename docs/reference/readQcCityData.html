@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • SfSpHelpers</title>
+<title>Read all the shp files in file.path("Data", "Rdata", "GeoData","QuebecCityOpenData") — readQcCityData • SfSpHelpers</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,10 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Read all the shp files in file.path("Data", "Rdata", "GeoData","QuebecCityOpenData") — readQcCityData" />
+
+<meta property="og:description" content="Read all the shp files in file.path(&quot;Data&quot;, &quot;Rdata&quot;, &quot;GeoData&quot;,&quot;QuebecCityOpenData&quot;)" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -47,7 +50,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -89,96 +92,44 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Read all the shp files in file.path("Data", "Rdata", "GeoData","QuebecCityOpenData")</h1>
+    
+    <div class="hidden name"><code>readQcCityData.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>Read all the shp files in file.path("Data", "Rdata", "GeoData","QuebecCityOpenData")</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>readQcCityData</span>(<span class='kw'>readSP</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
+        
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="bbox_polygon.html">bbox_polygon()</a></code> </p>
-        </td>
-        <td><p>Create a st_polygon from a bounding box</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="createBuffer.html">createBuffer()</a></code> </p>
-        </td>
-        <td><p>Create a buffer around an sf object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="getCentroids.html">getCentroids()</a></code> </p>
-        </td>
-        <td><p>Get the long/lat of centroids of sf object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="getShpLayerNameInDir.html">getShpLayerNameInDir()</a></code> </p>
-        </td>
-        <td><p>Calls auxiliary GeneralHelpers functions to find a shp file in dir</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hello.html">hello()</a></code> </p>
-        </td>
-        <td><p>Hello, World!</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="makeSfValidProjRmZ.html">makeSfValidProjRmZ()</a></code> </p>
-        </td>
-        <td><p>Wrapper for makeValid, st_zm, st_transform ...</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="makeValid.html">makeValid()</a></code> </p>
-        </td>
-        <td><p>Make sure polygons that intersect are treated  MULTIPOLYGONS</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="readQcCityData.html">readQcCityData()</a></code> </p>
-        </td>
-        <td><p>Read all the shp files in file.path("Data", "Rdata", "GeoData","QuebecCityOpenData")</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="readShpFile.html">readShpFile()</a></code> </p>
-        </td>
-        <td><p>Read the shp file with rgdal::readOGR</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="unionShpBuffer.html">unionShpBuffer()</a></code> </p>
-        </td>
-        <td><p>Create a buffer around an sf object + merge the resulting polygons using st_union</p></td>
-      </tr>
-    </tbody>
-    </table>
+    <p>a named list of sf objects</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>names include:
+"vdq-quartier",
+"vdq-batiments",
+"vdq-arbrepotentielremarquable",
+"vdq-zonesaccessansfil"</p>
+    
+
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
-    </ul>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+          </ul>
+
   </div>
 </div>
 

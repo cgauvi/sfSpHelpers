@@ -50,3 +50,4 @@ vignettes/*.pdf
 
 #Shapefiles and all that heavy stuff
 /[gG]eo[dD]ata/**
+.Rproj.user

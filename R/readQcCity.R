@@ -17,8 +17,10 @@
 #'@example readQcCityData()[["vdq-quartier" ]] returns an sf object with the neighbourhood data
 #'
 #'@export
-readQcCityData <- function(readSP=F, qcDirPath="/home/charles/Projects/SfSpHelpers"){
+readQcCityData <- function(readSP=F, qcDirPath="/home/charles/Projects/SfSpHelpers", forceAbsPath=T){
 
+  print(paste0("In readQcCityData => will save all files in subfolders of ", qcDirPath, " change param qcDirPath if you want to change this"))
+  print(paste0(ifelse(forceAbsPath, "Using absolute path", "Using relative path")))
 
   pathQc=file.path(qcDirPath, "Data","GeoData","QuebecCityOpenData")
 
@@ -32,7 +34,7 @@ readQcCityData <- function(readSP=F, qcDirPath="/home/charles/Projects/SfSpHelpe
   listSubDirLayer <- purrr::map_chr(listSubDirPath, ~getShpLayerNameInDir(.x))
   listSubDirName <-  purrr::map(listSubDirPath, GeneralHelpers::getFurthestDirectory)
 
-  rdataPathBase <- file.path("Data", "Rdata", "GeoData","QuebecCityOpenData")
+  rdataPathBase <- file.path(qcDirPath, "Data", "Rdata", "GeoData","QuebecCityOpenData")
 
   listLayers <- vector("list", length(listSubDirPath))
 
@@ -45,7 +47,7 @@ readQcCityData <- function(readSP=F, qcDirPath="/home/charles/Projects/SfSpHelpe
       shpPath <- listSubDirPath[[l]]
       shpLayer <- listSubDirLayer[[l]]
 
-      listLayers[[l]] <- readShpFileWrapper(rdataPath,rdataName,
+      listLayers[[l]] <- readShpFileWrapper(rdataPath,rdataName, forceAbsPath,
                                             shpPath, shpLayer,
                                             readSP)
     }, error=function(e){

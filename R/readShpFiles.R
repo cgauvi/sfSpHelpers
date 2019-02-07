@@ -40,11 +40,12 @@ readShpFile <- function(pathName,layerName,readSP){
 }
 
 
-readShpFileWrapper <- function(rdataPath, rdataName, pathName,layerName,readSP=F){
+readShpFileWrapper <- function(rdataPath, rdataName, forceAbsPath, pathName,layerName,readSP=F){
 
   shp <- GeneralHelpers::wrapperRdataWrite( readShpFile,
                                                           rdataPath,
                                                           rdataName,
+                                                          forceAbsPath,
                                                           pathName,
                                                           layerName,
                                                           readSP)

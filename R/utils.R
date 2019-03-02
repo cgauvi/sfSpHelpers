@@ -2,7 +2,7 @@
 
 
 
-#### Spatial utils #####
+#### Valid polygons #####
 
 
 
@@ -72,6 +72,7 @@ makeSfValidProjRmZ <- function(shp){
 
 
 
+### Bbox ####
 
 #' Create a st_polygon from a bounding box
 #'
@@ -176,3 +177,52 @@ unionShpBuffer <- function(shp, dist){
   return(shpUnionedBuff)
 
 }
+
+
+
+
+convertLongLatToSf <- function(dfListings, listCoordColNames){
+
+  shpListings <- st_as_sf(dfListings,
+                          coords = listCoordColNames,
+                          crs = 4326,
+                          remove=F)  #keep the long,lat columns
+  #For leaflet
+  names(shpListings$geometry) <- NULL
+
+  #Remove the Z coord
+  shpListings %<>% st_zm()
+
+  return(shpListings)
+}
+
+
+
+
+buldNeighList <- function(shp){
+
+  shp %<>% as("Spatial")
+  poly2nb(shp)
+
+}
+
+
+convertNeighToListWeights <- function(nb){
+
+  nb2listw(nb)
+
+}
+
+
+
+
+getSfDf <- function(shp){
+  stopifnot(any(grepl("sf", class(shp))))
+
+  st_geometry(shp) <- NULL
+
+  return(shp)
+}
+
+
+

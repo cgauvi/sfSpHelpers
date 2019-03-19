@@ -2,12 +2,24 @@ getDfLatLongCols <- function(df, id, hardCodedLng=NULL, hardCodedLat=NULL){
 
   if(any(grepl("sf", class(df)))) df <- getSfDf(df)
 
-  lngColName <- ifelse(is.null(hardCodedLng), grep( "lon*|lng*", colnames(df), ignore.case = T, value = T), hardCodedLng)
-  latColName <- ifelse(is.null(hardCodedLat), grep( "lat*", colnames(df), ignore.case = T, value = T), hardCodedLat)
+  lngColName <- ifelse(is.null(hardCodedLng), grep( "lon.*|lng.*", colnames(df), ignore.case = T, value = T), hardCodedLng)
+  latColName <- ifelse(is.null(hardCodedLat), grep( "lat.*", colnames(df), ignore.case = T, value = T), hardCodedLat)
 
   stopifnot( length(lngColName) == 1 && length(latColName) ==  1)
 
   print("returning df[, c(id, latitude, longitude)] IN THAT ORDER!")
+
+  maxLat <- max(df[[latColName]])
+  minLat <- min(df[[latColName]])
+  maxLng <- max(df[[lngColName]])
+  minLng <- min(df[[lngColName]])
+
+  #Need to have -90 <= lat <= 90 and -180 <= lng <= 180
+  if( !((-90 <= minLat) & (maxLat <= 90) ) |
+      !((-180 <= minLng) & (maxLng <= 180) ) ){
+    stop(paste0("Fatal error, lng or lat not in valid range - here are the cols used - ",
+                " lng: ",lngColName, " - lat: ",  latColName) )
+  }
 
   return(df[, c(id, latColName, lngColName) ])
 

@@ -25,14 +25,10 @@
 #' }
 st_kde <- function(points,cellsize, bandwith, extent = NULL){
 
-  require(MASS)
-  require(raster)
-  require(sf)
-
   if(is.null(extent)){
-    extent_vec <- st_bbox(points)[c(1,3,2,4)]
+    extent_vec <- sf::st_bbox(points)[c(1,3,2,4)]
   } else{
-    extent_vec <- st_bbox(extent)[c(1,3,2,4)]
+    extent_vec <- sf::st_bbox(extent)[c(1,3,2,4)]
   }
 
   n_y <- ceiling((extent_vec[4]-extent_vec[3])/cellsize)
@@ -41,9 +37,9 @@ st_kde <- function(points,cellsize, bandwith, extent = NULL){
   extent_vec[2] <- extent_vec[1]+(n_x*cellsize)-cellsize
   extent_vec[4] <- extent_vec[3]+(n_y*cellsize)-cellsize
 
-  coords <- st_coordinates(points)
-  matrix <- kde2d(coords[,1],coords[,2],h = bandwith,n = c(n_x,n_y),lims = extent_vec)
-  raster(matrix)
+  coords <- sf::st_coordinates(points)
+  matrix <- MASS::kde2d(coords[,1],coords[,2],h = bandwith,n = c(n_x,n_y),lims = extent_vec)
+  raster::raster(matrix)
 }
 
 

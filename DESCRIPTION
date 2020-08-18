@@ -22,6 +22,8 @@ Imports:
     tools,
     dplyr,
     MASS,
+    purrr,
+    FNN,
     raster,
     GeneralHelpers  
 Suggests: 

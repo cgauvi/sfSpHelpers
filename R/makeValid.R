@@ -5,10 +5,8 @@
 #'
 #' @param shp, sf object to clean
 #'
-#' @return shp, valid sf object
+#' @return shp, valid and cleaned sf object
 #' @export
-#'
-#' @examples
 makeValid <- function(shp){
 
   listValid <- st_is_valid(shp)
@@ -37,15 +35,10 @@ makeValid <- function(shp){
 }
 
 #' Wrapper for makeValid, st_zm,
+#' @param shp valid and cleaned sf object
 #'
-#'
-#'
-#' @param shp
-#'
-#' @return
+#' @return shp, cleaned shp
 #' @export
-#'
-#' @examples
 makeSfValidRmZM <- function(shp){
 
   if( any(grepl("sf", class(shp) ) )){
@@ -54,7 +47,7 @@ makeSfValidRmZM <- function(shp){
     shp %<>% st_zm()                              #remove the z values
     names(st_geometry(shp)) <- NULL               #Leaflet bug
 
-    print(paste0("In makeSfValidProjRmZ, crs is ", sf::st_crs(shp)))
+    print(paste0("In makeSfValidProjRmZ, crs is ", paste(st_crs(shp),sep=",",collapse = ",")))
 
   } else { print("Spatial object is " , paste(class(shp), collapse = ",", sep=","), " -- does not contain sf")}
 

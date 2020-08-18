@@ -4,8 +4,8 @@
 #' Note: Taken from https://github.com/r-spatial/sf/issues/1201
 #'
 #' @param points sf object with POINT geometry
-#' @param cellsize
-#' @param bandwith
+#' @param cellsize size of cell
+#' @param bandwith bandwith for 2D kde, larger: smoother, smaller: spikier
 #' @param extent allows cropping to a specific subregion of the map
 #'
 #' @return raster

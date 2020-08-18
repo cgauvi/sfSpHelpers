@@ -8,15 +8,15 @@
 #' If dirToDownload/nameOfFile already exists, then it just reads back the shp file.
 #' nameOfFile is created from the url path
 #'
-#' @param url
-#' @param dirToDownload
+#' @param url url adress of shp to download
+#' @param dirToDownload directory where the file will be unzipped , can be "", in which case a temp dir is used
 #'
-#' @return
+#' @return shp
 #' @export
-#'
-#' @examples
-st_read_remote <- function(url, dirToDownload= here('Data')){
+st_read_remote <- function(url, dirToDownload= here::here('Data')){
 
+  #Use a tmp dir if we do not want persistance
+  if(dirToDownload=="")dirToDownload <- tempdir()
 
   destFile <- tryCatch({
     urlPath <- httr::parse_url(url)$path
@@ -47,53 +47,54 @@ st_read_remote <- function(url, dirToDownload= here('Data')){
 
 }
 
-get_zipped_remote_shapefile <- function(path, dirToSave=here("Data")){
-
-  require(glue)
-  require(here)
-  require(sf)
-  require(httr)
-  require(curl)
-
-  h <- new_handle()
-  handle_setopt(h, ssl_verifyhost = 0, ssl_verifypeer=0)
+#' Download a (zipped) shp file from a url
+#'
+#' @param url
+#' @param dirToDownload
+#'
+#' @return shp downloaded shp file
+#' @export
+get_zipped_remote_shapefile <- function(url, dirToDownload=here::here("Data")){
 
 
-  dest_dir = here::here("Data")
-  pathRootNoExt <- tools::file_path_sans_ext( basename(path)  )
+  h <- curl::new_handle()
+  curl::handle_setopt(h, ssl_verifyhost = 0, ssl_verifypeer=0)
 
-  if(grepl('http',path)){
 
-    #Create the Data/subdir if required
-    GeneralHelpers::createDirIfNotExistentRecursive(file.path(dirToSave,pathRootNoExt))
+  pathRootNoExt <- tools::file_path_sans_ext( basename(url)  )
+
+  if(grepl('http',url)){
+
+    #Create the dirToDownload/subdir if required
+    GeneralHelpers::createDirIfNotExistentRecursive(file.path(dirToDownload,pathRootNoExt))
 
     #Download the file
-    dest <- file.path(dest_dir, pathRootNoExt, glue("{pathRootNoExt}.zip") )
+    dest <- file.path(dirToDownload, pathRootNoExt, glue("{pathRootNoExt}.zip") )
 
     #Check if the shp exists
-    shpPath <- file.path(dest_dir, pathRootNoExt, glue("{pathRootNoExt}.shp|geojson") )
+    shpPath <- file.path(dirToDownload, pathRootNoExt, glue("{pathRootNoExt}.shp|geojson") )
     if ( file.exists( shpPath  )){
       return (  sf::st_read(shpPath,quiet=TRUE) )
     }
 
-    curl::curl_download(url= path,
+    curl::curl_download(url= url,
                   destfile = dest ,
                   handle = h)
     path <- dest
   }
 
   if(grepl('.tgz$|.tar.gz$',path)){
-    utils::untar(path, exdir = file.path(dest_dir, pathRootNoExt))
+    utils::untar(path, exdir = file.path(dirToDownload, pathRootNoExt))
   } else if(grepl('.zip$',path)){
-    utils::unzip(path, exdir = file.path(dest_dir, pathRootNoExt))
+    utils::unzip(path, exdir = file.path(dirToDownload, pathRootNoExt))
   } else{
     stop('Unsupported filetype')
   }
 
   file.remove(path)
 
-  shape_name = grep('.shp|geojson',list.files(dest_dir),value=T)
-  setwd(dest_dir)
+  shape_name <- grep('.shp|geojson',list.files(file.path(dirToDownload, pathRootNoExt)),value=T)
+  setwd(file.path(dirToDownload, pathRootNoExt))
   sf::st_read(shape_name,quiet=TRUE)
 }
 

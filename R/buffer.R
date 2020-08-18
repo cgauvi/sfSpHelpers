@@ -3,7 +3,7 @@
 #' Create a buffer around an sf object + merge the resulting polygons using st_union
 #'
 #' @param shp, sf object
-#' @param dist, distance (supposed to be in some valid unit)
+#' @param dist, distance (supposed to be in some valid unit - e.g. degreees or meters)
 #'
 #' @return shpUnionedBuff, sf object with potentially less features than shp
 #'

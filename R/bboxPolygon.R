@@ -32,7 +32,7 @@ bbox_polygon <- function(shp, buffer=0) {
   else polyReturn <- sf::st_polygon(list(p)) %>% sf::st_buffer(dist=buffer)
 
   #Cast to sf and set crs
-  polyReturn %<>% sf::st_as_sf(crs=sf::st_crs(shp))
+  polyReturn %<>% st_sfc %>% sf::st_as_sf(crs=sf::st_crs(shp))
 
   return(polyReturn)
 }

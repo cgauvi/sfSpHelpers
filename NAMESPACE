@@ -2,5 +2,9 @@
 
 export(bbox_polygon)
 export(getCentroids)
+export(get_zipped_remote_shapefile)
+export(makeSfValidRmZM)
 export(makeValid)
+export(st_kde)
+export(st_read_remote)
 export(unionShpBuffer)

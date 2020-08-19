@@ -19,7 +19,7 @@ getCentroids <- function(shp){
     dplyr::as_tibble() %>%
     setNames(c("lng","lat"))
 
-  if(!any(c("lng","lat") %in% colnames(shp))) shp %<>% bind_cols(centroidsCols)
+  if(!any(c("lng","lat") %in% colnames(shp))) shp %<>% dplyr::bind_cols(centroidsCols)
 
 
   return(shp)

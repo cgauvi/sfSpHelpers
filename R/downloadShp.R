@@ -69,10 +69,10 @@ get_zipped_remote_shapefile <- function(url, dirToDownload=here::here("Data")){
     GeneralHelpers::createDirIfNotExistentRecursive(file.path(dirToDownload,pathRootNoExt))
 
     #Download the file
-    dest <- file.path(dirToDownload, pathRootNoExt, glue("{pathRootNoExt}.zip") )
+    dest <- file.path(dirToDownload, pathRootNoExt, glue::glue("{pathRootNoExt}.zip") )
 
     #Check if the shp exists
-    shpPath <- file.path(dirToDownload, pathRootNoExt, glue("{pathRootNoExt}.shp|geojson") )
+    shpPath <- file.path(dirToDownload, pathRootNoExt, glue::glue("{pathRootNoExt}.shp|geojson") )
     if ( file.exists( shpPath  )){
       return (  sf::st_read(shpPath,quiet=TRUE) )
     }

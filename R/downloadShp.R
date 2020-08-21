@@ -42,7 +42,7 @@ st_read_remote <- function(url, dirToDownload= here::here('Data')){
 
 
 
-  return( st_read(destFile) )
+  return(  sf::st_read(destFile) )
 
 
 }

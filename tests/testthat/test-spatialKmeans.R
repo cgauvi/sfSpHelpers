@@ -1,4 +1,4 @@
-test_that("raw num centroids + median - villeray", {
+test_that("raw num centroids + median heightmax - villeray", {
 
   library(ggplot2)
   library(sf)
@@ -12,13 +12,13 @@ test_that("raw num centroids + median - villeray", {
                        host="localhost",
                        user="postgres",
                        password=mypwd,
-                       dbname="statCan_buildings")
+                       dbname="nrCan_buildings")
 
-
+  #This is also to test out st_transform and make sure that the srid of public.quartiers_sociologiques_2014_2950 is really 2950
   queryStr <- 'SELECT *
               FROM (
-              	SELECT q_socio,geom
-              	FROM public.quartiers_sociologiques_2014
+              	SELECT q_socio,  ST_Transform(geom,4326) as geom
+              	FROM public.quartiers_sociologiques_2014_2950
               	WHERE q_socio LIKE \'Villeray\'
               	) as neigh
               JOIN
@@ -38,6 +38,7 @@ test_that("raw num centroids + median - villeray", {
                             numClosestPoints = 10,
                             var="heightmax",
                             aggFct=median)
+
   #Check same crs
   assertthat::are_equal(st_crs(shpBuildingsAgg), st_crs(shpBuildings))
 
@@ -52,10 +53,92 @@ test_that("raw num centroids + median - villeray", {
   shpBoth <- rbind(shpBuildingsAgg,
                    shpBuildings %>% dplyr::select( colnames(shpBuildingsAgg)))
 
-  ggplot(shpBoth) +
-    geom_sf(aes(col=heightmax) ) +
+  mapBoxToken <- keyringr::decrypt_gk_pw('token mapToken')
+  Sys.setenv(MAPBOX_ACCESS_TOKEN=mapBoxToken)
+
+  ggplot() +
+    snapbox::layer_mapbox( map_style = stylebox::mapbox_light(),  st_bbox(shpBuildingsAgg, crs=st_crs(shpBoth)), scale_ratio = 0.25) +
+    geom_sf(data=shpBoth, aes(col=heightmax) ) +
     facet_wrap(~id, ncol=1)
+
+
+  tmap::tmap_mode("view")
+  tmap::tm_shape(shpBuildings  ) +
+    tmap::tm_polygons("heightmax")
+
 })
+
+
+test_that("raw num centroids + median heightmin - villeray", {
+
+  library(ggplot2)
+  library(sf)
+  library(here)
+
+
+  mypwd <- keyringr::decrypt_gk_pw("user charles")
+
+  #mtl_buildings
+  conn <- DBI::dbConnect( drv = RPostgreSQL::PostgreSQL(),
+                          host="localhost",
+                          user="postgres",
+                          password=mypwd,
+                          dbname="nrCan_buildings")
+
+  #This is also to test out st_transform and make sure that the srid of public.quartiers_sociologiques_2014_2950 is really 2950
+  queryStr <- 'SELECT *
+              FROM (
+              	SELECT q_socio,  ST_Transform(geom,4326) as geom
+              	FROM public.quartiers_sociologiques_2014_2950
+              	WHERE q_socio LIKE \'Villeray\'
+              	) as neigh
+              JOIN
+              	(SELECT *
+              	FROM mtl_buildings
+              	WHERE  St_isvalid (geom)
+              	 )as buildings
+              ON st_intersects(neigh.geom, buildings.geom)'
+
+  shpBuildings <- st_read(conn,
+                          query = queryStr)
+
+
+  #No need to get the centroids, spatialKMeans does it automatically
+  shpBuildingsAgg <- spatialKMeans (shpBuildings,
+                                    numCentroids = 10**3,
+                                    numClosestPoints = 10,
+                                    var="heightmin",
+                                    aggFct=median)
+
+  #Check same crs
+  assertthat::are_equal(st_crs(shpBuildingsAgg), st_crs(shpBuildings))
+
+  #Number of centroids
+  assertthat::are_equal(nrow(shpBuildingsAgg) , 10**3)
+
+  #Plot to see the difference
+  shpBuildingsAgg$id <- 'aggregated'
+  shpBuildings$id <- 'raw'
+  shpBuildings %<>% dplyr::rename(geometry=geom)
+
+  shpBoth <- rbind(shpBuildingsAgg,
+                   shpBuildings %>% dplyr::select( colnames(shpBuildingsAgg)))
+
+  mapBoxToken <- keyringr::decrypt_gk_pw('token mapToken')
+  Sys.setenv(MAPBOX_ACCESS_TOKEN=mapBoxToken)
+
+  ggplot() +
+    snapbox::layer_mapbox( map_style = stylebox::mapbox_light(),  st_bbox(shpBuildingsAgg, crs=st_crs(shpBoth)), scale_ratio = 0.25) +
+    geom_sf(data=shpBoth, aes(col=heightmin) ) +
+    facet_wrap(~id, ncol=1)
+
+
+  #tmap::tmap_mode("view")
+  #tmap::tm_shape(shpBuildings  ) +
+  #  tmap::tm_polygons("heightmin")
+
+})
+
 
 
 
@@ -73,7 +156,7 @@ test_that("proportion of centroids + median - villeray", {
                           host="localhost",
                           user="postgres",
                           password=mypwd,
-                          dbname="statCan_buildings")
+                          dbname="nrCan_buildings")
 
 
   queryStr <- 'SELECT *
@@ -121,7 +204,7 @@ test_that("proportion of centroids + median - villeray", {
 
 
 
-test_that("proportion of centroids + median - villeray", {
+test_that("proportion of centroids + median heightmin - villeray", {
 
   library(ggplot2)
   library(sf)
@@ -135,7 +218,7 @@ test_that("proportion of centroids + median - villeray", {
                           host="localhost",
                           user="postgres",
                           password=mypwd,
-                          dbname="statCan_buildings")
+                          dbname="nrCan_buildings")
 
 
   queryStr <- 'SELECT *
@@ -159,7 +242,7 @@ test_that("proportion of centroids + median - villeray", {
   shpBuildingsAgg <- spatialKMeans (shpBuildings,
                                     propToKeep = 0.1,
                                     numClosestPoints = 10,
-                                    var="heightmax",
+                                    var="heightmin",
                                     aggFct=median)
   #Check same crs
   assertthat::are_equal(st_crs(shpBuildingsAgg), st_crs(shpBuildings))
@@ -176,6 +259,6 @@ test_that("proportion of centroids + median - villeray", {
                    shpBuildings %>% dplyr::select( colnames(shpBuildingsAgg)))
 
   ggplot(shpBoth) +
-    geom_sf(aes(col=heightmax) ) +
+    geom_sf(aes(col=heightmin) ) +
     facet_wrap(~id, ncol=1)
 })

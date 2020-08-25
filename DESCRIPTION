@@ -1,16 +1,16 @@
 Package: SfSpHelpers
 Type: Package
 Title: Some functions to deal with sf/sp objects
-Version: 0.1.0
+Version: 0.1.2
 Author: Charles Gauvin
-Maintainer: Charles Gauvin <charles.gauvin1232@gmail.com>
+Maintainer: Charles Gauvin <charles.gauvin123@gmail.com>
 Description: Basic utility functions such as adding centroids without changing the geometry, download geojsons and zipped shp files, 
     ensuring polygons are valid, compatibility with leaflet (geometries have no name, z and m coordinates are removed, etc)
 License: MIT LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
-    Depends:
+Depends:
         magrittr
 Imports:
     sf (>= 0.9-3),
@@ -25,6 +25,7 @@ Imports:
     purrr,
     FNN,
     raster,
-    GeneralHelpers  
+    GeneralHelpers,
+    ggvoronoi
 Suggests: 
     testthat

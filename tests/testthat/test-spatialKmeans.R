@@ -28,7 +28,7 @@ test_that("raw num centroids + median heightmax - villeray", {
               	 )as buildings
               ON st_intersects(neigh.geom, buildings.geom)'
 
-  shpBuildings <- st_read(conn,
+  shpBuildings <- sf::st_read(conn,
                           query = queryStr)
 
 
@@ -57,7 +57,7 @@ test_that("raw num centroids + median heightmax - villeray", {
   Sys.setenv(MAPBOX_ACCESS_TOKEN=mapBoxToken)
 
   ggplot() +
-    snapbox::layer_mapbox( map_style = stylebox::mapbox_light(),  st_bbox(shpBuildingsAgg, crs=st_crs(shpBoth)), scale_ratio = 0.25) +
+    snapbox::layer_mapbox( map_style = stylebox::mapbox_light(),  sf::st_bbox(shpBuildingsAgg, crs=st_crs(shpBoth)), scale_ratio = 0.25) +
     geom_sf(data=shpBoth, aes(col=heightmax) ) +
     facet_wrap(~id, ncol=1)
 

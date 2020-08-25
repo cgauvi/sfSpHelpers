@@ -59,7 +59,7 @@ spatialKMeans <- function(shp,
 
   #Convert back to shp
   shpCentroids <- dfCentroids %>%
-    sf::st_as_sf(coords=c( "lng","lat") , crs=st_crs(shp))
+    sf::st_as_sf(coords=c( "lng","lat") , crs=sf::st_crs(shp))
 
 
   return(shpCentroids)

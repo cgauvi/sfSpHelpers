@@ -25,11 +25,11 @@ getVoronoiInterpolation <- function(shp,
   voronoi <- ggvoronoi::voronoi_polygon(dfCentroids,x='lng',y='lat')
 
   #Set the projection
-  sp::proj4string(voronoi) <- sp::proj4string (shp %>% as_Spatial())
+  sp::proj4string(voronoi) <- sp::proj4string (shp %>% sf::as_Spatial())
 
   #Convert to sf and set crs
   voronoi %<>% sf::st_as_sf(crs=sf::st_crs(shp))
-  voronoi %<>% sf::st_set_crs(st_crs(shp))
+  voronoi %<>% sf::st_set_crs(sf::st_crs(shp))
 
   #Add an id to each polygon
   voronoi$id <- 1:nrow(voronoi)

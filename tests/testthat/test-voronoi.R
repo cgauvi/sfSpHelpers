@@ -80,10 +80,20 @@ test_that("voronoi interpolation based on elev for only 1 neighbourhoods", {
   shpVoronoi <- getVoronoiInterpolation(shpBuildings,
                                         'elevmax')
 
-  ggplot() +
+  p <- ggplot() +
     geom_sf(data=shpVoronoi, aes(fill=elevmax)) +
     geom_sf(data=shpBuildings %>% sf::st_centroid(), lwd=0.5) +
-    viridis::scale_fill_viridis()
+    viridis::scale_fill_viridis() +
+    ggtitle('Villeray - max elevation interpolation') +
+    labs(caption = 'Voronoi interpolation - SRID 4326')
+
+  ggsave(here("Figures", "voronoi_interpolate_villeray_elevmax_4326.png"),
+         p,
+         width = 10,
+         height = 10)
+
+
+  p
 })
 
 
@@ -125,10 +135,19 @@ test_that("voronoi interpolation based on elevmin for only 1 neighbourhoods", {
   shpVoronoi <- getVoronoiInterpolation(shpBuildings,
                                         'elevmin')
 
-  ggplot() +
+  p <- ggplot() +
     geom_sf(data=shpVoronoi, aes(fill=elevmin)) +
     geom_sf(data=shpBuildings %>% sf::st_centroid(), lwd=0.5) +
-    viridis::scale_fill_viridis()
+    viridis::scale_fill_viridis() +
+    ggtitle('Villeray - min elevation interpolation') +
+    labs(caption = 'Voronoi interpolation - SRID 4326')
+
+  ggsave(here("Figures", "voronoi_interpolate_villeray_elevmin_4326.png"),
+         p,
+         width = 10,
+         height = 10)
+
+  p
 })
 
 
@@ -172,7 +191,7 @@ test_that("voronoi interpolation based on elevmin for only 1 neighbourhoods with
   shpVoronoi <- getVoronoiInterpolation(shpBuildings,
                                         'elevmin')
 
-  ggplot() +
+  p <- ggplot() +
     geom_sf(data=shpVoronoi, aes(fill=elevmin)) +
     geom_sf(data=shpBuildings %>% sf::st_centroid(), lwd=0.5) +
     viridis::scale_fill_viridis()

@@ -9,7 +9,7 @@ unionShpBuffer(shp, dist)
 \arguments{
 \item{shp, }{sf object}
 
-\item{dist, }{distance (supposed to be in some valid unit)}
+\item{dist, }{distance (supposed to be in some valid unit - e.g. degreees or meters)}
 }
 \value{
 shpUnionedBuff, sf object with potentially less features than shp

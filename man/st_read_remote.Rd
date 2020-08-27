@@ -4,7 +4,7 @@
 \alias{st_read_remote}
 \title{Fct that wraps st_read with a curl call}
 \usage{
-st_read_remote(url, dirToDownload = here("Data"))
+st_read_remote(url, dirToDownload = here::here("Data"))
 }
 \arguments{
 \item{url}{url adress of shp to download}

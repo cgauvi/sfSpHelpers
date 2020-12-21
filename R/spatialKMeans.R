@@ -21,7 +21,7 @@ spatialKMeans <- function(shp,
   #Make sure we only use 1 of the 2 arguments - either a raw numer of centroids OR a proportion
   stopifnot( sum( purrr::map_lgl(list(propToKeep, numCentroids), is.null)) %% 2 ==1 )
 
-  #Mke sure the variable is present
+  #Make sure the variable is present
   stopifnot(var %in% colnames(shp))
 
   if (is.null(numCentroids)){

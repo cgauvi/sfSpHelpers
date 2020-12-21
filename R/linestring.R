@@ -1,7 +1,7 @@
 
 
 
-#' Add start and end points to a sf liestring object
+#' Add start and end points to a sf linestring object
 #'
 #' @param shp_segments , sf object
 #'

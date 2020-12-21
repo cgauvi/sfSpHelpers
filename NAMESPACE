@@ -3,6 +3,7 @@
 export(bbox_polygon)
 export(getCentroids)
 export(getVoronoiInterpolation)
+export(get_polygon_heatmap)
 export(get_zipped_remote_shapefile)
 export(makeSfValidRmZM)
 export(makeValid)

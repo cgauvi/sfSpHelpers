@@ -27,6 +27,7 @@ Imports:
     raster,
     GeneralHelpers,
     ggvoronoi,
-    sp
+    sp,
+    KernSmooth
 Suggests: 
     testthat

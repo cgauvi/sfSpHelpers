@@ -2,7 +2,7 @@
 % Please edit documentation in R/linestring.R
 \name{st_linestring_add_endpoints}
 \alias{st_linestring_add_endpoints}
-\title{Add start and end points to a sf liestring object}
+\title{Add start and end points to a sf linestring object}
 \usage{
 st_linestring_add_endpoints(shp_segments)
 }
@@ -13,5 +13,5 @@ st_linestring_add_endpoints(shp_segments)
 shp_segments , sf object with 4 new columns start_x,start_y, end_x,end_y
 }
 \description{
-Add start and end points to a sf liestring object
+Add start and end points to a sf linestring object
 }

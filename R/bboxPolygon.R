@@ -36,3 +36,31 @@ bbox_polygon <- function(shp, buffer=0) {
 
   return(polyReturn)
 }
+
+
+
+
+#' Create an sf bounding box from a list of longitude and latitudes
+#'
+#' @param list_lng
+#' @param list_lat
+#' @param crs
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
+#' bbox_from_points(c(45.6,44.2), c(-71.1,-73.1))
+bbox_from_points <- function(list_lng, list_lat,crs=4326){
+
+  stopifnot(length(list_lng) == length(list_lat))
+
+  sp_box <- as(raster::extent(list(x=list_lng,y=list_lat )), "SpatialPolygons")
+
+  sf_box <-  sf::st_as_sf(sp_box)
+
+  sf::st_crs(shp_bbox) <- crs
+
+  return(sf_box)
+}

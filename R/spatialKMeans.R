@@ -2,9 +2,13 @@
 
 #' Smooth out a large number of points or polygons by taking a spatially weighted k means
 #'
+#' In other words:
+#' 1) get k spatially representative points by performing k-means on a 2D matrix of lng lat
+#' 2) for each of these centroids, aggregate some function (e.g. median) of the covariate var over the numClosestPoints closest points spatially to get an idea of the value of var in a neighbourhood
+#'
 #' @param shp
-#' @param numCentroids
-#' @param numClosestPoints - analoguous to bandwith - larger number reduces the variance
+#' @param numCentroids number of representative points to take (use EITHER numCentroids or numClosestPoints)
+#' @param numClosestPoints - analoguous to bandwith - larger number reduces the variance (use EITHER numCentroids or numClosestPoints)
 #' @param var - string - variable to summarise
 #' @param aggFct - function to use to summarise - e.g. median or mean
 #'
@@ -29,7 +33,7 @@ spatialKMeans <- function(shp,
     numCentroids <- ceiling(propToKeep*nrow(shp))
   }
 
-  #Can only consider as many points as
+  #Can only consider as many points as there are rows/observations
   stopifnot(numCentroids <= nrow(shp))
 
   #Add points/centroids
@@ -53,7 +57,7 @@ spatialKMeans <- function(shp,
                                query=dfCentroids ,
                                k = numClosestPoints)$nn.index
 
-  #Compute the median covar
+  #Compute the agregating function (e.g. median or mean) over the desired covariate + only consider the numClosestPoints closest points spatially
   dfCentroids[[var]] <- purrr::map_dbl( 1:nrow(matClosest),
                                           ~aggFct( shp[[var]][ matClosest[.x,] ] , na.rm=T) )
 

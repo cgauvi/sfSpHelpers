@@ -8,7 +8,9 @@ spatialKMeans(shp, numCentroids = NULL, propToKeep = NULL,
   numClosestPoints = 10, var = "ass_diff", aggFct = median)
 }
 \arguments{
-\item{numClosestPoints}{- analoguous to bandwith - larger number reduces the variance}
+\item{numCentroids}{number of representative points to take (use EITHER numCentroids or numClosestPoints)}
+
+\item{numClosestPoints}{- analoguous to bandwith - larger number reduces the variance (use EITHER numCentroids or numClosestPoints)}
 
 \item{var}{- string - variable to summarise}
 
@@ -18,5 +20,7 @@ spatialKMeans(shp, numCentroids = NULL, propToKeep = NULL,
 shpCentroids with column var
 }
 \description{
-Smooth out a large number of points or polygons by taking a spatially weighted k means
+In other words:
+1) get k spatially representative points by performing k-means on a 2D matrix of lng lat
+2) for each of these centroids, aggregate some function (e.g. median) of the covariate var over the numClosestPoints closest points spatially to get an idea of the value of var in a neighbourhood
 }

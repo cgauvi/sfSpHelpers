@@ -1,13 +1,15 @@
-test_that("multiplication works", {
+test_that("bbox works", {
 
   library(sf)
 
-  shpBuildings <- st_read(dsn=here::here('Data', 'GeoData', 'QuebecCityOpenData', 'Trees','vdq-arbrepotentielremarquable.shp'))
+  file_name <- system.file("shape/nc.shp", package="sf")
+  nc <- sf::st_read(file_name)
 
-  shpBbox <- bbox_polygon(shpBuildings)
+  shpBbox <- bbox_polygon(nc)
 
-  plot(shpBbox)
-  plot(shpBuildings$geometry, add=T)
+  #plot(shpBbox)
+  #plot(shpBuildings$geometry, add=T)
 
-  assertthat::are_equal(st_crs(shpBbox), st_crs(shpBuildings))
+  assertthat::are_equal(sf::st_crs(shpBbox), sf::st_crs(nc))
+  assertthat::assert_that( !is.null(  sf::st_contains(shpBbox,  sf::st_union(nc) ) [[1]] ) )
 })

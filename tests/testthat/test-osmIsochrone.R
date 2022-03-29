@@ -56,13 +56,13 @@ test_that("isochrone all modes atlanta", {
   shp_point <- data.frame(X=-84.33604, Y=33.76117) %>% sf::st_as_sf(coords=c('X','Y'),crs=4326)
 
 
-  shp_isochrone <- st_make_isochrone_main (shp_point,
+  shp_isochrone <- st_make_isochrone (shp_point,
                        buffer_km = 1,
                        limit_minutes = c(5,10,15),
                        list_modes= c("motorcar","foot","bicycle"),
                        list_osm_params= list( list(key='highway' ) ))
 
-  expect_equal( nrow(shp_isochrone) == 3*3) #3 modes and 3 time limits
+  expect_equal( nrow(shp_isochrone) , 3*3) #3 modes and 3 time limits
 
 
 })
@@ -77,7 +77,7 @@ test_that("isochrone bicycle montreal", {
   shp_point <- data.frame(X=-73.57595721339615, Y=45.510545744510516) %>% sf::st_as_sf(coords=c('X','Y'),crs=4326)
 
 
-  shp_isochrone <- st_make_isochrone_main (shp_point,
+  shp_isochrone <- st_make_isochrone (shp_point,
                            buffer_km = 1,
                            limit_minutes = c(5,10,15),
                            list_modes= c("bicycle"),
@@ -97,12 +97,12 @@ test_that("isochrone walking qc city", {
   shp_point <- data.frame(X=-71.22776107610193, Y=46.805060757836486) %>% sf::st_as_sf(coords=c('X','Y'),crs=4326)
   df_centroid <- shp_point %>% sf::st_coordinates() %>% as.data.frame
 
-  shp_isochrone <- st_make_isochrone_main (shp_point,
+  shp_isochrone <- st_make_isochrone (shp_point,
                            buffer_km = 5,
                            limit_minutes = c(5,10,15),
                            list_modes= c("foot"),
                            list_osm_params= list(  list(key='highway', value='path'))
                            )
 
-  expect_equal( nrow(shp_isochrone) , 3*1) #1 mode and 3 time limits
+  expect_equal( nrow(shp_isochrone) , 2*1) #1 mode and only 2 valid time limits
 })

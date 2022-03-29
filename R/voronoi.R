@@ -14,12 +14,12 @@ getVoronoiInterpolation <- function(shp,
                                     varToInterpolate,
                                     fctToAggregate=mean){
 
+  require(dplyr)
 
-  #Get a df with centroids
+  #Get a df with centroids + make sure they are distinct - otherwise ggvoronoi::voronoi_polygon crashes
   dfCentroids <- shp %>%
     getCentroids() %>%
-    sf::st_set_geometry(NULL) %>%
-    dplyr::select(c(lng,lat))
+    distinct(lng,lat)
 
   #Get the voronoi polygon as sp object
   voronoi <- ggvoronoi::voronoi_polygon(dfCentroids,x='lng',y='lat')

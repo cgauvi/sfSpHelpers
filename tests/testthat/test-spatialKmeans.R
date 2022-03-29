@@ -5,13 +5,29 @@ test_that("",{
 
 
   #No need to get the centroids, spatialKMeans does it automatically
+  num_clusters <- 50
+  var_to_agg <- "an_orig"
   shpBuildingsAgg <- spatialKMeans (shpBuildings,
-                                    numCentroids = 500,
+                                    numCentroids = num_clusters,
                                     numClosestPoints = 10,
-                                    var="an_orig",
+                                    var=var_to_agg,
                                     aggFct=median)
 
   assertthat::are_equal(shpBuildingsAgg$an_orig %>% is.na %>% sum() ,0)
+  assertthat::are_equal(nrow(shpBuildingsAgg) , num_clusters)
+
+  # library(dplyr)
+  # library(ggplot2)
+  # shpBuildingsBind <- rbind(shpBuildingsAgg %>% dplyr::select(var_to_agg) %>% mutate(id='aggregated'),
+  #                           shpBuildings %>% dplyr::select(var_to_agg) %>% mutate(id='original'))
+  #
+  # ggplot(shpBuildingsBind) +
+  #   geom_sf( aes_string(col=var_to_agg)) +
+  #   theme_light() +
+  #   coord_sf(datum=NA) +
+  #   scale_color_viridis_c() +
+  #   facet_wrap(~id)
+
 
 })
 

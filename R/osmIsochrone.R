@@ -72,7 +72,7 @@ st_get_linestring_osm_by_mode <- function(osm_results_streets,
 #' @return
 #'
 #' @examples
-sf2graph <- function(sfdf){
+sf_to_graph <- function(sfdf){
 
   sfdf <- st_transform(sfdf, 4326)
   coords <- as.data.frame(sf::st_coordinates(sfdf))
@@ -120,7 +120,7 @@ sf2graph <- function(sfdf){
 #' @return
 #'
 #' @examples
-make_isochrone <- function(graph,
+st_make_isochrone_concave_hull <- function(graph,
                            from = "1",
                            limit_minutes = c(5,10,15)){
 
@@ -139,8 +139,9 @@ make_isochrone <- function(graph,
       print(glue::glue('Weird results! there are only 3 points! Trying a triangle'))
       x <- sf::st_make_valid(rbind(x,x[1,]))
     }else if(nrow(x)<=2){
-      print(glue::glue('Error! less than 3 points'))
-      return( sf::st_as_sf(data.frame(limit_minutes = limit_minutes, geometry = NA)) )
+      print(glue::glue('Error getting the concave hull! less than 3 points can be reached : check the query radius and the network parameters - use only "highway" preferably '))
+      #See https://github.com/r-spatial/sf/issues/354 for empty polyon
+      return( st_geometrycollection()  )
     }
 
     y <- tryCatch({
@@ -164,14 +165,41 @@ make_isochrone <- function(graph,
   poly <- sf::st_as_sfc(poly, crs = 4326)
   poly <- sf::st_as_sf(data.frame(limit_minutes = limit_minutes, geometry = poly))
   poly <- poly[seq(nrow(poly), 1), ]
+
   return(poly)
 
 }
 
 
 
+#' Check to see if a dataframe of points lies within the convex hull of another dataframe of points
+#'
+#' Geographic 4326 coordinates with X and Y columns for lon and lat for both dataframes
+#'
+#' @param coords_to_check
+#' @param coords_area
+#'
+#' @return
+#' @export
+#'
+#' @examples
+is_within_cvx_hull <- function(coords_to_check,
+                               coords_area  ){
 
-#' Wrapper over make_isochrone that creates an isochrone based on the weighted graph computed and a starting point
+  require(sf)
+
+
+  shp_to_check<- st_as_sf( coords_to_check, coords = c('X','Y'), crs=4326)
+  shp_area <- st_as_sf( coords_area,   coords = c('X','Y') , crs=4326)
+
+  is_within <- all( map_lgl( st_within(shp_to_check, st_convex_hull(shp_area))  , ~!is_empty(.x)) ) #this means we can have multiple points to check
+
+  return(is_within)
+
+}
+
+
+#' Wrapper over st_make_isochrone_concave_hull that creates an isochrone based on the weighted graph computed and a starting point
 #'
 #' @param graph
 #' @param df_start_point
@@ -179,29 +207,58 @@ make_isochrone <- function(graph,
 #' @return
 #'
 #' @examples
-make_isochrone_new_point <- function(graph,
+st_make_isochrone_new_point <- function(graph,
                                      df_start_point,
-                                     limit_minutes = c(5,10,15) ){
+                                     limit_minutes = c(5,10,15),
+                                     walk_speed_kmh=5){
 
   assertthat::assert_that(nrow(graph$coords)>0,msg='Fatal error! no coordinates in graph')
 
   #Get node in graph which is closest to the desired point
   get_dist <- function(x,y,x_ref=df_start_point$X,y_ref=df_start_point$Y){
-    sum( (x-x_ref)**2+(y-y_ref)**2)
+    geodist::geodist( data.frame( lon=x, lat= y),  data.frame(lon=x_ref,lat=y_ref), measure='vincenty') [[1]]
   }
 
-  df_dist <- map_dbl( 1:nrow(graph$coords),
-                      ~get_dist( graph$coords$X[[.x]], graph$coords$Y[[.x]] )
+ dist_km <- map_dbl( 1:nrow(graph$coords),
+                      ~get_dist( graph$coords$X[[.x]], graph$coords$Y[[.x]] )*10**-3
   )
 
-  id_ref <- graph$coords$ID[[which.min(df_dist)]][[1]] #make sure we only select exactly 1
+  id_ref <- graph$coords$ID[[which.min(dist_km)]][[1]] #make sure we only select exactly 1
   assertthat::assert_that( length(id_ref) != 0, msg = 'Fatal error! coul not find a node in the graph')
 
+  #Check if the centroid is within the cvx hull of the graph coordinates
+  is_within <- is_within_cvx_hull(df_start_point, graph$coords)
+  if(!is_within){
+    print(glue::glue('Warning! the centroid does not lie within the convex hull of nodes that can be reached in the network - check the network and the centroid'))
+  }
+
+  #Add in the walk time to the network
+  # dodgr::weighting_profiles has 5 km/hour
+  walk_speed_kmpermin <- walk_speed_kmh/60
+  walk_time_min_reach_network <- (dist_km[which.min(dist_km) ]/walk_speed_kmpermin)
+
+  print(glue::glue('Watch out! It takes at least {round(walk_time_min_reach_network,2)} minutes to walk (fly..) from point ({df_start_point$X},{y_ref=df_start_point$Y}) to the nearest street'))
+  limit_minutes_adjusted <- limit_minutes - walk_time_min_reach_network
+  limit_minutes_adjusted <- limit_minutes_adjusted[limit_minutes_adjusted >0 ]
+
+  # Make sure we can actually reach the initial time limits
+  if(walk_time_min_reach_network>=min(limit_minutes)){
+    str_limit_adj <- paste0(round(limit_minutes_adjusted,2), collapse = ',')
+    print(glue::glue('Not all time limits can be reached since walking to the network is already very long. Considering only the following times: {str_limit_adj}'))
+  }
+
+
+
   # Now the actual isochrone
-  isochone <- make_isochrone(graph = graph,
+  isochone <- st_make_isochrone_concave_hull(graph = graph,
                              from = id_ref,
-                             limit_minutes = limit_minutes
+                             limit_minutes = limit_minutes_adjusted #reduce the time we can take since we need to factor approx walk time to network
   )
+
+
+  isochone$limit_minutes_adjusted <-  isochone$limit_minutes
+  isochone$limit_minutes     <-  isochone$limit_minutes + walk_time_min_reach_network
+  isochone$walk_time_min_reach_network <- walk_time_min_reach_network
 
   return(isochone)
 }
@@ -220,7 +277,7 @@ make_isochrone_new_point <- function(graph,
 #' @export
 #'
 #' @examples
-st_make_isochrone_main <- function(shp_point,
+st_make_isochrone  <- function(shp_point,
                                 buffer_km = 5,
                                 limit_minutes = c(5,10,15),
                                 list_modes= c("motorcar","foot","bicycle"),
@@ -240,13 +297,13 @@ st_make_isochrone_main <- function(shp_point,
 
   #Create the graphs with the appropriate modes from the corresponding sf objects
   list_graph_modes <-  map(list_modes ,
-                            ~sf2graph(shp_osm_line_by_mode[[.x]]) ) %>%
+                            ~sf_to_graph(shp_osm_line_by_mode[[.x]]) ) %>%
     set_names(list_modes)
 
 
-  #Loop over all modes and call make_isochrone_new_point
+  #Loop over all modes and call st_make_isochrone_new_point
   shp_iso_all_modes_list <- map( seq_along(list_graph_modes),
-                                 ~make_isochrone_new_point(graph = list_graph_modes[[.x]],
+                                 ~st_make_isochrone_new_point(graph = list_graph_modes[[.x]],
                                                           df_start_point = df_centroid,
                                                           limit_minutes = limit_minutes) %>%
                                   mutate(mode=list_modes[[.x]]))

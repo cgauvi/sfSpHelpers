@@ -6,7 +6,10 @@ test_that("kde", {
   shpCentroids <- shpBuildings %>% st_centroid
 
   rasterKDECentroids <- st_kde(shpCentroids,0.01,0.01)
-  plot(rasterKDECentroids$layer)
+
+  assertthat::are_equal(dim(rasterKDECentroids), c(20,26,1))
+
+  #plot(rasterKDECentroids$layer)
 })
 
 

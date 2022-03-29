@@ -14,7 +14,7 @@ unionShpBuffer <- function(shp, dist){
   shpBuff <- sf::st_buffer( shp , dist = dist)
 
   shpUnionedBuff <- st_union(shpBuff) %>%
-    st_cast("POLYGON") %>%   #need this lin, otherwise we will get a multipolygon object
+    st_cast("POLYGON") %>%   #need this line, otherwise we will get a multipolygon object
     st_sf(crs=st_crs(shp))
 
   print(paste0("There are now ", nrow(shpUnionedBuff), " simple features after applying buffer+union with dist ", dist))

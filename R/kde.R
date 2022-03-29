@@ -76,7 +76,7 @@ get_polygon_heatmap <- function(df,  crs_epsg=4326, bw=.001, gsize=500 ){
   stopifnot( all(c("lng","lat") %in% colnames(df) ))
 
   df_lng_lat <- df %>%
-    select(lng,lat) %>%
+    dplyr::select(lng,lat) %>%
     as.data.frame() %>%
     mutate_at(vars("lng","lat"), as.numeric )
 

@@ -9,7 +9,7 @@ Description: Basic utility functions such as adding centroids without changing t
 License: MIT LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.2
 Depends:
         magrittr
 Imports:

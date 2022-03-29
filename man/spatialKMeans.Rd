@@ -4,8 +4,14 @@
 \alias{spatialKMeans}
 \title{Smooth out a large number of points or polygons by taking a spatially weighted k means}
 \usage{
-spatialKMeans(shp, numCentroids = NULL, propToKeep = NULL,
-  numClosestPoints = 10, var = "ass_diff", aggFct = median)
+spatialKMeans(
+  shp,
+  numCentroids = NULL,
+  propToKeep = NULL,
+  numClosestPoints = 10,
+  var = "ass_diff",
+  aggFct = median
+)
 }
 \arguments{
 \item{numCentroids}{number of representative points to take (use EITHER numCentroids or numClosestPoints)}

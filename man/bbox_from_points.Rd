@@ -9,6 +9,9 @@ bbox_from_points(list_lng, list_lat, crs = 4326)
 \arguments{
 \item{crs}{}
 }
+\value{
+
+}
 \description{
 Create an sf bounding box from a list of longitude and latitudes
 }

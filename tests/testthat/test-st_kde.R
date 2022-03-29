@@ -2,7 +2,7 @@ test_that("kde", {
 
   library(raster)
 
-  shpBuildings <- st_read(dsn=here::here('Data', 'GeoData', 'QuebecCityOpenData', 'Trees','vdq-arbrepotentielremarquable.shp'))
+  shpBuildings <- st_read('https://www.donneesquebec.ca/recherche/dataset/bc5afddf-9439-4e96-84fb-f91847b722be/resource/bbdca0dd-82df-42f9-845b-32348debf8ab/download/vdq-arbrepotentielremarquable.geojson')
   shpCentroids <- shpBuildings %>% st_centroid
 
   rasterKDECentroids <- st_kde(shpCentroids,0.01,0.01)
@@ -15,7 +15,7 @@ test_that("kde", {
 test_that("polygons heatmap with sf", {
 
 
-  shp_trees <- sf::st_read(dsn=here::here('Data', 'GeoData', 'QuebecCityOpenData', 'Trees','vdq-arbrepotentielremarquable.shp'))
+  shp_trees <- sf::st_read('https://www.donneesquebec.ca/recherche/dataset/bc5afddf-9439-4e96-84fb-f91847b722be/resource/bbdca0dd-82df-42f9-845b-32348debf8ab/download/vdq-arbrepotentielremarquable.geojson')
 
 
   shp_polyons <- get_polygon_heatmap(shp_trees , bw=.001, gsize=500 )

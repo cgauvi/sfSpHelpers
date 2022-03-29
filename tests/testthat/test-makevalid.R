@@ -1,7 +1,7 @@
 test_that("valid + rm zm ", {
 
 
-    shpTreesRaw <- st_read(dsn=here::here('Data', 'GeoData', 'QuebecCityOpenData', 'Trees','vdq-arbrepotentielremarquable.shp'))
+    shpTreesRaw <- sf::st_read('https://www.donneesquebec.ca/recherche/dataset/bc5afddf-9439-4e96-84fb-f91847b722be/resource/bbdca0dd-82df-42f9-845b-32348debf8ab/download/vdq-arbrepotentielremarquable.geojson')
 
     shpTrees <- makeSfValidRmZM(shpTreesRaw)
 

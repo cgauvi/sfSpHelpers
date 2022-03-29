@@ -1,0 +1,342 @@
+
+
+# Author: @cgauvi
+# March 28, 2022
+# Based on [this repo](https://github.com/mem48/trafficcounts/blob/master/cpprouting.R)
+
+
+
+#' Creates a graph with weights given by the mode chosen
+#'
+#' @param osm_results_streets
+#' @param osm_modes
+#'
+#' @return osm list of sf LINESTRING
+#'
+#' @examples
+st_get_linestring_osm_by_mode <- function(osm_results_streets,
+                                          osm_modes= c("motorcar","foot","bicycle")){
+
+  require(sf)
+  require(purrr)
+  require(dplyr)
+
+  osm <- osm_results_streets$osm_lines
+  assertthat::assert_that(!is.null(osm) && nrow(osm)>0,msg = 'Fatal error! no results from osm oeverpass query! make sure query raidius is sufficiently large')
+  polys <- osm_results_streets$osm_polygons # needed for roundabouts
+
+  cols_select <- c("osm_id","name","ref","highway",
+                   "junction","maxspeed","geometry")
+
+
+  osm <- osm %>% dplyr::select(any_of(cols_select))
+
+  if(!all(is.na(polys)) & !is.null(polys) & nrow(polys)>0){
+    polys <- st_cast(polys, "LINESTRING")
+    polys <- polys %>% dplyr::select(any_of(cols_select))
+    osm <- rbind(osm, polys)
+  }
+
+  assertthat::assert_that( nrow(osm)>0,msg=glue::glue('Fatal error there are no results for that osm query'))
+  rm(osm_results_streets, polys)
+
+  #Nested function to attach the max speed by mode
+  get_max_speed <- function(mode="motorcar",left_name_join='highway'){
+
+    weights <- dodgr::weighting_profiles$weighting_profiles %>%
+      filter(name==mode) %>%
+      rename_at('way', ~left_name_join) %>%
+      rename(mode=name)
+
+    if('maxspeed' %in% colnames(osm)) osm %<>% select(-maxspeed)
+    osm %<>% left_join(weights , by= left_name_join )
+
+    assertthat::assert_that(sum(is.na(osm$max_speed))!=nrow(osm),msg=glue::glue('Fatal error for mode {mode} -- all speeds are NA'))
+
+    return(osm)
+  }
+
+  osm_by_mode <- map(osm_modes, get_max_speed) %>% set_names(osm_modes)
+
+
+  return(osm_by_mode)
+}
+
+
+
+
+#' Creates a weighted graph whose weight is given by the time required to travel along an edge given a certain mode
+#'
+#' @param sfdf
+#'
+#' @return
+#'
+#' @examples
+sf2graph <- function(sfdf){
+
+  sfdf <- st_transform(sfdf, 4326)
+  coords <- as.data.frame(sf::st_coordinates(sfdf))
+  coords <- round(coords, 13)
+  coords$ID <- stplanr::od_id_szudzik(coords$X, coords$Y, ordermatters = TRUE)
+
+  coords$lengths <- geodist::geodist(coords[,c("X","Y")], sequential = TRUE, pad = TRUE)*10**-3 #in km
+  coords$speeds <- sfdf$max_speed[coords$L1] #in km/h - L1 is the index of the original linestring that contains the POINT
+
+  # Convert from hours to minute
+  coords$time <- (coords$lengths / coords$speeds) * 60
+
+  roads <- coords[seq(1, nrow(coords)-1),c("ID","L1")]
+  roads2 <- coords[seq(2, nrow(coords)),c("ID","time","L1")]
+  names(roads) <- c("from","L1a")
+  names(roads2) <- c("to","weight","L1b")
+  roads <- cbind(roads, roads2)
+  rm(roads2)
+  roads <- roads[roads$L1a == roads$L1b,]
+  roads <- roads[,c("from","to","weight")]
+  coords <- coords[,c("ID","X","Y")]
+  coords <- coords[!duplicated(coords$ID),]
+
+  assertthat::are_equal(coords %>% is.na() %>% sum, 0)
+
+  #Remove edges with no time to travel -- removed things like time to walk on a motorway or driving on a path
+  is_na_idx <- map_lgl( 1:nrow(roads), ~any(is.na(roads[.x,])) )
+
+  gg <- cppRouting::makegraph(roads[!is_na_idx, ], coords = coords, directed = FALSE)
+
+  return(gg)
+
+}
+
+
+
+#' Compute isochrones based on a cppRouting graph (whose edges have weight given by time in minutes)
+#'
+#' The limits depends on the units used for the 'dist' column - for this function requires that the dist be in seconds
+#'
+#' @param graph
+#' @param from
+#' @param lim
+#'
+#' @return
+#'
+#' @examples
+make_isochrone <- function(graph,
+                           from = "1",
+                           limit_minutes = c(5,10,15)){
+
+  require(magrittr)
+  require(dplyr)
+
+  iso <- cppRouting::get_isochrone(Graph = graph, from = from,lim = limit_minutes)
+  poly<-lapply(iso[[1]],function(x){
+    x <- data.frame(noeuds=x,stringsAsFactors = F)
+    x <- dplyr::left_join(x,graph$coords,by=c("noeuds"="ID"))
+    x <- sf::st_as_sf(x,coords=c("X","Y"),crs=4326, dim = "XY")
+
+
+    #Edge cases
+    if(nrow(x)==3){
+      print(glue::glue('Weird results! there are only 3 points! Trying a triangle'))
+      x <- sf::st_make_valid(rbind(x,x[1,]))
+    }else if(nrow(x)<=2){
+      print(glue::glue('Error! less than 3 points'))
+      return( sf::st_as_sf(data.frame(limit_minutes = limit_minutes, geometry = NA)) )
+    }
+
+    y <- tryCatch({
+
+      y <- concaveman::concaveman(x, length_threshold = 0.01)
+      y <- y[[1]][[1]]
+      y <- sf::st_make_valid(y)
+      y <- st_cast(y, "MULTIPOLYGON")
+    },error=function(e){
+
+      print(glue::glue('Fatal error - {e} - trying convex hull instead'))
+      y <- sf::st_make_valid(x)
+      y <- sf::st_convex_hull(y)
+      y <- y %>% mutate(id=1) %>% group_by(id) %>% summarise() %>% st_cast('POLYGON') %>% pull(geometry) %>%  `[[`(1) #dissolve and get the sfc
+    })
+
+
+    return(y)
+  })
+
+  poly <- sf::st_as_sfc(poly, crs = 4326)
+  poly <- sf::st_as_sf(data.frame(limit_minutes = limit_minutes, geometry = poly))
+  poly <- poly[seq(nrow(poly), 1), ]
+  return(poly)
+
+}
+
+
+
+
+#' Wrapper over make_isochrone that creates an isochrone based on the weighted graph computed and a starting point
+#'
+#' @param graph
+#' @param df_start_point
+#'
+#' @return
+#'
+#' @examples
+make_isochrone_new_point <- function(graph,
+                                     df_start_point,
+                                     limit_minutes = c(5,10,15) ){
+
+  assertthat::assert_that(nrow(graph$coords)>0,msg='Fatal error! no coordinates in graph')
+
+  #Get node in graph which is closest to the desired point
+  get_dist <- function(x,y,x_ref=df_start_point$X,y_ref=df_start_point$Y){
+    sum( (x-x_ref)**2+(y-y_ref)**2)
+  }
+
+  df_dist <- map_dbl( 1:nrow(graph$coords),
+                      ~get_dist( graph$coords$X[[.x]], graph$coords$Y[[.x]] )
+  )
+
+  id_ref <- graph$coords$ID[[which.min(df_dist)]][[1]] #make sure we only select exactly 1
+  assertthat::assert_that( length(id_ref) != 0, msg = 'Fatal error! coul not find a node in the graph')
+
+  # Now the actual isochrone
+  isochone <- make_isochrone(graph = graph,
+                             from = id_ref,
+                             limit_minutes = limit_minutes
+  )
+
+  return(isochone)
+}
+
+
+
+#' Man function to call to get
+#'
+#' @param shp_point
+#' @param buffer_km
+#' @param list_osm_params
+#' @param limit_minutes
+#' @param list_modes
+#'
+#' @return shp_iso_all_modes: sf POLYGON
+#' @export
+#'
+#' @examples
+st_make_isochrone_main <- function(shp_point,
+                                buffer_km = 5,
+                                limit_minutes = c(5,10,15),
+                                list_modes= c("motorcar","foot","bicycle"),
+                                list_osm_params= list( list(key='highway' ) )){
+
+  #Get the centroid
+  df_centroid <- shp_point %>% sf::st_coordinates() %>% as.data.frame
+
+  #OSM overpass query
+  osm_results_streets <- osm_buffer_query_helper( shp_point,
+                                                  buffer_km = buffer_km,
+                                                  list_osm_params=list_osm_params)
+
+
+  #Create the sf linestring objects with the appropriate weights
+  shp_osm_line_by_mode <- st_get_linestring_osm_by_mode(osm_results_streets,list_modes)
+
+  #Create the graphs with the appropriate modes from the corresponding sf objects
+  list_graph_modes <-  map(list_modes ,
+                            ~sf2graph(shp_osm_line_by_mode[[.x]]) ) %>%
+    set_names(list_modes)
+
+
+  #Loop over all modes and call make_isochrone_new_point
+  shp_iso_all_modes_list <- map( seq_along(list_graph_modes),
+                                 ~make_isochrone_new_point(graph = list_graph_modes[[.x]],
+                                                          df_start_point = df_centroid,
+                                                          limit_minutes = limit_minutes) %>%
+                                  mutate(mode=list_modes[[.x]]))
+
+  shp_iso_all_modes <- do.call(rbind,shp_iso_all_modes_list ) %>%
+    st_make_valid()
+
+  if(!all( map_lgl(shp_iso_all_modes$geometry, ~length(.x)>0 ) ) ){
+    print('Warning error! not all geometries are valid! could be some geo porcessing error when computing convex/concave hull')
+  }
+
+  return(shp_iso_all_modes)
+
+}
+
+
+#' Add feature, value pairs recursively to an osm overpass query
+#'
+#' @param opq_query
+#' @param list_osm_params
+#'
+#' @return
+#' @export
+#'
+#' @examples
+create_opq_query_add_features <- function(opq_query,
+                                          list_osm_params= list( list(key='highway' ) )){
+
+
+  assertthat::assert_that( length(list_osm_params) >0 ,msg='Fatal error! no parameters passed')
+
+  #Wrapper to set the key and values specifically
+  wrapped_add_osm_feature = function(key,value =NULL, ...) {
+    return(function(...) osmdata::add_osm_feature(key=key,value=value,...) )
+  }
+
+  wrapped_add_osm_feature_with_list <- do.call( wrapped_add_osm_feature, list_osm_params[[1]]  )
+  opq_query %<>% wrapped_add_osm_feature_with_list
+
+  if(length(list_osm_params)>=2){
+    for(k in 2:length(list_osm_params)){
+      wrapped_add_osm_feature_with_list_new <- do.call( wrapped_add_osm_feature, list_osm_params[[k]]  )
+      opq_query %<>% wrapped_add_osm_feature_with_list_new
+    }
+  }
+
+
+
+  return(opq_query)
+
+}
+
+
+#' Get osm objects within a fixed radius of a given point
+#'
+#' This is useful namely to get the street network around a point
+#'
+#' @param shp_point
+#' @param buffer_km
+#' @param list_osm_params
+#'
+#' @return osm_results_streets
+#' @export
+#'
+#' @examples
+osm_buffer_query_helper <- function(shp_point,
+                                     buffer_km = 5,
+                                     list_osm_params= list( list(key='highway' ) )
+                                    ){
+
+  shp_buffer <- shp_point  %>%
+    sf::st_transform(crs=3857) %>%
+    sf::st_buffer(buffer_km*1000) %>%
+    sf::st_transform(crs=4326)
+
+  opq_query <- osmdata::opq(bbox = sf::st_bbox(shp_buffer) )
+
+
+  osm_results_streets <- opq_query %>%
+    create_opq_query_add_features( list_osm_params=list_osm_params) %>%
+    osmdata::osmdata_sf ()
+
+  return(osm_results_streets)
+}
+
+
+
+
+
+
+
+
+

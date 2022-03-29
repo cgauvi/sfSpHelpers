@@ -29,3 +29,34 @@ st_linestring_add_endpoints <- function(shp_segments){
   return(shp_segments)
 
 }
+
+
+
+#' Uses st_linestring_add_endpoints to take a potentiall complicated linestring and convert it into a simple linestring based only on the endpoints of the initial linestring
+#'
+#' @param shp_segments
+#'
+#' @return shp_segments_endpoints
+#' @export
+#'
+#' @examples
+st_linestring_to_sf_linestring_endpoints <- function(shp_segments){
+
+  assertthat::assert_that(nrow(shp_segments)>0,msg='Fatal error! no segments passed')
+
+  shp_segments %<>% st_linestring_add_endpoints()
+
+  #Create a sfc object using the endpoints
+  list_lines <- purrr::map ( 1:nrow(shp_segments),
+                             ~sf::st_linestring(x = matrix(  c(shp_segments$start_x[[.x]], shp_segments$end_x[[.x]], shp_segments$start_y[[.x]], shp_segments$end_y[[.x]]), nrow = 2, ncol = 2) )
+  )
+
+  #Convert to sf
+  shp_segments_endpoints <- sf::st_as_sf( st_sfc(coords=list_lines),
+                                       crs=st_crs(shp_segments) ) %>%
+    rename(geometry=x)
+
+
+  return(shp_segments_endpoints)
+
+}

@@ -12,6 +12,7 @@ makeValid <- function(shp){
   listValid <- st_is_valid(shp)
   listIdxInvalid <- which( listValid == F)
 
+
   if(all(listValid)) print("Ok, all polygons are valid")
   else{
     writeLines (
@@ -25,9 +26,14 @@ makeValid <- function(shp){
     print("here is a sample problematic polygon")
     plot(shp$geometry[listIdxInvalid[[1]]])
 
-    shp[listIdxInvalid, ] <- lwgeom::st_make_valid( shp[listIdxInvalid, ] )
+    shp[listIdxInvalid, ] <- lwgeom::lwgeom_make_valid( shp[listIdxInvalid, ] )
 
     if( sum(!st_is_valid(shp)) == 0) print("Ok polygon should now be valid")
+    else{
+      print("Still some problematic polygons! Dropping them")
+      listValid <- st_is_valid(shp)
+      shp <- shp[  which( listValid == T), ]
+    }
   }
 
   return(shp)

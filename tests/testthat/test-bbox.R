@@ -8,8 +8,32 @@ test_that("bbox works", {
   shpBbox <- bbox_polygon(nc)
 
   #plot(shpBbox)
-  #plot(shpBuildings$geometry, add=T)
+
 
   assertthat::are_equal(sf::st_crs(shpBbox), sf::st_crs(nc))
   assertthat::assert_that( !is.null(  sf::st_contains(shpBbox,  sf::st_union(nc) ) [[1]] ) )
+})
+
+
+
+test_that("bbox from points works", {
+
+  library(sf)
+  library(dplyr)
+  library(magrittr)
+  library(purrr)
+
+  file_name <- system.file("shape/nc.shp", package="sf")
+  nc <- sf::st_read(file_name)
+
+  coordinates <- nc %>% st_coordinates() %>% as.data.frame()
+
+  shpBbox <- bbox_from_points(coordinates$X, coordinates$Y,crs=st_crs(nc))
+  shpBbox %<>% st_transform(crs=3857) %>% st_buffer(10**4 ) %>% st_transform(crs=st_crs(nc)) #... the bounding box is pretty tight
+
+  # plot(shpBbox)
+  # plot(sf::st_union(nc),add=T)
+
+  assertthat::are_equal(sf::st_crs(shpBbox), sf::st_crs(nc))
+  assertthat::assert_that( all( map_lgl( sf::st_within(nc, shpBbox  ) , ~!is_empty(.x))) )
 })

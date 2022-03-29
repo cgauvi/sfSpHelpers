@@ -186,13 +186,22 @@ st_make_isochrone_concave_hull <- function(graph,
 is_within_cvx_hull <- function(coords_to_check,
                                coords_area  ){
 
-  require(sf)
 
+  require(sf)
+  require(dplyr)
 
   shp_to_check<- st_as_sf( coords_to_check, coords = c('X','Y'), crs=4326)
   shp_area <- st_as_sf( coords_area,   coords = c('X','Y') , crs=4326)
 
-  is_within <- all( map_lgl( st_within(shp_to_check, st_convex_hull(shp_area))  , ~!is_empty(.x)) ) #this means we can have multiple points to check
+  #Get the convex hull
+  shp_convex_area <-   st_convex_hull(  st_union(shp_area))
+
+
+
+  is_within <- all(
+    map_lgl( st_within(shp_to_check, shp_convex_area)  ,
+             ~!is_empty(.x))
+    ) #this means we can have multiple points to check
 
   return(is_within)
 

@@ -1,4 +1,23 @@
 
+test_that("helper convex hull works", {
+
+  file_name <- system.file("shape/nc.shp", package="sf")
+  nc <- sf::st_read(file_name) %>% st_transform(crs=4326)
+
+  coordinates_cvx_hull <- nc %>% bbox_polygon( ) %>% st_transform(crs=3857) %>% st_buffer(10**4) %>% st_transform(crs=4326) %>% st_coordinates() %>% as.data.frame()
+  coordinates_to_check <- nc %>% st_coordinates() %>% as.data.frame()
+
+  is_within <- is_within_cvx_hull( coords_to_check = coordinates_to_check,
+                      coords_area = coordinates_cvx_hull )
+
+  # plot(shp_convex_area)
+  # plot(bbox_polygon(nc)  ,add=T)
+  # plot(nc ,add=T)
+
+  expect_equal(is_within, T )
+})
+
+
 
 test_that("osm query steps - qc city", {
 
@@ -22,8 +41,8 @@ test_that("osm query steps - qc city", {
     osmdata::add_osm_feature(key='highway',value='steps')%>%
     osmdata::osmdata_sf ()
 
-  assertthat::are_equal(opq_steps$overpass_call, opq_steps_valid$overpass_call)
-  assertthat::are_equal(nrow(opq_steps$osm_lines), nrow(opq_steps_valid$osm_lines))
+  expect_equal(opq_steps$overpass_call, opq_steps_valid$overpass_call)
+  expect_equal(nrow(opq_steps$osm_lines), nrow(opq_steps_valid$osm_lines))
 })
 
 
@@ -42,7 +61,7 @@ test_that("osm query cycle path - qc city", {
   opq_all <- osm_buffer_query_helper(shp_point, buffer_km = km_buffer,   list_osm_params= list(  list(key='highway'),  list (key='cycleway') ) )
 
 
-  assertthat::are_equal(nrow(opq_cycling$osm_lines), nrow(opq_all$osm_lines))
+  expect_equal(nrow(opq_cycling$osm_lines), nrow(opq_all$osm_lines))
 
 })
 

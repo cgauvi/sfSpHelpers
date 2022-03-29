@@ -58,9 +58,9 @@ bbox_from_points <- function(list_lng, list_lat,crs=4326){
 
   sp_box <- as(raster::extent(list(x=list_lng,y=list_lat )), "SpatialPolygons")
 
-  sf_box <-  sf::st_as_sf(sp_box)
+  shp_bbox <-  sf::st_as_sf(sp_box)
 
   sf::st_crs(shp_bbox) <- crs
 
-  return(sf_box)
+  return(shp_bbox)
 }

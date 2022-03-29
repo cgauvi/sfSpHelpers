@@ -235,12 +235,6 @@ st_make_isochrone_new_point <- function(graph,
   id_ref <- graph$coords$ID[[which.min(dist_km)]][[1]] #make sure we only select exactly 1
   assertthat::assert_that( length(id_ref) != 0, msg = 'Fatal error! coul not find a node in the graph')
 
-  #Check if the centroid is within the cvx hull of the graph coordinates
-  is_within <- is_within_cvx_hull(df_start_point, graph$coords)
-  if(!is_within){
-    print(glue::glue('Warning! the centroid does not lie within the convex hull of nodes that can be reached in the network - check the network and the centroid'))
-  }
-
   #Add in the walk time to the network
   # dodgr::weighting_profiles has 5 km/hour
   walk_speed_kmpermin <- walk_speed_kmh/60
@@ -263,6 +257,14 @@ st_make_isochrone_new_point <- function(graph,
                              from = id_ref,
                              limit_minutes = limit_minutes_adjusted #reduce the time we can take since we need to factor approx walk time to network
   )
+
+
+
+  #Check if the centroid is within the cvx hull of the isochrone coordinates
+  is_within <- is_within_cvx_hull(df_start_point, isochone %>% st_coordinates %>% as.data.frame())
+  if(!is_within){
+    print(glue::glue('Warning! the centroid does not lie within the convex hull of nodes that can be reached in the network - check the network and the centroid'))
+  }
 
 
   isochone$limit_minutes_adjusted <-  isochone$limit_minutes
@@ -303,12 +305,13 @@ st_make_isochrone  <- function(shp_point,
 
   #Create the sf linestring objects with the appropriate weights
   shp_osm_line_by_mode <- st_get_linestring_osm_by_mode(osm_results_streets,list_modes)
+  print('...OSM successfully queried...')
 
   #Create the graphs with the appropriate modes from the corresponding sf objects
   list_graph_modes <-  map(list_modes ,
                             ~sf_to_graph(shp_osm_line_by_mode[[.x]]) ) %>%
     set_names(list_modes)
-
+  print('...Network successfully converted to graph...')
 
   #Loop over all modes and call st_make_isochrone_new_point
   shp_iso_all_modes_list <- map( seq_along(list_graph_modes),
@@ -317,8 +320,10 @@ st_make_isochrone  <- function(shp_point,
                                                           limit_minutes = limit_minutes) %>%
                                   mutate(mode=list_modes[[.x]]))
 
+
   shp_iso_all_modes <- do.call(rbind,shp_iso_all_modes_list ) %>%
     st_make_valid()
+  print('...Isochrones successfully computed for all modes...')
 
   if(!all( map_lgl(shp_iso_all_modes$geometry, ~length(.x)>0 ) ) ){
     print('Warning error! not all geometries are valid! could be some geo porcessing error when computing convex/concave hull')

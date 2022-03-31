@@ -48,7 +48,7 @@ st_get_linestring_osm_by_mode <- function(osm_results_streets,
       rename_at('way', ~left_name_join) %>%
       rename(mode=name)
 
-    if('maxspeed' %in% colnames(osm)) osm %<>% select(-maxspeed)
+    if('maxspeed' %in% colnames(osm)) osm %<>% dplyr::select(-maxspeed)
     osm %<>% left_join(weights , by= left_name_join )
 
     assertthat::assert_that(sum(is.na(osm$max_speed))!=nrow(osm),msg=glue::glue('Fatal error for mode {mode} -- all speeds are NA'))

@@ -30,4 +30,7 @@ Imports:
     sp,
     KernSmooth
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat
+VignetteBuilder: knitr

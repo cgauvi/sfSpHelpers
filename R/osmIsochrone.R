@@ -379,7 +379,7 @@ create_opq_query_add_features <- function(opq_query,
 #' @param buffer_km
 #' @param list_osm_params
 #'
-#' @return osm_results_streets
+#' @return osm_results_streets osm results: list with linestrings, points and polygons + aux data
 #' @export
 #'
 #' @examples
@@ -407,6 +407,27 @@ osm_buffer_query_helper <- function(shp_point,
 
 
 
+
+#' Simple helper to get the city centroid from a string (in 4326 geographic coordiantes)
+#'
+#' @param city_str
+#'
+#' @return
+#' @export
+#'
+#' @examples st_osm_city_centroid_from_string('Atlanta')
+st_osm_city_centroid_from_string <- function(city_str){
+
+  osm <-  osmdata::opq(bbox = city_str)
+
+  shp_bbox <- SfSpHelpers::bbox_from_points(list_lng = as.double(str_split(osm$bbox, ',')[[1]][c(2,4) ]),
+                                            list_lat = as.double(str_split(osm$bbox, ',')[[1]][c(1,3)]) )
+
+  assertthat::assert_that( units::drop_units(st_area(shp_bbox %>% st_transform(crs=3857))) >0, msg='Fatal error! bbox has 0 area')
+
+
+  return(shp_bbox)
+}
 
 
 

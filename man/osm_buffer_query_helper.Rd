@@ -14,7 +14,7 @@ osm_buffer_query_helper(
 \item{list_osm_params}{}
 }
 \value{
-osm_results_streets
+osm_results_streets osm results: list with linestrings, points and polygons + aux data
 }
 \description{
 This is useful namely to get the street network around a point

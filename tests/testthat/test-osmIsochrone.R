@@ -15,7 +15,18 @@ test_that("helper convex hull works", {
   # plot(nc ,add=T)
 
   expect_equal(is_within, T )
+
 })
+
+
+
+
+test_that("osm bbox helper", {
+
+  expect_equal ( nrow(st_osm_city_centroid_from_string('Atlanta') ), 1)
+  expect_error(st_osm_city_centroid_from_string('Made up non existent city'))
+}
+)
 
 
 

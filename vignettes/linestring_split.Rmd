@@ -38,6 +38,23 @@ geojson <- '{
 
 ```
 
+
+---
+---
+
+
+# Split lines
+```{r}
+#This works for sf lines with multiple lines and returns another sf objet
+lines_split <- split_lines(lines,id = 'COMID' ,max_length = 10)
+mapview( lines_split ,zcol='split_fID') 
+
+```
+
+---
+---
+
+
 # Remove all end points
 ## Remove a fixed distance in meters 
 ```{r}

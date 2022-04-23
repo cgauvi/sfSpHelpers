@@ -61,6 +61,15 @@ split_lines <- function(input_lines, max_length, id = "ID") {
 
 
 
+#' Splits line into segments using SfSpHelpers::split_lines and then removes the first and last segments (if possible)
+#'
+#' @param shp_line
+#' @param id_col
+#' @param min_distance_m_to_remove
+#'
+#' @return
+#'
+#' @examples
 split_lines_remove_line_endpoints <- function(shp_line,id_col, min_distance_m_to_remove=10){
 
   #Quick tests
@@ -88,6 +97,25 @@ split_lines_remove_line_endpoints <- function(shp_line,id_col, min_distance_m_to
 }
 
 
+#' Splits line into segments using SfSpHelpers::split_lines and then removes the first and last segments (if possible)
+#' and then groups the line string by id
+#'
+#' @param shp_line
+#' @param id_col
+#' @param min_distance_m_to_remove
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
+#' @param shp_line
+#' @param id_col
+#' @param min_distance_m_to_remove
+#'
+#' @return
+#'
+#' @examples
 remove_line_endpoints_from_split <- function(shp_line,id_col, min_distance_m_to_remove=10){
 
   lines_return <- split_lines_remove_line_endpoints(shp_line,id_col, min_distance_m_to_remove=10)
@@ -100,10 +128,23 @@ remove_line_endpoints_from_split <- function(shp_line,id_col, min_distance_m_to_
 
 }
 
+#' Get a substring from a linestring
+#'
+#' Wrapper over lwgeom::st_linesubstring with possibility to either use meters or
+#'
+#' @param shp_line
+#' @param id_col
+#' @param min_distance_m_to_remove
+#' @param min_proportion_remove
+#'
+#' @return
+#' @export
+#'
+#' @examples
 remove_line_endpoints_lwgeom <- function(shp_line,id_col, min_distance_m_to_remove=NULL, min_proportion_remove=NULL){
 
   assertthat::assert_that(any(id_col %in% colnames(shp_line)))
-  assertthat::assert_that( sum(sapply(list(min_distance_m_to_remove,min_proportion_remove), is_null)) %% 2 ==1,
+  assertthat::assert_that( sum(sapply(list(min_distance_m_to_remove,min_proportion_remove), purrr::is_null)) %% 2 ==1,
                            msg='Fatal error! input exaclty one of min_distance_m_to_remove or min_proportion_remove')
 
   #Convert to a proportion of total segment length when meters are used
@@ -131,7 +172,16 @@ remove_line_endpoints_lwgeom <- function(shp_line,id_col, min_distance_m_to_remo
 
 
 
-remove_line_endpoints_all_segments <- function(shp_lines,...){
+#' Removes the endpoints for a collection of LINESTRINGS
+#'
+#' @param shp_lines sf object with multiple rows
+#' @param ... parameters passed to to remove_line_endpoints_lwgeom
+#'
+#' @return
+#' @export
+#'
+#' @examples
+remove_line_endpoints <- function(shp_lines,...){
 
   #Remove endpoints from all rows
   list_lines_no_endpoints <- lapply(1:nrow(shp_lines),

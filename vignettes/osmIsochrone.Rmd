@@ -62,7 +62,7 @@ osm <-  osmdata::opq(bbox = 'Atlanta') %>%
     osmdata_sf () 
 
 
-shp_iso_all_modes <- SfSpHelpers::st_make_isochrone (shp_centroid %>% st_transform(crs=4326),
+shp_iso_all_modes <- SfSpHelpers::st_make_isochrone (osm$osm_lines %>% st_centroid() %>% st_transform(crs=4326),
                            buffer_km = 15) 
 
 

@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # SfSpHelpers
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/cgauvi/sfSpHelpers/workflows/R-CMD-check/badge.svg)](https://github.com/cgauvi/sfSpHelpers/actions)
 <!-- badges: end -->
 
 Basic `R` package to perform routine spatial operations 

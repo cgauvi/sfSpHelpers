@@ -4,6 +4,8 @@
 # SfSpHelpers
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/cgauvi/sfSpHelpers/workflows/R-CMD-check/badge.svg)](https://github.com/cgauvi/sfSpHelpers/actions)
 <!-- badges: end -->
 
 Basic `R` package to perform routine spatial operations
@@ -43,7 +45,7 @@ library(ggplot2)
  
   #Neighborhoods
   shp_neigh <-  get_zipped_remote_shapefile("https://www.donneesquebec.ca/recherche/dataset/5b1ae6f2-6719-46df-bd2f-e57a7034c917/resource/508594dc-b090-407c-9489-73a1b46a8477/download/vdq-quartier.zip")
-#> Reading layer `vdq-quartier' from data source `/tmp/Rtmp60xzRg' using driver `ESRI Shapefile'
+#> Reading layer `vdq-quartier' from data source `/tmp/RtmprGLW10' using driver `ESRI Shapefile'
 #> Simple feature collection with 35 features and 4 fields
 #> Geometry type: MULTIPOLYGON
 #> Dimension:     XYZ

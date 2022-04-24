@@ -471,13 +471,6 @@
       "Repository": "CRAN",
       "Hash": "d7566c471c7b17e095dd023b9ef155ad"
     },
-    "ggvoronoi": {
-      "Package": "ggvoronoi",
-      "Version": "0.8.4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "19658598a366615af028c82cdd5c8efa"
-    },
     "glue": {
       "Package": "glue",
       "Version": "1.6.2",

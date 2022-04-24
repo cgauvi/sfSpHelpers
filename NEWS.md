@@ -1,3 +1,16 @@
+
+
+
+sfSpHelpers v0.4 326e4426b252b867cf4133a061af4ce01c914d2c Apr 24
+==============
+
+Changes:
+
+* Implemented osm bbox + bbox from vector
+* Removed useless makeValid functions
+* Debugged vignettes + added voronoi vignette
+
+
 sfSpHelpers v0.3 c5e9ee7c2c86c9cd2672e463fa581371e22ae34c Apr 23
 ==============
 

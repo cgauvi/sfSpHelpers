@@ -82,7 +82,8 @@ shpBuildings %<>% sample_frac(size=0.001)
 ## Area grouped by type 
 ```{r}
 
-top_cat <- shpBuildings %>% st_drop_geometry() %>% count(LIBELLE_UT) %>% arrange(desc(n)) %>% top_n(n=3)
+#Keep the most prevalent groups and make sure to have at least 10 observations so that propToKeep = 0.1 does not fail after
+top_cat <- shpBuildings %>% st_drop_geometry() %>% count(LIBELLE_UT) %>% arrange(desc(n)) %>% top_n(n=3) %>% filter(n > 10)
 
 shpBuildingsAgg_by_build_type <- map_dfr(
   top_cat$LIBELLE_UT,

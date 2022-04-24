@@ -28,49 +28,21 @@ using mapview or ggplot2
 
 ``` r
 library(SfSpHelpers)
-#> Loading required package: magrittr
 library(sf)
-#> Linking to GEOS 3.9.1, GDAL 3.3.2, PROJ 7.2.1; sf_use_s2() is TRUE
 library(ggplot2)
 
-  #Trees
-  shp_trees <-  st_read('https://www.donneesquebec.ca/recherche/dataset/bc5afddf-9439-4e96-84fb-f91847b722be/resource/bbdca0dd-82df-42f9-845b-32348debf8ab/download/vdq-arbrepotentielremarquable.geojson')
-#> Reading layer `D:/fmeserver2017///resources/data/\DO\PUBLICATION\vdq-arbrepotentielremarquable.geojson' from data source `https://www.donneesquebec.ca/recherche/dataset/bc5afddf-9439-4e96-84fb-f91847b722be/resource/bbdca0dd-82df-42f9-845b-32348debf8ab/download/vdq-arbrepotentielremarquable.geojson' 
-#>   using driver `GeoJSON'
-#> Simple feature collection with 707 features and 11 fields
-#> Geometry type: POINT
-#> Dimension:     XY
-#> Bounding box:  xmin: -71.41288 ymin: 46.73784 xmax: -71.15738 ymax: 46.93477
-#> Geodetic CRS:  WGS 84
+#Trees
+shp_trees <-  st_read('https://www.donneesquebec.ca/recherche/dataset/bc5afddf-9439-4e96-84fb-f91847b722be/resource/bbdca0dd-82df-42f9-845b-32348debf8ab/download/vdq-arbrepotentielremarquable.geojson')
  
-  #Neighborhoods
-  shp_neigh <-  get_zipped_remote_shapefile("https://www.donneesquebec.ca/recherche/dataset/5b1ae6f2-6719-46df-bd2f-e57a7034c917/resource/508594dc-b090-407c-9489-73a1b46a8477/download/vdq-quartier.zip")
-#> Reading layer `vdq-quartier' from data source `/tmp/RtmprGLW10' using driver `ESRI Shapefile'
-#> Simple feature collection with 35 features and 4 fields
-#> Geometry type: MULTIPOLYGON
-#> Dimension:     XYZ
-#> Bounding box:  xmin: -71.54908 ymin: 46.73355 xmax: -71.13833 ymax: 46.98074
-#> z_range:       zmin: 0 zmax: 0
-#> Geodetic CRS:  WGS 84
+#Neighborhoods - read with the get_zipped_remote_shapefile util from the open data portal 
+shp_neigh <-  get_zipped_remote_shapefile("https://www.donneesquebec.ca/recherche/dataset/5b1ae6f2-6719-46df-bd2f-e57a7034c917/resource/508594dc-b090-407c-9489-73a1b46a8477/download/vdq-quartier.zip")
 
- #get_polygon_heatmap Works with polygons also (takes centroid implicitely)
-  shp_polyons <- get_polygon_heatmap(shp_trees , bw=.001, gsize=500 )
-#> Loading required package: sp
-#> Loading required package: dplyr
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
-#> Warning in st_centroid.sf(shp): st_centroid assumes attributes are constant over
-#> geometries of x
-#> Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.
-#> Using compatibility `.name_repair`.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+
+shp_tree_bbox_poly <- bbox_polygon(shp_trees)
+shp_neigh <- st_intersection(shp_neigh, shp_tree_bbox_poly)
+
+#get_polygon_heatmap Works with polygons also (takes centroid implicitely)
+shp_polyons <- get_polygon_heatmap(shp_trees , bw=.001, gsize=500 )
  
 #Can use the colors produced automatically, but this is a red to yellow gradient 
 ggplot(shp_polyons)+
@@ -78,7 +50,13 @@ ggplot(shp_polyons)+
     scale_fill_viridis_d() +
     geom_sf(data=shp_neigh, aes(col=NOM),alpha=0) + 
     ggplot2::theme_minimal(base_family="Roboto Condensed", base_size=11.5) +
-    theme(legend.position = 'none')
+    theme(legend.position = 'none') + 
+    ggtitle('Exceptional tree density') + 
+    coord_sf(datum=NA) + 
+    labs(subtitle = 'Quebec City neighborhoods',
+         caption ='Source: https://www.donneesquebec.ca - vdq-arbrepotentielremarquable.geojson')
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
+<img src="https://github.com/cgauvi/sfSpHelpers/man/figures/README-example-1.png" width="100%" />
+
+See the vignettes for more details.

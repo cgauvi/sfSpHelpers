@@ -62,7 +62,7 @@ library(RColorBrewer)
 ## Zoom in using functions in bbox
 ```{r}
 
-shp_bbox_raster <- bbox_from_vector(extent(rasterKDECentroids) , crs=4326)
+shp_bbox_raster <- bbox_from_vector( extent(rasterKDECentroids) , crs=4326)
 
 shp_neigh_filtered <- st_intersection(shp_neigh %>% st_zm(),
                                       shp_bbox_raster)

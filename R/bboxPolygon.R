@@ -125,18 +125,21 @@ bbox_from_vector <- function(v,
   require(sf)
   require(sp)
 
+
+  #IF already produced by sf::bbox will work as identity. If raster extent , then will convert to bbox
+  v <- st_bbox(v)
+
   #Check names. Order can differ, but the xmin, xmax,... should all be there (and nothing else)
   names_extent <- c(x_name_min,y_name_min,x_name_max,y_name_max)
   assertthat::assert_that(all( names_extent %in% names(v) ) & all( names(v) %in%  names_extent),
                           msg='v object must contain names of the coordinates to use for bbox')
   assertthat::assert_that(!is.na(crs))
 
-  #IF already produced by sf::bbox will work as identity. If raster extent , then will convert to bbox
-  v <- st_bbox(v)
-
+  #Raster extent
   rast_extent <- raster::extent( v[[x_name_min]],v[[x_name_max]],
                                  v[[y_name_min]],v[[y_name_max]] )
 
+  #Convert to sf
   shp_bbox <- as(rast_extent, "SpatialPolygons") %>%
     st_as_sf() %>%
     st_set_crs(crs)

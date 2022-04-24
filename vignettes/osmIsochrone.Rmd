@@ -48,6 +48,12 @@ if(!dir.exists(here('figures'))){
 
 ```
 
+## Params
+```{r}
+
+list_cities <- c('Montreal', 'Quebec City')
+```
+
 
 ---
 ---
@@ -58,12 +64,13 @@ if(!dir.exists(here('figures'))){
 ```{r}
    
 shp_Atlanta_bbox <-  bbox_from_osm('Atlanta')
+shp_point <- shp_Atlanta_bbox%>% sf::st_convex_hull() %>% st_centroid()
 
 osm <-  osmdata::opq(bbox = 'Atlanta') %>%
     add_osm_feature( key = "highway" ) %>% 
     osmdata_sf () 
 
-shp_point <- osm$osm_lines[1, ] %>% sf::st_convex_hull() %>% st_centroid()
+
 
 shp_iso_all_modes <- SfSpHelpers::st_make_isochrone (shp_point %>% st_transform(crs=4326),
                            buffer_km = 1) 
@@ -82,7 +89,7 @@ ggplot() +
   coord_sf(datum=NA)
 
 
-ggsave(here('figures', 'isochrones_all_modes_atlanta_1km.png'),bg='white')
+#ggsave(here('figures', 'isochrones_all_modes_atlanta_1km.png'),bg='white')
 
 ```
 
@@ -247,14 +254,14 @@ get_street_network <- function(city_str,
 ## Isochrones
 ```{r}
 
-shp_isochone <- map_dfr( c('Atlanta', 'Quebec City', 'Montreal'),
+shp_isochone <- map_dfr( list_cities,
                          get_isochrone_from_city_centroid)
 
 ```
 ## Street network
 ```{r}
 
-shp_streets <- map_dfr( c('Atlanta', 'Quebec City', 'Montreal'),
+shp_streets <- map_dfr( list_cities,
                          ~get_street_network(.x,buffer_size_km = 1))
 
 ```
@@ -276,7 +283,7 @@ plot_city <- function(city_str){
 }
 
 
-list_plots <- map(c('Atlanta', 'Quebec City', 'Montreal') , plot_city )
+list_plots <- map(list_cities , plot_city )
 
 
 
@@ -290,7 +297,7 @@ plot_annotation(
                                            plot.caption = element_text(family='Roboto condensed')) & labs(fill='Time (minutes)' )
 
 
-ggsave(here('figures','driving_isochrones_size_by_time_map.png'),bg='white', width = 7, height = 5)
+#ggsave(here('figures','driving_isochrones_size_by_time_map.png'),bg='white', width = 7, height = 5)
  
 
 ```
@@ -332,6 +339,7 @@ ggplot() +
 
 
 
-ggsave(here('figures','driving_isochrones_size_by_time_lines.png'),bg='white', width = 7, height = 5)
+#ggsave(here('figures','driving_isochrones_size_by_time_lines.png'),bg='white', width = 7, height = 5)
+
 ```
 

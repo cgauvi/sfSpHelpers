@@ -152,6 +152,8 @@ remove_line_endpoints_lwgeom <- function(shp_line,
                                          min_distance_m_to_remove=NULL,
                                          min_proportion_remove=NULL){
 
+  require(sf)
+
   assertthat::assert_that(any(id_col %in% colnames(shp_line)))
   assertthat::assert_that( sum(sapply(list(min_distance_m_to_remove,min_proportion_remove), purrr::is_null)) %% 2 ==1,
                            msg='Fatal error! input exaclty one of min_distance_m_to_remove or min_proportion_remove')

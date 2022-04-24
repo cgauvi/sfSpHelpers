@@ -111,8 +111,15 @@ test_that("remove_line_endpoints fails when both meters and proportion are set",
   length_line_m <- sf::st_length(lines) %>% units::drop_units()
 
 
-  expect_failure(
-    remove_line_endpoints(shp_lines = lines, id_col = "COMID" , min_proportion_remove = 0.1 , min_distance_m_to_remove = 5)
+  testthat::expect_equal(
+    r <- tryCatch({
+      remove_line_endpoints(shp_lines = lines, id_col = "COMID" , min_proportion_remove = 0.1 , min_distance_m_to_remove = 5)
+    },error=function(x){
+      print(x)
+      return(NA)
+    })
+    ,
+    NA
   )
 
 }

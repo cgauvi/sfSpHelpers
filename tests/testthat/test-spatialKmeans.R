@@ -11,7 +11,7 @@ test_that("",{
                                     numCentroids = num_clusters,
                                     numClosestPoints = 10,
                                     var=var_to_agg,
-                                    aggFct=median)
+                                    aggFct=function(x) median(x,na.rm=T))
 
   expect_equal(shpBuildingsAgg$an_orig %>% is.na %>% sum() ,0)
   expect_equal(nrow(shpBuildingsAgg) , num_clusters)

@@ -64,3 +64,36 @@ bbox_from_points <- function(list_lng, list_lat,crs=4326){
 
   return(shp_bbox)
 }
+
+
+
+
+bbox_from_vector <- function(v,
+                        crs,
+                        x_name_min="xmin" ,
+                        y_name_min="ymin",
+                        x_name_max="xmax" ,
+                        y_name_max="ymax"){
+
+  require(magrittr)
+  require(sf)
+  require(sp)
+
+  names_extent <- c(x_name_min,y_name_min,x_name_max,x_name_max)
+  assertthat::assert_that(all( names_extent == names(v) ), msg='v object must contain names of the coordinates to use for bbox')
+  assertthat::assert_that(!is.na(crs))
+
+  #IF already produced by sf::bbox will work as identity. If raster extent , then will convert to bbox
+  v <- st_bbox(v)
+
+  rast_extent <- raster::extent( v[[x_name_min]],v[[x_name_max]],
+                                v[[y_name_min]],v[[y_name_max]] )
+
+  shp_bbox <- as(rast_extent, "SpatialPolygons") %>%
+    st_as_sf() %>%
+    st_set_crs(crs)
+
+
+  return(shp_bbox)
+
+}

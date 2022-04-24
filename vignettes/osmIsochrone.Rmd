@@ -61,9 +61,10 @@ osm <-  osmdata::opq(bbox = 'Atlanta') %>%
     add_osm_feature( key = "highway" ) %>% 
     osmdata_sf () 
 
+shp_point <- osm$osm_lines %>% sf::st_convex() %>% st_centroid()
 
-shp_iso_all_modes <- SfSpHelpers::st_make_isochrone (osm$osm_lines %>% st_centroid() %>% st_transform(crs=4326),
-                           buffer_km = 15) 
+shp_iso_all_modes <- SfSpHelpers::st_make_isochrone (shp_point %>% st_transform(crs=4326),
+                           buffer_km = 1) 
 
 
 ggplot() + 
@@ -79,7 +80,7 @@ ggplot() +
   coord_sf(datum=NA)
 
 
-ggsave(here('figures', 'isochrones_all_modes_atlanta.png'),bg='white')
+ggsave(here('figures', 'isochrones_all_modes_atlanta_1km.png'),bg='white')
 
 ```
 
@@ -92,7 +93,7 @@ ggsave(here('figures', 'isochrones_all_modes_atlanta.png'),bg='white')
 
   shp_point <- data.frame(X=-71.22776107610193, Y=46.805060757836486) %>% sf::st_as_sf(coords=c('X','Y'),crs=4326)
    
-  osm <- SfSpHelpers::osm_buffer_query_helper(shp_point,buffer_km = 5)
+  osm <- SfSpHelpers::osm_buffer_query_helper(shp_point,buffer_km = 1 )
 
   
   
@@ -104,7 +105,7 @@ ggsave(here('figures', 'isochrones_all_modes_atlanta.png'),bg='white')
 ```{r}
 
 shp_isochrone <- SfSpHelpers::st_make_isochrone (shp_point,
-                           buffer_km = 5,
+                           buffer_km = 1,
                            limit_minutes = seq(1,15,by=1),
                            list_modes= c("foot"),
                            list_osm_params= list(  list(key='highway' ) )
@@ -127,8 +128,8 @@ ggplot() +
 ```{r}
 
 shp_isochrone <- SfSpHelpers::st_make_isochrone (shp_point,
-                           buffer_km = 5,
-                           limit_minutes = c(5,10,15),
+                           buffer_km = 1,
+                           limit_minutes = c(1,2,5),
                            list_modes= c("bicycle"),
                            list_osm_params= list(  list(key='highway' ) )
                            )
@@ -152,8 +153,8 @@ ggplot() +
 ```{r}
 
 shp_isochrone <- SfSpHelpers::st_make_isochrone (shp_point,
-                           buffer_km = 5,
-                           limit_minutes = c(5,10,15),
+                           buffer_km = 1,
+                           limit_minutes = c(1,2,5),
                            list_modes= c("motorcar"),
                            list_osm_params= list(  list(key='highway' ) )
                            )
@@ -172,17 +173,7 @@ ggplot() +
   coord_sf(datum=NA)
 
 ```
-
-## Mapview inspect 
-```{r}
- mapview::mapview(shp_point_cap_blanc ,color='salmon') + 
- mapview::mapview(shp_all_roads %>% filter(type=='stairs')) + 
-   mapview::mapview(shp_all_roads %>% filter(type!='stairs'))+ 
-  mapview::mapview(shp_iso_foot %>% filter(type=='stairs'),color='black') +
-  mapview::mapview(shp_iso_foot %>% filter(type!='stairs'),color='black')  
-
-```
-
+ 
 
 
 
@@ -199,9 +190,9 @@ ggplot() +
 ```{r}
 
 get_isochrone_from_city_centroid <- function(city_str, 
-                          buffer_size_km = 20,  #at 50 km/h <-> 1.2 min per km, driving for 15 minutes results in 18 km distance 
+                          buffer_size_km = 5,  #at 50 km/h <-> 1.2 min per km, driving for 15 minutes results in 18 km distance 
                           list_modes=c("motorcar"),
-                          list_times=c(5,10,15)){
+                          list_times=c(1,2,5)){
   
   shp_bbox <- SfSpHelpers::st_osm_city_centroid_from_string(city_str)
   
@@ -232,7 +223,7 @@ get_isochrone_from_city_centroid <- function(city_str,
 ```{r}
 
 get_street_network <- function(city_str,
-                                buffer_size_km = 5){
+                                buffer_size_km = 1){
   
  shp_bbox <- SfSpHelpers::st_osm_city_centroid_from_string(city_str)
  
@@ -262,7 +253,7 @@ shp_isochone <- map_dfr( c('Atlanta', 'Quebec City', 'Montreal'),
 ```{r}
 
 shp_streets <- map_dfr( c('Atlanta', 'Quebec City', 'Montreal'),
-                         ~get_street_network(.x,buffer_size_km = 15))
+                         ~get_street_network(.x,buffer_size_km = 1))
 
 ```
 
@@ -315,7 +306,7 @@ compare_size <- function(shp_isochone, time){
 }
 
 
-df_sizes <- map_dfr( c(5,10,15), ~compare_size(shp_isochone, .x))
+df_sizes <- map_dfr( c(1,2,5), ~compare_size(shp_isochone, .x))
 
 ```
 

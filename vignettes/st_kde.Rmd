@@ -41,7 +41,7 @@ library(RColorBrewer)
 ## 2D raster KDE
 ```{r}
 
-  rasterKDECentroids <- st_kde(shp_trees,bw=.001, gsize=500 )
+  rasterKDECentroids <- st_kde(shp_trees , cellsize = 0.001, bandwith =c(.001, .001 ) )
   plot(rasterKDECentroids$layer, main='Remarkable tree density - Quebec City')
   
   df_rast <- rasterKDECentroids$layer %>% as.data.frame(xy=T)
@@ -53,9 +53,28 @@ library(RColorBrewer)
     geom_sf(data=shp_neigh, aes(col=NOM),alpha=0) + 
     scale_fill_viridis_c() + 
     scale_color_manual(values = extended_cols) + 
-    ggplot2::theme_minimal(base_family="Roboto Condensed", base_size=11.5) +
+    ggplot2::theme_dark(base_family="Roboto Condensed", base_size=11.5) +
     guides( color = FALSE) 
     
+```
+
+
+## Zoom in using functions in bbox
+```{r}
+
+shp_bbox_raster <- bbox_from_vector(extent(rasterKDECentroids) , crs=4326)
+
+shp_neigh_filtered <- st_intersection(shp_neigh %>% st_zm(),
+                                      shp_bbox_raster)
+
+  ggplot() + 
+    geom_tile(data=df_rast, aes(x=x,y=y,fill=layer),alpha=0.2) + 
+    geom_sf(data=shp_neigh, aes(col=NOM),alpha=0) + 
+    scale_fill_viridis_c() + 
+    scale_color_manual(values = extended_cols) + 
+    ggplot2::theme_dark(base_family="Roboto Condensed", base_size=11.5) +
+    guides( color = FALSE) 
+  
 ```
 
 

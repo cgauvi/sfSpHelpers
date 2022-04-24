@@ -4,12 +4,15 @@
 \alias{remove_line_endpoints}
 \title{Removes the endpoints for a collection of LINESTRINGS}
 \usage{
-remove_line_endpoints(shp_lines, ...)
+remove_line_endpoints(
+  shp_lines,
+  id_col,
+  min_distance_m_to_remove = NULL,
+  min_proportion_remove = NULL
+)
 }
 \arguments{
 \item{shp_lines}{sf object with multiple rows}
-
-\item{...}{parameters passed to to remove_line_endpoints_lwgeom}
 }
 \value{
 

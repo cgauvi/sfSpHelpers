@@ -100,12 +100,14 @@ split_lines_remove_line_endpoints <- function(shp_line,id_col, min_distance_m_to
 #' Splits line into segments using SfSpHelpers::split_lines and then removes the first and last segments (if possible)
 #' and then groups the line string by id
 #'
+#' Not exported, only kept as reference as it peforms the same function as remove_line_endpoints_lwgeom which
+#' is preferable
+#'
 #' @param shp_line
 #' @param id_col
 #' @param min_distance_m_to_remove
 #'
 #' @return
-#' @export
 #'
 #' @examples
 #'
@@ -132,16 +134,23 @@ remove_line_endpoints_from_split <- function(shp_line,id_col, min_distance_m_to_
 #'
 #' Wrapper over lwgeom::st_linesubstring with possibility to either use meters or
 #'
+#' Not exported: remove_line_endpoints wraps this function and is the function to use
+#'
+#' remove_line_endpoints_lwgeom performs the same functionality as remove_line_endpoints_from_split but is
+#' faster, more robust, and allows for fractions to be inputed, not just distances in meters
+#'
 #' @param shp_line
 #' @param id_col
-#' @param min_distance_m_to_remove
-#' @param min_proportion_remove
+#' @param min_distance_m_to_remove distance to remove EACH SIDE: so 2X for total removed
+#' @param min_proportion_remove proportion to remove EACH SIDE: so 2X for total removed
 #'
 #' @return
-#' @export
 #'
 #' @examples
-remove_line_endpoints_lwgeom <- function(shp_line,id_col, min_distance_m_to_remove=NULL, min_proportion_remove=NULL){
+remove_line_endpoints_lwgeom <- function(shp_line,
+                                         id_col,
+                                         min_distance_m_to_remove=NULL,
+                                         min_proportion_remove=NULL){
 
   assertthat::assert_that(any(id_col %in% colnames(shp_line)))
   assertthat::assert_that( sum(sapply(list(min_distance_m_to_remove,min_proportion_remove), purrr::is_null)) %% 2 ==1,
@@ -151,18 +160,19 @@ remove_line_endpoints_lwgeom <- function(shp_line,id_col, min_distance_m_to_remo
   if(!is.null(min_distance_m_to_remove)){
     assertthat::assert_that( 0 < min_distance_m_to_remove , msg='Fatal error! use a distance to remove > 0')
     from <- min_distance_m_to_remove/units::drop_units(st_length(shp_line))
-    if(from >= 1){
-      from <- 0.99
-      print(paste0('Cannot consider such a large segment! larger than segment! using :', from*units::drop_units(st_length(shp_line)) ))
-    }
   }else{
     assertthat::assert_that( 0 < min_proportion_remove & min_proportion_remove <1 , msg='Fatal error! use a proportion in (0,1)')
     from <- min_proportion_remove
   }
 
+  #Quick check that we cannot remove more than the total segment length
+  if(from >= 0.5){
+    stop(paste0('Cannot remove such a large segment! Would remove (for both sides): ',  2*from*100 , ' % of the segment' ))
+  }
+
   to <- 1-from
 
-
+  #This will still run if from > to, but we should be more careful
   lines_return <- lwgeom::st_linesubstring(x = shp_line, from = from, to = to)
 
   return(lines_return)
@@ -174,18 +184,26 @@ remove_line_endpoints_lwgeom <- function(shp_line,id_col, min_distance_m_to_remo
 
 #' Removes the endpoints for a collection of LINESTRINGS
 #'
+#' @param id_col
+#' @param min_distance_m_to_remove
+#' @param min_proportion_remove
 #' @param shp_lines sf object with multiple rows
-#' @param ... parameters passed to to remove_line_endpoints_lwgeom
 #'
 #' @return
 #' @export
 #'
 #' @examples
-remove_line_endpoints <- function(shp_lines,...){
+remove_line_endpoints <- function(shp_lines,
+                                  id_col,
+                                  min_distance_m_to_remove=NULL,
+                                  min_proportion_remove=NULL){
 
   #Remove endpoints from all rows
   list_lines_no_endpoints <- lapply(1:nrow(shp_lines),
-                                    function(x) remove_line_endpoints_lwgeom(shp_lines [x, ], ... )
+                                    function(x) remove_line_endpoints_lwgeom(shp_lines [x, ],
+                                                                             id_col,
+                                                                             min_distance_m_to_remove,
+                                                                             min_proportion_remove )
   )
 
   shp_lines_no_endpoints <- do.call(rbind, list_lines_no_endpoints)

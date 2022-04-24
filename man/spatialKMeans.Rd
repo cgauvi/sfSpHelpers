@@ -2,25 +2,28 @@
 % Please edit documentation in R/spatialKMeans.R
 \name{spatialKMeans}
 \alias{spatialKMeans}
-\title{Smooth out a large number of points or polygons by taking a spatially weighted k means}
+\title{Smooth/thin out a large number of points or polygons by taking a spatially weighted k means}
 \usage{
 spatialKMeans(
   shp,
+  var,
   numCentroids = NULL,
   propToKeep = NULL,
   numClosestPoints = 10,
-  var = "ass_diff",
-  aggFct = median
+  aggFct = function(x) {     median(x, na.rm = T) },
+  iter.max = 10^3
 )
 }
 \arguments{
-\item{numCentroids}{number of representative points to take (use EITHER numCentroids or numClosestPoints)}
-
-\item{numClosestPoints}{- analoguous to bandwith - larger number reduces the variance (use EITHER numCentroids or numClosestPoints)}
-
 \item{var}{- string - variable to summarise}
 
+\item{numCentroids}{number of representative points to take (use EITHER numCentroids or numClosestPoints)}
+
+\item{numClosestPoints}{- analogous to bandwidth - larger number reduces the variance (use EITHER numCentroids or numClosestPoints)}
+
 \item{aggFct}{- function to use to summarise - e.g. median or mean}
+
+\item{iter.max}{max number of iterations for kmeans}
 }
 \value{
 shpCentroids with column var
@@ -28,5 +31,5 @@ shpCentroids with column var
 \description{
 In other words:
 1) get k spatially representative points by performing k-means on a 2D matrix of lng lat
-2) for each of these centroids, aggregate some function (e.g. median) of the covariate var over the numClosestPoints closest points spatially to get an idea of the value of var in a neighbourhood
+2) for each of these centroids, aggregate some function (e.g. median) of the covariates var over the numClosestPoints closest points spatially to get an idea of the value of var in a neighbourhood
 }

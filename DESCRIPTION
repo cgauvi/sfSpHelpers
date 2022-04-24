@@ -25,7 +25,6 @@ Imports:
     purrr,
     FNN,
     raster,
-    GeneralHelpers,
     ggvoronoi,
     sp,
     KernSmooth

@@ -36,6 +36,9 @@ geojson <- '{
     ]
 }'
 
+
+lines <- sf::st_transform(sf::st_read(geojson), 5070)
+
 ```
 
 
@@ -59,13 +62,11 @@ mapview( lines_split ,zcol='split_fID')
 ## Remove a fixed distance in meters 
 ```{r}
  
-lines <- sf::st_transform(sf::st_read(geojson), 5070)
 
-lines_no_endpoints_10 <- remove_line_endpoints_all_segments(lines,min_distance_m_to_remove = 10,id_col='COMID')
-lines_no_endpoints_50 <- remove_line_endpoints_all_segments(lines,min_distance_m_to_remove = 50,id_col='COMID')
 
-lines_compare <- rbind(lines_no_endpoints %>% select(geometry) %>% mutate(type='endpoints_removed'),
-                       lines %>% select(geometry) %>% mutate(type='initial'))
+lines_no_endpoints_10 <- remove_line_endpoints(lines,min_distance_m_to_remove = 10,id_col='COMID')
+lines_no_endpoints_50 <- remove_line_endpoints(lines,min_distance_m_to_remove = 50,id_col='COMID')
+ 
 
  
 mapview( lines %>% select(geometry) %>% mutate(type='initial'),color='red') + 
@@ -82,16 +83,20 @@ mapview( lines %>% select(geometry) %>% mutate(type='initial'),color='red') +
  
 lines <- sf::st_transform(sf::st_read(geojson), 5070)
 
-lines_no_endpoints_10 <- remove_line_endpoints_all_segments(lines,min_proportion_remove = 0.1,id_col='COMID')
-lines_no_endpoints_50 <- remove_line_endpoints_all_segments(lines,min_proportion_remove = 0.5,id_col='COMID')
+lines_no_endpoints_10 <- remove_line_endpoints(lines,min_proportion_remove = 0.1,id_col='COMID')
 
-lines_compare <- rbind(lines_no_endpoints %>% select(geometry) %>% mutate(type='endpoints_removed'),
-                       lines %>% select(geometry) %>% mutate(type='initial'))
+tryCatch({
+  lines_no_endpoints_50 <- remove_line_endpoints(lines,min_proportion_remove = 0.5,id_col='COMID')
+},error=function(e){
+  print(paste0('Fatal error as expected ', e))
+})
 
+
+lines_no_endpoints_50 <- remove_line_endpoints(lines,min_proportion_remove = 0.49,id_col='COMID')
  
-
-mapview(lines_no_endpoints %>% select(geometry) %>% mutate(type='endpoints_removed')) + 
-  mapview( lines %>% select(geometry) %>% mutate(type='initial'),color='red')
+mapview( lines %>% select(geometry) %>% mutate(type='initial'),color='red') + 
+  mapview(lines_no_endpoints_50 %>% select(geometry) %>% mutate(type='endpoints_removed - 49%'),color='green') +
+  mapview(lines_no_endpoints_10 %>% select(geometry) %>% mutate(type='endpoints_removed - 10%')) 
 
 
 

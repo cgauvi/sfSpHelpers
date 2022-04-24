@@ -28,7 +28,7 @@ libary(here)
 library(magrittr)
 library(dplyr)
 
-shpBuildings <- st_read(dsn=here::here('Data', 'GeoData', 'QuebecCityOpenData', 'Buildings','vdq-batiments.shp'))
+shpBuildings <- SfSpHelpers::get_zipped_remote_shapefile ("https://data.montreal.ca/dataset/4ad6baea-4d2c-460f-a8bf-5d000db498f7/resource/866a3dbc-8b59-48ff-866d-f2f9d3bbee9d/download/uniteevaluationfonciere.geojson.zip")
 shpCentroids <- shpBuildings \%>\% st_centroid
 
 rasterKDECentroids <- st_kde(shpCentroids,0.01,0.01)

@@ -1,5 +1,10 @@
-pandoc: 1.19.2.1
-pkgdown: 1.3.0
+pandoc: 2.11.4
+pkgdown: 2.0.2
 pkgdown_sha: ~
-articles: []
+articles:
+  linestring_split: linestring_split.html
+  osmIsochrone: osmIsochrone.html
+  spatialKMeans: spatialKMeans.html
+  st_kde: st_kde.html
+last_built: 2022-04-24T01:07Z
 

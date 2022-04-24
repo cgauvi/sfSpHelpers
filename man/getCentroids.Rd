@@ -2,7 +2,7 @@
 % Please edit documentation in R/centroids.R
 \name{getCentroids}
 \alias{getCentroids}
-\title{Get the long/lat of centroids of sf object}
+\title{Get the long/lat of centroids of sf object (adds 2 new columns if they do not already exist)}
 \usage{
 getCentroids(shp)
 }
@@ -13,5 +13,5 @@ getCentroids(shp)
 shp with 2 new lng and lat columns
 }
 \description{
-Get the long/lat of centroids of sf object
+Similar to cbind( shp , st_coordinates(st_centroid(shp)))
 }

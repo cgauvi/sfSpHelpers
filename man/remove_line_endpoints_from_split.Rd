@@ -20,8 +20,8 @@ remove_line_endpoints_from_split(
 
 }
 \description{
-Splits line into segments using SfSpHelpers::split_lines and then removes the first and last segments (if possible)
-and then groups the line string by id
+Not exported, only kept as reference as it peforms the same function as remove_line_endpoints_lwgeom which
+is preferable
 }
 \examples{
 

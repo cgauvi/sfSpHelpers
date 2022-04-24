@@ -12,11 +12,19 @@ remove_line_endpoints_lwgeom(
 )
 }
 \arguments{
-\item{min_proportion_remove}{}
+\item{min_distance_m_to_remove}{distance to remove EACH SIDE: so 2X for total removed}
+
+\item{min_proportion_remove}{proportion to remove EACH SIDE: so 2X for total removed}
 }
 \value{
 
 }
 \description{
 Wrapper over lwgeom::st_linesubstring with possibility to either use meters or
+}
+\details{
+Not exported: remove_line_endpoints wraps this function and is the function to use
+
+remove_line_endpoints_lwgeom performs the same functionality as remove_line_endpoints_from_split but is
+faster, more robust, and allows for fractions to be inputed, not just distances in meters
 }

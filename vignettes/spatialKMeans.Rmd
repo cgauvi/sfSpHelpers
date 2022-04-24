@@ -1,0 +1,97 @@
+---
+title: "spatialKMeans"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{spatialKMeans}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(SfSpHelpers)
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+```
+
+ 
+# Data 
+
+## Caches results to defaul cache + downloads a large zip 
+```{r}
+
+  shpBuildings <- cache_csv_sf_wrapper('eval_fonciere_mtl', 
+                                       fun = get_zipped_remote_shapefile,
+                                       url = 'https://data.montreal.ca/dataset/4ad6baea-4d2c-460f-a8bf-5d000db498f7/resource/43c2cccf-a439-429b-a3c8-5d4ebce53e1b/download/uniteevaluationfonciere.zip',
+                                       id_name='ID_UEV')
+
+#Clean up 
+shpBuildings %<>% mutate( ANNEE_CONS = plyr::mapvalues(ANNEE_CONS, from=9999, to=NA) )
+
+```
+
+# Spatial k mean to thin out large number of points
+
+## Year built
+```{r}
+
+  #No need to get the centroids, spatialKMeans does it automatically
+  shpBuildingsAgg <- spatialKMeans (shpBuildings,
+                            numCentroids = 10**3,
+                            numClosestPoints = 10,
+                            var="ANNEE_CONS",
+                            aggFct=function(x) {median(x,na.rm = T)} #remove NAs since we introduced some in the chunk above
+  )
+
+  #Check same crs
+  assertthat::are_equal(st_crs(shpBuildingsAgg), st_crs(shpBuildings))
+
+  #Number of centroids
+  assertthat::are_equal(nrow(shpBuildingsAgg) , 10**3)
+
+  #Plot to see the difference
+  shpBuildingsAgg$id <- 'aggregated'
+  shpBuildings$id <- 'raw'
+  shpBuildings %<>% dplyr::rename(geometry=geom)
+
+  shpBoth <- rbind(shpBuildingsAgg,
+                   shpBuildings %>% dplyr::select( colnames(shpBuildingsAgg)))
+
+ 
+
+  ggplot() +
+    geom_sf(data=shpBoth, aes(col=ANNEE_CONS) ) +
+    facet_wrap(~id, ncol=1) + 
+    ggplot2::theme_minimal(base_family="Roboto Condensed", base_size=11.5) +
+    scale_color_viridis_c()
+
+ 
+
+```
+
+## Area grouped by type 
+```{r}
+
+shpBuildingsAgg_by_build_type <- shpBuildings %>% 
+  group_by(LIBELLE_UT) %>% 
+  spatialKMeans (.,
+                 numCentroids = 10**3,
+                 numClosestPoints = 10,
+                 var="SUPERFICIE")
+ 
+ggplot() +
+    geom_sf(data=shpBoth, aes(col=ANNEE_CONS) ) +
+    facet_wrap(~LIBELLE_UT, ncol=1) +
+    ggplot2::theme_minimal(base_family="Roboto Condensed", base_size=11.5) +
+    scale_color_viridis_c()
+
+```
+
+

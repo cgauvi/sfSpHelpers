@@ -7,7 +7,7 @@ test_that("caching works - default path ", {
                                    id_name='osm_id')
 
 
-  assertthat::assert_that(nrow(shp_iso_1km) >1)
+  expect_true(nrow(shp_iso_1km) >1)
 })
 
 
@@ -38,6 +38,6 @@ test_that("caching works - custom path ", {
 
 
 
-  assertthat::assert_that(nrow(shp_iso_5km) >1)
+  expect_true(nrow(shp_iso_5km) >1)
 }
 )

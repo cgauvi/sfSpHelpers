@@ -5,15 +5,15 @@ test_that("valid + rm zm ", {
 
     shpTrees <- makeSfValidRmZM(shpTreesRaw)
 
-    assertthat::assert_that(  all( st_is_valid(shpTrees) ) )
+    expect_true(  all( st_is_valid(shpTrees) ) )
 
     #No zm
     all( colnames( st_coordinates(shpTrees) %in% c("X","Y") ) )
 
     #geometry has no name
-    assertthat::assert_that( is.null( names(st_geometry(shpTrees)) ) )
+    expect_true( is.null( names(st_geometry(shpTrees)) ) )
 
     #crs is the same as original object
-    assertthat::are_equal( st_crs(shpTrees) , st_crs(shpTreesRaw) )
+    expect_equal( st_crs(shpTrees) , st_crs(shpTreesRaw) )
 
 })

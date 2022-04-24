@@ -4,8 +4,8 @@ Title: Some functions to deal with sf/sp objects
 Version: 0.3.0
 Author: Charles Gauvin
 Maintainer: Charles Gauvin <charles.gauvin123@gmail.com>
-Description: Basic utility functions such as adding centroids without changing the geometry, download geojsons and zipped shp files, 
-    ensuring polygons are valid, compatibility with leaflet (geometries have no name, z and m coordinates are removed, etc)
+Description: Basic utility functions such as adding centroids without changing the geometry, download zipped shp files, 
+    getting 2D KDE density polygons for plotting, removing a fixed proportion from linestring endpoints, voronoi-based spatial interpolation, etc.
 License: MIT LICENSE
 Encoding: UTF-8
 LazyData: true

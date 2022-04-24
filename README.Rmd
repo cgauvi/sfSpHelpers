@@ -36,6 +36,8 @@ For instance, create a 2D kernel density heatmap from a sf object with POINT geo
 ```{r example}
 
 library(SfSpHelpers)
+library(sf)
+library(ggplot2)
 
   #Trees
   shp_trees <-  st_read('https://www.donneesquebec.ca/recherche/dataset/bc5afddf-9439-4e96-84fb-f91847b722be/resource/bbdca0dd-82df-42f9-845b-32348debf8ab/download/vdq-arbrepotentielremarquable.geojson')
@@ -49,9 +51,9 @@ library(SfSpHelpers)
 #Can use the colors produced automatically, but this is a red to yellow gradient 
 ggplot(shp_polyons)+
     geom_sf(aes( fill = colors),lwd=0) +
-    scale_fill_identity() +
+    scale_fill_viridis_d() +
     geom_sf(data=shp_neigh, aes(col=NOM),alpha=0) + 
     ggplot2::theme_minimal(base_family="Roboto Condensed", base_size=11.5) +
-    guides( color = 'none') 
+    theme(legend.position = 'none')
 ```
  

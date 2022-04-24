@@ -69,7 +69,7 @@ shp_neigh_filtered <- st_intersection(shp_neigh %>% st_zm(),
 
   ggplot() + 
     geom_tile(data=df_rast, aes(x=x,y=y,fill=layer),alpha=0.2) + 
-    geom_sf(data=shp_neigh, aes(col=NOM),alpha=0) + 
+    geom_sf(data=shp_neigh_filtered, aes(col=NOM),alpha=0) + 
     scale_fill_viridis_c() + 
     scale_color_manual(values = extended_cols) + 
     ggplot2::theme_dark(base_family="Roboto Condensed", base_size=11.5) +

@@ -7,11 +7,9 @@ test_that("bbox works", {
 
   shpBbox <- bbox_polygon(nc)
 
-  #plot(shpBbox)
 
-
-  assertthat::are_equal(sf::st_crs(shpBbox), sf::st_crs(nc))
-  assertthat::assert_that( !is.null(  sf::st_contains(shpBbox,  sf::st_union(nc) ) [[1]] ) )
+  expect_equal(sf::st_crs(shpBbox), sf::st_crs(nc))
+  expect_true( !is.null(  sf::st_contains(shpBbox,  sf::st_union(nc) ) [[1]] ) )
 })
 
 
@@ -34,6 +32,6 @@ test_that("bbox from points works", {
   # plot(shpBbox)
   # plot(sf::st_union(nc),add=T)
 
-  assertthat::are_equal(sf::st_crs(shpBbox), sf::st_crs(nc))
-  assertthat::assert_that( all( map_lgl( sf::st_within(nc, shpBbox  ) , ~!is_empty(.x))) )
+  expect_equal(sf::st_crs(shpBbox), sf::st_crs(nc))
+  expect_true( all( map_lgl( sf::st_within(nc, shpBbox  ) , ~!is_empty(.x))) )
 })

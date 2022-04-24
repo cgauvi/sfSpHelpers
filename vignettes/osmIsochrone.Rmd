@@ -57,11 +57,13 @@ if(!dir.exists(here('figures'))){
 ## Atlanta
 ```{r}
    
+shp_Atlanta_bbox <-  bbox_from_osm('Atlanta')
+
 osm <-  osmdata::opq(bbox = 'Atlanta') %>%
     add_osm_feature( key = "highway" ) %>% 
     osmdata_sf () 
 
-shp_point <- osm$osm_lines %>% sf::st_convex() %>% st_centroid()
+shp_point <- osm$osm_lines[1, ] %>% sf::st_convex_hull() %>% st_centroid()
 
 shp_iso_all_modes <- SfSpHelpers::st_make_isochrone (shp_point %>% st_transform(crs=4326),
                            buffer_km = 1) 

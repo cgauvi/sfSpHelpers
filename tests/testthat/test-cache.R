@@ -23,7 +23,7 @@ test_that("caching works - custom path ", {
   }
 
   remove_dir <- F
-  dir_path_custom <- here('cache')
+  dir_path_custom <- here::here('cache')
   if(!dir.exists(dir_path_custom)){
     remove_dir <- T
     dir.create(dir_path_custom)

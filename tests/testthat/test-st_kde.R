@@ -24,7 +24,7 @@ test_that("polygons heatmap with sf", {
   #Make sure there are associated features and at least 2 levels
   expect_true(nrow( shp_polyons ) > 1 )
   expect_true(n_distinct( shp_polyons$level ) > 1 )
-  expect_equal( sf::st_crs(shp_polyons)$input,  "EPSG:4326" )
+  expect_true( grepl( sf::st_crs(shp_polyons)$input,  "WGS 84|EPSG:4326" ) )
 
 }
 

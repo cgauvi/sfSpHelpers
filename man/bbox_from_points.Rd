@@ -13,9 +13,16 @@ bbox_from_points(list_lng, list_lat, crs = 4326)
 
 }
 \description{
-Create an sf bounding box from a list of longitude and latitudes
+Can work with up to 2 points
 }
 \examples{
-
-bbox_from_points(c(45.6,44.2), c(-71.1,-73.1))
+\dontrun{
+library(sf)
+library(ggplot2)
+lats <- c(45.6,44.2)
+lngs <- c(-71.1,-73.1)
+shp_bbox <- bbox_from_points(lats, lngs)
+shp_points <- st_as_sf( data.frame(lat=lats, lng=lngs), coords=c('lat', 'lng'), crs=4326)
+ggplot() + geom_sf(data=shp_points) + geom_sf(data=shp_bbox)
+}
 }

@@ -7,5 +7,5 @@ test_that("buffer", {
 
   plot(shpTreesBuffered$geometry)
 
-  assertthat::are_equal(nrow(shpTreesBuffered),13)
+  expect_equal(nrow(shpTreesBuffered),13)
 })

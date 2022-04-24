@@ -72,7 +72,7 @@ shp_iso_all_modes <- SfSpHelpers::st_make_isochrone (shp_point %>% st_transform(
 ggplot() + 
   geom_sf(data=osm$osm_lines,lwd=0.1) + 
   geom_sf(data=shp_iso_all_modes, aes(fill=limit_minutes),alpha=0.5) + 
-  geom_sf(data=shp_site_buffer %>% st_centroid(), col='salmon') + 
+  geom_sf(data=shp_point, col='salmon') + 
   scale_fill_viridis_c() + 
   facet_wrap(~mode,nrow=2) + 
   ggtitle('Atlanta isochrones') + 

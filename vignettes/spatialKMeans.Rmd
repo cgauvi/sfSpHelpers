@@ -35,6 +35,9 @@ library(magrittr)
 #Clean up 
 shpBuildings %<>% mutate( ANNEE_CONS = plyr::mapvalues(ANNEE_CONS, from=9999, to=NA) )
 
+#Sample
+shpBuildings %<>% sample_frac(size=0.001) 
+
 ```
 
 # Spatial k mean to thin out large number of points
@@ -44,7 +47,7 @@ shpBuildings %<>% mutate( ANNEE_CONS = plyr::mapvalues(ANNEE_CONS, from=9999, to
 
   #No need to get the centroids, spatialKMeans does it automatically
   shpBuildingsAgg <- spatialKMeans (shpBuildings,
-                            numCentroids = 10**3,
+                            numCentroids = as.integer(nrow(shpBuildings)/10),
                             numClosestPoints = 10,
                             var="ANNEE_CONS",
                             aggFct=function(x) {median(x,na.rm = T)} #remove NAs since we introduced some in the chunk above
@@ -59,10 +62,10 @@ shpBuildings %<>% mutate( ANNEE_CONS = plyr::mapvalues(ANNEE_CONS, from=9999, to
   #Plot to see the difference
   shpBuildingsAgg$id <- 'aggregated'
   shpBuildings$id <- 'raw'
-  shpBuildings %<>% dplyr::rename(geometry=geom)
+ 
 
   shpBoth <- rbind(shpBuildingsAgg,
-                   shpBuildings %>% dplyr::select( colnames(shpBuildingsAgg)))
+                   shpBuildings %>% dplyr::select( all_of(colnames(shpBuildingsAgg))))
 
  
 
@@ -79,15 +82,21 @@ shpBuildings %<>% mutate( ANNEE_CONS = plyr::mapvalues(ANNEE_CONS, from=9999, to
 ## Area grouped by type 
 ```{r}
 
-shpBuildingsAgg_by_build_type <- shpBuildings %>% 
-  group_by(LIBELLE_UT) %>% 
-  spatialKMeans (.,
-                 numCentroids = 10**3,
+top_cat <- shpBuildings %>% st_drop_geometry() %>% count(LIBELLE_UT) %>% arrange(desc(n)) %>% top_n(n=3)
+
+shpBuildingsAgg_by_build_type <- map_dfr(
+  top_cat$LIBELLE_UT,
+  function(x) {
+    spatialKMeans (shp = shpBuildings %>%  filter(LIBELLE_UT == x ) ,
+                 propToKeep = 0.1,
                  numClosestPoints = 10,
-                 var="SUPERFICIE")
+                 var="SUPERFICIE") %>% 
+    mutate(LIBELLE_UT = x)
+  }
+)
  
 ggplot() +
-    geom_sf(data=shpBoth, aes(col=ANNEE_CONS) ) +
+    geom_sf(data=shpBuildingsAgg_by_build_type, aes(col=SUPERFICIE) ) +
     facet_wrap(~LIBELLE_UT, ncol=1) +
     ggplot2::theme_minimal(base_family="Roboto Condensed", base_size=11.5) +
     scale_color_viridis_c()

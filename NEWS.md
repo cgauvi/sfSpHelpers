@@ -1,4 +1,4 @@
-sfSpHelpers v0.2 c5e9ee7c2c86c9cd2672e463fa581371e22ae34c Apr 23
+sfSpHelpers v0.3 c5e9ee7c2c86c9cd2672e463fa581371e22ae34c Apr 23
 ==============
 
 Changes:
@@ -9,7 +9,7 @@ Changes:
 * Debugged functions: get_zipped_remote_shapefile 
 
 
-sfSpHelpers - ce153047ea9b36273f95d89987d3b8b82f239410  Mon Mar 28
+sfSpHelpers v0.2 - ce153047ea9b36273f95d89987d3b8b82f239410  Mon Mar 28
 ==============
 
 Changes:
@@ -18,7 +18,7 @@ Changes:
 
 
 
-sfSpHelpers  Sun Jan 17  b297a4c2e839f62a724e44747d0b1d721f457140
+sfSpHelpers v0.1 Sun Jan 17  b297a4c2e839f62a724e44747d0b1d721f457140
 ==============
 
 Changes:
@@ -26,7 +26,7 @@ Changes:
 * New polygon scaling function
 
 
-sfSpHelpers  Tue Aug 25 2020  372f03bfab48f818db4aeb8d2be61ee05a8dad6c
+sfSpHelpers v0.0 Tue Aug 25 2020  372f03bfab48f818db4aeb8d2be61ee05a8dad6c
 ==============
 
 Changes:

@@ -1,0 +1,36 @@
+sfSpHelpers v0.2 c5e9ee7c2c86c9cd2672e463fa581371e22ae34c Apr 23
+==============
+
+Changes:
+
+* Implemented linestring split functions
+* Removed useless dependencies - e.g. GeneralHelpers
+* Removed useless functions that could be replaced by existing e.g st_read_remote is the same as st_read
+* Debugged functions: get_zipped_remote_shapefile 
+
+
+sfSpHelpers - ce153047ea9b36273f95d89987d3b8b82f239410  Mon Mar 28
+==============
+
+Changes:
+
+* Implemented osmIsochrone functions
+
+
+
+sfSpHelpers  Sun Jan 17  b297a4c2e839f62a724e44747d0b1d721f457140
+==============
+
+Changes:
+
+* New polygon scaling function
+
+
+sfSpHelpers  Tue Aug 25 2020  372f03bfab48f818db4aeb8d2be61ee05a8dad6c
+==============
+
+Changes:
+
+* New k-means function + voronoi interpolation
+
+

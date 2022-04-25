@@ -34,7 +34,9 @@ Imports:
     assertthat,
     mapview,
     tidyverse,
-    osmdata
+    osmdata,
+    dodgr,
+    cppRouting
 Suggests: 
     knitr,
     rmarkdown,

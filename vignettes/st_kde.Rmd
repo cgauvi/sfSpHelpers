@@ -51,7 +51,10 @@ library(RColorBrewer)
 
   df_rast <- rasterKDECentroids$layer %>% as.data.frame(xy=T)
   
-  extended_cols <- colorRampPalette(brewer.pal(8, "Set3"))(n_distinct(shp_neigh$NOM))
+  if(! ('NOM' %in% colnames(shp_neigh))){
+    knitr::knit_exit()
+  }
+  extended_cols <- colorRampPalette(brewer.pal(8, "Set3"))(n_distinct(shp_neigh[['NOM']]))
   
   ggplot() + 
     geom_tile(data=df_rast, aes(x=x,y=y,fill=layer),alpha=0.2) + 
@@ -78,7 +81,7 @@ shp_neigh_filtered <- st_intersection(shp_neigh %>% st_zm(),
     scale_fill_viridis_c() + 
     scale_color_manual(values = extended_cols) + 
     ggplot2::theme_dark(base_family="Roboto Condensed", base_size=11.5) +
-    guides( color = FALSE) 
+    guides( color = 'none') 
   
 ```
 

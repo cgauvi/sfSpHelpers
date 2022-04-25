@@ -11,6 +11,8 @@
 #' @param osm_results_streets
 #' @param osm_modes
 #'
+#' @import dodgr
+#'
 #' @return osm list of sf LINESTRING
 #'
 #' @examples
@@ -68,6 +70,8 @@ st_get_linestring_osm_by_mode <- function(osm_results_streets,
 #' Creates a weighted graph whose weight is given by the time required to travel along an edge given a certain mode
 #'
 #' @param sfdf
+#'
+#' @import cppRouting
 #'
 #' @return
 #'

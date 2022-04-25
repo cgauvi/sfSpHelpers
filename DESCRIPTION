@@ -32,7 +32,8 @@ Imports:
     methods,
     rgeos,
     assertthat,
-    mapview
+    mapview,
+    tidyverse
 Suggests: 
     knitr,
     rmarkdown,

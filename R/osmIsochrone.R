@@ -378,6 +378,7 @@ create_opq_query_add_features <- function(opq_query,
 #' @param shp_point
 #' @param buffer_km
 #' @param list_osm_params
+#' @import osmdata
 #'
 #' @return osm_results_streets osm results: list with linestrings, points and polygons + aux data
 #' @export

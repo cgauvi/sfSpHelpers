@@ -10,9 +10,6 @@ osm_buffer_query_helper(
   list_osm_params = list(list(key = "highway"))
 )
 }
-\arguments{
-\item{list_osm_params}{}
-}
 \value{
 osm_results_streets osm results: list with linestrings, points and polygons + aux data
 }

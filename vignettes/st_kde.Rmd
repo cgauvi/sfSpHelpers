@@ -59,7 +59,7 @@ library(RColorBrewer)
     scale_fill_viridis_c() + 
     scale_color_manual(values = extended_cols) + 
     ggplot2::theme_dark(base_family="Roboto Condensed", base_size=11.5) +
-    guides( color = FALSE) 
+    guides( color = "none") 
     
 ```
 

@@ -33,7 +33,8 @@ Imports:
     rgeos,
     assertthat,
     mapview,
-    tidyverse
+    tidyverse,
+    osmdata
 Suggests: 
     knitr,
     rmarkdown,

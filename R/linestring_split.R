@@ -54,7 +54,7 @@ split_lines <- function(input_lines, max_length, id = "ID") {
 
   rm(too_long)
 
-  split_lines <- st_sf(split_points[c(id, "split_fID")], geometry = st_sfc(split_lines, crs = input_crs))
+  split_lines <- sf::st_sf(split_points[c(id, "split_fID")], geometry = sf::st_sfc(split_lines, crs = input_crs))
 
   return(split_lines)
 }
@@ -77,7 +77,7 @@ split_lines_remove_line_endpoints <- function(shp_line,id_col, min_distance_m_to
   assertthat::assert_that(nrow(shp_line)==1, msg='Fatal error in split_lines_remove_line_endpoints! need to sed in sf object with a single row')
 
   #Reproject and split/segmentize
-  shp_line  %<>% st_transform(crs=3857)
+  shp_line  %<>% sf::st_transform(crs=3857)
   split_lines <- split_lines(shp_line, min_distance_m_to_remove, id = id_col)
 
   #Inspect results and try to throw out the endpoints (first and last segments from the new split linestring)
@@ -114,6 +114,8 @@ split_lines_remove_line_endpoints <- function(shp_line,id_col, min_distance_m_to
 #' @param shp_line
 #' @param id_col
 #' @param min_distance_m_to_remove
+#'
+#' @importFrom dplyr group_by summarise
 #'
 #' @return
 #'
@@ -213,7 +215,7 @@ remove_line_endpoints <- function(shp_lines,
   shp_lines_no_endpoints <- do.call(rbind, list_lines_no_endpoints)
 
   #Reproject
-  shp_lines_no_endpoints %<>% st_transform(crs=st_crs(shp_lines))
+  shp_lines_no_endpoints %<>% sf::st_transform(crs=st_crs(shp_lines))
 
   assertthat::assert_that(nrow(shp_lines_no_endpoints) == nrow(shp_lines))
 

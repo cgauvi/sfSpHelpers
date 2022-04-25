@@ -202,10 +202,6 @@
                            list_modes<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"foot"</span><span class="op">)</span>,
                            list_osm_params<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>key<span class="op">=</span><span class="st">'highway'</span> <span class="op">)</span> <span class="op">)</span>
                            <span class="op">)</span>
-<span class="co">#&gt; Error in curl::curl_fetch_memory(url, handle = handle): HTTP/2 stream 0 was not closed cleanly: PROTOCOL_ERROR (err 1)</span>
-<span class="co">#&gt; Request failed [ERROR]. Retrying in 1.1 seconds...</span>
-<span class="co">#&gt; Error in curl::curl_fetch_memory(url, handle = handle): HTTP/2 stream 0 was not closed cleanly: PROTOCOL_ERROR (err 1)</span>
-<span class="co">#&gt; Request failed [ERROR]. Retrying in 1 seconds...</span>
 <span class="co">#&gt; Warning in st_cast.sf(polys, "LINESTRING"): repeating attributes for all sub-</span>
 <span class="co">#&gt; geometries for which they may not be constant</span>
 <span class="co">#&gt; [1] "...OSM successfully queried..."</span>
@@ -269,8 +265,6 @@
                            list_modes<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"motorcar"</span><span class="op">)</span>,
                            list_osm_params<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>key<span class="op">=</span><span class="st">'highway'</span> <span class="op">)</span> <span class="op">)</span>
                            <span class="op">)</span>
-<span class="co">#&gt; Error in curl::curl_fetch_memory(url, handle = handle): HTTP/2 stream 0 was not closed cleanly: PROTOCOL_ERROR (err 1)</span>
-<span class="co">#&gt; Request failed [ERROR]. Retrying in 1.8 seconds...</span>
 <span class="co">#&gt; Warning in st_cast.sf(polys, "LINESTRING"): repeating attributes for all sub-</span>
 <span class="co">#&gt; geometries for which they may not be constant</span>
 <span class="co">#&gt; [1] "...OSM successfully queried..."</span>
@@ -359,20 +353,12 @@
 <code class="sourceCode R">
 <span class="va">shp_isochone</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dfr</a></span><span class="op">(</span> <span class="va">list_cities</span>,
                          <span class="va">get_isochrone_from_city_centroid</span><span class="op">)</span>
-<span class="co">#&gt; Error in curl::curl_fetch_memory(url, handle = handle): HTTP/2 stream 0 was not closed cleanly: PROTOCOL_ERROR (err 1)</span>
-<span class="co">#&gt; Request failed [ERROR]. Retrying in 1 seconds...</span>
-<span class="co">#&gt; Error in curl::curl_fetch_memory(url, handle = handle): HTTP/2 stream 0 was not closed cleanly: PROTOCOL_ERROR (err 1)</span>
-<span class="co">#&gt; Request failed [ERROR]. Retrying in 2.9 seconds...</span>
 <span class="co">#&gt; Warning in st_cast.sf(polys, "LINESTRING"): repeating attributes for all sub-</span>
 <span class="co">#&gt; geometries for which they may not be constant</span>
 <span class="co">#&gt; [1] "...OSM successfully queried..."</span>
 <span class="co">#&gt; [1] "...Network successfully converted to graph..."</span>
 <span class="co">#&gt; Watch out! It takes at least 0.09 minutes to walk (fly..) from point (-73.72422595,45.5575763427528) to the nearest street</span>
 <span class="co">#&gt; [1] "...Isochrones successfully computed for all modes..."</span>
-<span class="co">#&gt; Error in curl::curl_fetch_memory(url, handle = handle): HTTP/2 stream 0 was not closed cleanly: PROTOCOL_ERROR (err 1)</span>
-<span class="co">#&gt; Request failed [ERROR]. Retrying in 1 seconds...</span>
-<span class="co">#&gt; Error in curl::curl_fetch_memory(url, handle = handle): HTTP/2 stream 0 was not closed cleanly: PROTOCOL_ERROR (err 1)</span>
-<span class="co">#&gt; Request failed [ERROR]. Retrying in 1.2 seconds...</span>
 <span class="co">#&gt; Warning in st_cast.sf(polys, "LINESTRING"): repeating attributes for all sub-</span>
 <span class="co">#&gt; geometries for which they may not be constant</span>
 <span class="co">#&gt; [1] "...OSM successfully queried..."</span>

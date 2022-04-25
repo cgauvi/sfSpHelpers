@@ -1,6 +1,15 @@
 
 
 
+sfSpHelpers v0.4.1 e73e0a03e173c95935f4bbfde86b56bb33227257 Apr 24
+==============
+
+Changes:
+
+* Fixed broken dependency with ggvoronoi
+
+
+
 sfSpHelpers v0.4 326e4426b252b867cf4133a061af4ce01c914d2c Apr 24
 ==============
 

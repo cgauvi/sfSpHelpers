@@ -158,6 +158,13 @@ remove_line_endpoints_lwgeom <- function(shp_line,
 
   require(sf)
 
+  #Quick test - cannot split a 0 length string- will also avoid potential div by 0 later
+  line_length <- units::drop_units(st_length(shp_line))
+  if(abs(line_length) < 10**-4){
+    print(paste0('Line ', id_col, ' is already too small! Not splitting') )
+    return (shp_line)
+  }
+
   assertthat::assert_that(any(id_col %in% colnames(shp_line)))
   assertthat::assert_that( sum(sapply(list(min_distance_m_to_remove,min_proportion_remove), purrr::is_null)) %% 2 ==1,
                            msg='Fatal error! input exaclty one of min_distance_m_to_remove or min_proportion_remove')
@@ -165,7 +172,7 @@ remove_line_endpoints_lwgeom <- function(shp_line,
   #Convert to a proportion of total segment length when meters are used
   if(!is.null(min_distance_m_to_remove)){
     assertthat::assert_that( 0 < min_distance_m_to_remove , msg='Fatal error! use a distance to remove > 0')
-    from <- min_distance_m_to_remove/units::drop_units(st_length(shp_line))
+    from <- min_distance_m_to_remove/line_length
   }else{
     assertthat::assert_that( 0 < min_proportion_remove & min_proportion_remove <1 , msg='Fatal error! use a proportion in (0,1)')
     from <- min_proportion_remove

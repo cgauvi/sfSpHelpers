@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SfSpHelpers</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
@@ -42,6 +42,9 @@
     </li>
     <li>
       <a href="../articles/st_kde.html">st_kde</a>
+    </li>
+    <li>
+      <a href="../articles/voronoi.html">voronoi</a>
     </li>
   </ul></li>
 <li>
@@ -97,7 +100,7 @@
 <span class="r-in"><span class="va">shpCentroids</span> <span class="op">&lt;-</span> <span class="va">shpBuildings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">st_centroid</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">rasterKDECentroids</span> <span class="op">&lt;-</span> <span class="fu">st_kde</span><span class="op">(</span><span class="va">shpCentroids</span>,<span class="fl">0.01</span>,<span class="fl">0.01</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rasterKDECentroids</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://r-spatial.github.io/sf/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rasterKDECentroids</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>

@@ -26,7 +26,7 @@ library(RColorBrewer)
 
 
 # Data
-```{r}
+```{r,message=F ,warning=FALSE}
 
   #Trees
   shp_trees <-  st_read('https://www.donneesquebec.ca/recherche/dataset/bc5afddf-9439-4e96-84fb-f91847b722be/resource/bbdca0dd-82df-42f9-845b-32348debf8ab/download/vdq-arbrepotentielremarquable.geojson')
@@ -38,12 +38,17 @@ library(RColorBrewer)
 ```
 
 
-## 2D raster KDE
+## 2D raster KDE plot - default
 ```{r}
 
   rasterKDECentroids <- st_kde(shp_trees , cellsize = 0.001, bandwith =c(.001, .001 ) )
   plot(rasterKDECentroids$layer, main='Remarkable tree density - Quebec City')
   
+```
+  
+## GGplot version   
+```{r,  message=F ,warning=FALSE}
+
   df_rast <- rasterKDECentroids$layer %>% as.data.frame(xy=T)
   
   extended_cols <- colorRampPalette(brewer.pal(8, "Set3"))(n_distinct(shp_neigh$NOM))
@@ -99,7 +104,7 @@ ggplot(shp_polyons)+
   geom_sf(data=shp_neigh, aes(col=NOM),alpha=0) + 
   scale_fill_viridis_d()+
   ggplot2::theme_minimal(base_family="Roboto Condensed", base_size=11.5) +
-  guides( color = FALSE) 
+  theme(legend.position = 'none')
  
 
 ```

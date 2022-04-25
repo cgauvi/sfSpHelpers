@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 # Setup 
 ## Librairies 
 
-```{r setup}
+```{r setup,  message=F ,warning=FALSE}}
 library(SfSpHelpers)
 options("rgdal_show_exportToProj4_warnings"="none")
 library(sf)
@@ -35,12 +35,12 @@ assertthat::assert_that(curl::has_internet(), msg='Internet required to run test
 
 
 ## Ggplot theme
-```{r}
+```{r, message=FALSE }
 custom_minimal_theme <- function(){  ggplot2::theme_minimal(base_family="Roboto Condensed", base_size=11.5) }
 ```
 
-##Check for figures dir
-```{r}
+## Check for figures dir
+```{r, message=FALSE }
 
 if(!dir.exists(here('figures'))){
   dir.create(here('figures'))
@@ -60,32 +60,34 @@ list_cities <- c('Montreal', 'Quebec City')
 
 ## Compare cities
 
+Atlanta is too long to run
+
 ## Atlanta
-```{r}
-   
+```{r,  eval=F}
+
 shp_Atlanta_bbox <-  bbox_from_osm('Atlanta')
 shp_point <- shp_Atlanta_bbox%>% sf::st_convex_hull() %>% st_centroid()
 
 osm <-  osmdata::opq(bbox = 'Atlanta') %>%
-    add_osm_feature( key = "highway" ) %>% 
-    osmdata_sf () 
+    add_osm_feature( key = "highway" ) %>%
+    osmdata_sf ()
 
 
 
 shp_iso_all_modes <- SfSpHelpers::st_make_isochrone (shp_point %>% st_transform(crs=4326),
-                           buffer_km = 1) 
+                           buffer_km = 1)
 
 
-ggplot() + 
-  geom_sf(data=osm$osm_lines,lwd=0.1) + 
-  geom_sf(data=shp_iso_all_modes, aes(fill=limit_minutes),alpha=0.5) + 
-  geom_sf(data=shp_point, col='salmon') + 
-  scale_fill_viridis_c() + 
-  facet_wrap(~mode,nrow=2) + 
-  ggtitle('Atlanta isochrones') + 
+ggplot() +
+  geom_sf(data=osm$osm_lines,lwd=0.1) +
+  geom_sf(data=shp_iso_all_modes, aes(fill=limit_minutes),alpha=0.5) +
+  geom_sf(data=shp_point, col='salmon') +
+  scale_fill_viridis_c() +
+  facet_wrap(~mode,nrow=2) +
+  ggtitle('Atlanta isochrones') +
   labs(caption = 'Max speeds from {dodgr}. Network from OSM overpass query through {osmdata} ',
-       fill='Time (minutes)') + 
-  custom_minimal_theme() + 
+       fill='Time (minutes)') +
+  custom_minimal_theme() +
   coord_sf(datum=NA)
 
 
@@ -100,11 +102,10 @@ ggplot() +
 ### OSM query
 ```{r}
 
-  shp_point <- data.frame(X=-71.22776107610193, Y=46.805060757836486) %>% sf::st_as_sf(coords=c('X','Y'),crs=4326)
+  shp_point <- data.frame(X=-71.22776107610193, Y=46.805060757836486) %>% 
+  sf::st_as_sf(coords=c('X','Y'),crs=4326)
    
   osm <- SfSpHelpers::osm_buffer_query_helper(shp_point,buffer_km = 1 )
-
-  
   
 ```
 
@@ -115,7 +116,7 @@ ggplot() +
 
 shp_isochrone <- SfSpHelpers::st_make_isochrone (shp_point,
                            buffer_km = 1,
-                           limit_minutes = seq(1,15,by=1),
+                           limit_minutes = seq(1,5,by=1),
                            list_modes= c("foot"),
                            list_osm_params= list(  list(key='highway' ) )
                            )

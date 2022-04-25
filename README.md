@@ -57,6 +57,6 @@ ggplot(shp_polyons)+
          caption ='Source: https://www.donneesquebec.ca - vdq-arbrepotentielremarquable.geojson')
 ```
 
-<img src="https://github.com/cgauvi/sfSpHelpers/tree/master/man/figures/README-example-1.png" width="100%" />
+<img src="https://github.com/cgauvi/sfSpHelpers/blob/master/man/figures/README-example-1.png" width="100%" />
 
 See the vignettes for more details.

@@ -67,7 +67,7 @@ ggplot(shp_polyons)+
 
 ```
 
-<img src="https://github.com/cgauvi/sfSpHelpers/man/figures/README-example-1.png" width="100%" />
+<img src="https://github.com/cgauvi/sfSpHelpers/tree/master/man/figures/README-example-1.png" width="100%" />
  
  
 See the vignettes for more details.  

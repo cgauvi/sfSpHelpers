@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup,message=F ,warning=FALSE}}
+```{r setup, message=F}
 library(SfSpHelpers)
 library(mapview)
 library(dplyr)
@@ -25,7 +25,7 @@ library(magrittr)
 The splitting function comes from this [gist](https://gist.github.com/dblodgett-usgs/cf87392c02d73f1b7d16153d2b66a8f3)
 
 # Data 
-```{r ,message=F ,warning=FALSE}}
+```{r ,message=F }
 geojson <- '{
   "type": "FeatureCollection",
   "name": "sample",

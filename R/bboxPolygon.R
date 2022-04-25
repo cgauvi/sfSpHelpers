@@ -191,7 +191,6 @@ bbox_from_osm <- function(osm_place){
 #' @param shp_bbox
 #'
 #' @return logical/boolean T for ok F for warning
-#' @export
 #'
 bbox_validation <- function(shp_bbox){
 

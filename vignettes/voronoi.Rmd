@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup,message=F ,warning=FALSE}
+```{r setup,message=F  }
 library(SfSpHelpers)
 library(dplyr)
 library(ggplot2)
@@ -22,7 +22,7 @@ library(ggplot2)
 
 
 # Data
-```{r,message=F ,warning=FALSE}
+```{r,message=F  }
 
 shpBuildings <- cache_csv_sf_wrapper('eval_fonciere_mtl', 
                                        fun = get_zipped_remote_shapefile,

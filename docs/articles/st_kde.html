@@ -132,7 +132,7 @@
  
   <span class="co">#Neighborhoods</span>
   <span class="va">shp_neigh</span> <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/get_zipped_remote_shapefile.html">get_zipped_remote_shapefile</a></span><span class="op">(</span><span class="st">"https://www.donneesquebec.ca/recherche/dataset/5b1ae6f2-6719-46df-bd2f-e57a7034c917/resource/508594dc-b090-407c-9489-73a1b46a8477/download/vdq-quartier.zip"</span><span class="op">)</span>
-<span class="co">#&gt; Reading layer `vdq-quartier' from data source `/tmp/RtmphBIwES' using driver `ESRI Shapefile'</span>
+<span class="co">#&gt; Reading layer `vdq-quartier' from data source `/tmp/RtmpERRmyq' using driver `ESRI Shapefile'</span>
 <span class="co">#&gt; Simple feature collection with 35 features and 4 fields</span>
 <span class="co">#&gt; Geometry type: MULTIPOLYGON</span>
 <span class="co">#&gt; Dimension:     XYZ</span>
@@ -140,15 +140,19 @@
 <span class="co">#&gt; z_range:       zmin: 0 zmax: 0</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span></code></pre></div>
 <div class="section level3">
-<h3 id="d-raster-kde">2D raster KDE<a class="anchor" aria-label="anchor" href="#d-raster-kde"></a>
+<h3 id="d-raster-kde-plot---default">2D raster KDE plot - default<a class="anchor" aria-label="anchor" href="#d-raster-kde-plot---default"></a>
 </h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
   <span class="va">rasterKDECentroids</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/st_kde.html">st_kde</a></span><span class="op">(</span><span class="va">shp_trees</span> , cellsize <span class="op">=</span> <span class="fl">0.001</span>, bandwith <span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.001</span>, <span class="fl">.001</span> <span class="op">)</span> <span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rasterKDECentroids</span><span class="op">$</span><span class="va">layer</span>, main<span class="op">=</span><span class="st">'Remarkable tree density - Quebec City'</span><span class="op">)</span></code></pre></div>
 <p><img src="st_kde_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+</div>
+<div class="section level3">
+<h3 id="ggplot-version">GGplot version<a class="anchor" aria-label="anchor" href="#ggplot-version"></a>
+</h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R">  
+<code class="sourceCode R">
   <span class="va">df_rast</span> <span class="op">&lt;-</span> <span class="va">rasterKDECentroids</span><span class="op">$</span><span class="va">layer</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span>xy<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
   
   <span class="va">extended_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span><span class="fl">8</span>, <span class="st">"Set3"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">shp_neigh</span><span class="op">$</span><span class="va">NOM</span><span class="op">)</span><span class="op">)</span>
@@ -159,10 +163,8 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_fill_viridis_c</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">extended_cols</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_dark</a></span><span class="op">(</span>base_family<span class="op">=</span><span class="st">"Roboto Condensed"</span>, base_size<span class="op">=</span><span class="fl">11.5</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span> color <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> 
-<span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
-<span class="co">#&gt; "none")` instead.</span></code></pre></div>
-<p><img src="st_kde_files/figure-html/unnamed-chunk-3-2.png" width="700"></p>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span> color <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </code></pre></div>
+<p><img src="st_kde_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="zoom-in-using-functions-in-bbox">Zoom in using functions in bbox<a class="anchor" aria-label="anchor" href="#zoom-in-using-functions-in-bbox"></a>
@@ -185,7 +187,7 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span> color <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> 
 <span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
 <span class="co">#&gt; "none")` instead.</span></code></pre></div>
-<p><img src="st_kde_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="st_kde_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="polygon-contours">Polygon contours<a class="anchor" aria-label="anchor" href="#polygon-contours"></a>
@@ -209,7 +211,7 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">shp_neigh</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>col<span class="op">=</span><span class="va">NOM</span><span class="op">)</span>,alpha<span class="op">=</span><span class="fl">0</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span>base_family<span class="op">=</span><span class="st">"Roboto Condensed"</span>, base_size<span class="op">=</span><span class="fl">11.5</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span> color <span class="op">=</span> <span class="st">'none'</span><span class="op">)</span> </code></pre></div>
-<p><img src="st_kde_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="st_kde_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"> 
 <span class="co">#Can simply use viridis discrete</span>
@@ -218,10 +220,8 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">shp_neigh</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>col<span class="op">=</span><span class="va">NOM</span><span class="op">)</span>,alpha<span class="op">=</span><span class="fl">0</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_fill_viridis_d</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span>base_family<span class="op">=</span><span class="st">"Roboto Condensed"</span>, base_size<span class="op">=</span><span class="fl">11.5</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span> color <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> 
-<span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
-<span class="co">#&gt; "none")` instead.</span></code></pre></div>
-<p><img src="st_kde_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'none'</span><span class="op">)</span></code></pre></div>
+<p><img src="st_kde_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
 </div>
 </div>
   </div>

@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 # Setup 
 ## Librairies 
 
-```{r setup,  message=F ,warning=FALSE}}
+```{r setup,  message=F ,warning=FALSE}
 library(SfSpHelpers)
 options("rgdal_show_exportToProj4_warnings"="none")
 library(sf)

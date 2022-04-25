@@ -144,6 +144,8 @@ remove_line_endpoints_from_split <- function(shp_line,id_col, min_distance_m_to_
 #' @param min_distance_m_to_remove distance to remove EACH SIDE: so 2X for total removed
 #' @param min_proportion_remove proportion to remove EACH SIDE: so 2X for total removed
 #'
+#' @import assertthat
+#'
 #' @return
 #'
 #' @examples

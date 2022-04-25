@@ -30,7 +30,8 @@ Imports:
     deldir,
     ggplot2,
     methods,
-    rgeos
+    rgeos,
+    assertthat
 Suggests: 
     knitr,
     rmarkdown,

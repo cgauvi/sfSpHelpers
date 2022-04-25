@@ -59,4 +59,5 @@ ggplot(shp_polyons)+
 
 <img src="https://github.com/cgauvi/sfSpHelpers/blob/master/man/figures/README-example-1.png" width="100%" />
 
-See the vignettes for more details.
+See the [vignettes](https://cgauvi.github.io/sfSpHelpers/) for more
+details.

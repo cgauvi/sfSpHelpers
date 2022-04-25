@@ -71,7 +71,7 @@ st_get_linestring_osm_by_mode <- function(osm_results_streets,
 #'
 #' @param sfdf
 #'
-#' @import cppRouting
+#' @import cppRouting stplanr
 #'
 #' @return
 #'
@@ -120,6 +120,8 @@ sf_to_graph <- function(sfdf){
 #' @param graph
 #' @param from
 #' @param lim
+#'
+#' @import concaveman
 #'
 #' @return
 #'

@@ -36,7 +36,9 @@ Imports:
     tidyverse,
     osmdata,
     dodgr,
-    cppRouting
+    cppRouting,
+    stplanr,
+    concaveman
 Suggests: 
     knitr,
     rmarkdown,

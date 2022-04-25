@@ -213,12 +213,22 @@ remove_line_endpoints <- function(shp_lines,
 
   #Remove endpoints from all rows
   list_lines_no_endpoints <- lapply(1:nrow(shp_lines),
-                                    function(x) remove_line_endpoints_lwgeom(shp_lines [x, ],
-                                                                             id_col,
-                                                                             min_distance_m_to_remove,
-                                                                             min_proportion_remove )
+                                    function(x) {
+                                      r <-  tryCatch({
+                                        r <- remove_line_endpoints_lwgeom(shp_lines [x, ],
+                                                                               id_col,
+                                                                               min_distance_m_to_remove,
+                                                                               min_proportion_remove )
+                                      },error=function(e){
+                                        print(paste0('Fatal error with ', shp_lines [[id_col]][x], ' - ' , e))
+                                        return(NA)
+                                      }
+                                      )
+                                      return(r)
+                                    }
   )
 
+  list_lines_no_endpoints <- list_lines_no_endpoints[!is.na(list_lines_no_endpoints)]
   shp_lines_no_endpoints <- do.call(rbind, list_lines_no_endpoints)
 
   #Reproject

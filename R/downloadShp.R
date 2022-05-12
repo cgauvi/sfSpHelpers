@@ -32,10 +32,10 @@ get_zipped_remote_shapefile <- function(url, dirToDownload=NA){
   }
 
 
-  shp <- sf::st_read(temp_dir)
+  shp <- sf::st_read(dir_dl)
 
   unlink(temp_file)
-  if(delete_tmp_dir) unlink(temp_dir)
+  if(delete_tmp_dir) unlink(dir_dl)
 
   return(shp)
 

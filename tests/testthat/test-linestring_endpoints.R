@@ -30,6 +30,34 @@ test_that("linestring end points works", {
 
 
 
+test_that("st_sf_linestring_from_points works ",{
+
+
+  pts_sf <- data.frame(
+    x = seq(-71.5, -71.0, by=0.1),
+    y = seq(45.5, 46.0, by=0.1),
+    attr_data = rnorm(6,42,42),
+    id = c(rep("fred",2), rep("wilma",4))
+  ) %>%
+    sf::st_as_sf(coords = c("x","y")) %>%
+    sf::st_set_crs(4326)
+
+
+
+
+  shp_segments <- pts_sf %>%
+    dplyr::group_by(id) %>%
+    dplyr::summarize(m = mean(attr_data)) %>%
+    sf::st_cast("LINESTRING")
+
+
+  shp_segments_with_endpoints <- st_linestring_add_endpoints(shp_segments)
+
+  expect_equal( nrow(st_sf_linestring_from_points(shp_segments_with_endpoints %>% st_drop_geometry())) ,2)
+  expect_error( st_sf_linestring_from_points(shp_segments_with_endpoints)) #takes in a df - NOT an sf object
+})
+
+
 
 test_that("linestring creates sf", {
 

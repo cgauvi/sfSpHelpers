@@ -49,11 +49,13 @@ st_linestring_to_sf_linestring_endpoints <- function(shp_segments){
   shp_segments %<>% st_linestring_add_endpoints()
 
   #Convert to sf (new sf object)
+  crs <- st_crs(shp_segments)
   shp_segments_endpoints <- st_sf_linestring_from_points(shp_segments %>% sf::st_drop_geometry(),
                                                          col_start_x = 'start_x',
                                                          col_start_y = 'start_y',
                                                          col_end_x = 'start_x',
-                                                         col_end_y = 'start_y' )
+                                                         col_end_y = 'start_y',
+                                                         crs=crs)
 
 
   return(shp_segments_endpoints)
@@ -77,7 +79,8 @@ st_sf_linestring_from_points <- function(df_segments,
                                          col_start_x = 'start_x',
                                          col_start_y = 'start_y',
                                          col_end_x = 'start_x',
-                                         col_end_y = 'start_y'){
+                                         col_end_y = 'start_y',
+                                         crs=4326){
 
   assert_that(!any(class(df_segments) %in% 'sf'),
               msg='st_sf_linestring_from_points takes a dataframe as input! Using an sf object creates ambiguity')
@@ -97,7 +100,7 @@ st_sf_linestring_from_points <- function(df_segments,
 
   #Convert to sf
   shp_segments_endpoints <- sf::st_as_sf( st_sfc(coords=list_lines),
-                                          crs=st_crs(shp_segments) ) %>%
+                                          crs=crs) %>%
     rename(geometry=x)
 
   # Add back the original data

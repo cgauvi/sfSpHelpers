@@ -77,3 +77,4 @@ test_that("linestring creates sf", {
   expect_true(all( lapply(shp_sements_endpoints$geometry, length) ==4 )  ) # 2 endpoints with lat and lng
 
 })
+

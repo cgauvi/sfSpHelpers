@@ -9,7 +9,8 @@ st_sf_linestring_from_points(
   col_start_x = "start_x",
   col_start_y = "start_y",
   col_end_x = "start_x",
-  col_end_y = "start_y"
+  col_end_y = "start_y",
+  crs = 4326
 )
 }
 \arguments{

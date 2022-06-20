@@ -2,7 +2,9 @@
 % Please edit documentation in R/linestring_endpoints.R
 \name{st_linestring_to_sf_linestring_endpoints}
 \alias{st_linestring_to_sf_linestring_endpoints}
-\title{Uses st_linestring_add_endpoints to take a potentiall complicated linestring and convert it into a simple linestring based only on the endpoints of the initial linestring}
+\title{Convenience function over  st_linestring_add_endpoints and st_sf_linestring_from_points
+Takes a potentially complicated linestring and converts it into a simple linestring based only on the *endpoints* of the initial linestring
+(keeps the geometry as LINESTRING)}
 \usage{
 st_linestring_to_sf_linestring_endpoints(shp_segments)
 }
@@ -13,5 +15,7 @@ st_linestring_to_sf_linestring_endpoints(shp_segments)
 shp_segments_endpoints
 }
 \description{
-Uses st_linestring_add_endpoints to take a potentiall complicated linestring and convert it into a simple linestring based only on the endpoints of the initial linestring
+Convenience function over  st_linestring_add_endpoints and st_sf_linestring_from_points
+Takes a potentially complicated linestring and converts it into a simple linestring based only on the *endpoints* of the initial linestring
+(keeps the geometry as LINESTRING)
 }

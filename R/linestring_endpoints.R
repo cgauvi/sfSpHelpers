@@ -78,8 +78,8 @@ st_linestring_to_sf_linestring_endpoints <- function(shp_segments){
 st_sf_linestring_from_points <- function(df_segments,
                                          col_start_x = 'start_x',
                                          col_start_y = 'start_y',
-                                         col_end_x = 'start_x',
-                                         col_end_y = 'start_y',
+                                         col_end_x = 'end_x',
+                                         col_end_y = 'end_y',
                                          crs=4326){
 
   assert_that(!any(class(df_segments) %in% 'sf'),

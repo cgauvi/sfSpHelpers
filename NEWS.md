@@ -1,7 +1,13 @@
 
+sfSpHelpers v0.4.2 b76ef3ae55790a05649d761036b99f618eb8fe0b June 20 2022
+==============
+
+Changes:
+
+* Exposed st_sf_linestring_from_points which will be much more useful on its own (as opposed to called by st_linestring_to_sf_linestring_endpoints)
 
 
-sfSpHelpers v0.4.1 e73e0a03e173c95935f4bbfde86b56bb33227257 Apr 24
+sfSpHelpers v0.4.1 e73e0a03e173c95935f4bbfde86b56bb33227257 Apr 24 2022
 ==============
 
 Changes:
@@ -10,7 +16,7 @@ Changes:
 
 
 
-sfSpHelpers v0.4 326e4426b252b867cf4133a061af4ce01c914d2c Apr 24
+sfSpHelpers v0.4 326e4426b252b867cf4133a061af4ce01c914d2c Apr 24 2022
 ==============
 
 Changes:
@@ -20,7 +26,7 @@ Changes:
 * Debugged vignettes + added voronoi vignette
 
 
-sfSpHelpers v0.3 c5e9ee7c2c86c9cd2672e463fa581371e22ae34c Apr 23
+sfSpHelpers v0.3 c5e9ee7c2c86c9cd2672e463fa581371e22ae34c Apr 23 2022
 ==============
 
 Changes:
@@ -31,7 +37,7 @@ Changes:
 * Debugged functions: get_zipped_remote_shapefile 
 
 
-sfSpHelpers v0.2 - ce153047ea9b36273f95d89987d3b8b82f239410  Mon Mar 28
+sfSpHelpers v0.2 - ce153047ea9b36273f95d89987d3b8b82f239410  Mon Mar 28 2022
 ==============
 
 Changes:

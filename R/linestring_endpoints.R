@@ -53,8 +53,8 @@ st_linestring_to_sf_linestring_endpoints <- function(shp_segments){
   shp_segments_endpoints <- st_sf_linestring_from_points(shp_segments %>% sf::st_drop_geometry(),
                                                          col_start_x = 'start_x',
                                                          col_start_y = 'start_y',
-                                                         col_end_x = 'start_x',
-                                                         col_end_y = 'start_y',
+                                                         col_end_x = 'end_x',
+                                                         col_end_y = 'end_y',
                                                          crs=crs)
 
 
@@ -93,9 +93,9 @@ st_sf_linestring_from_points <- function(df_segments,
 
   # Create the linestring geometry
   list_lines <- purrr::map ( 1:nrow(df_segments),
-               ~sf::st_linestring(x = matrix(  c(df_segments[[col_start_x]][[.x]], df_segments[[col_start_y]][[.x]],
-                                                 df_segments[[col_end_x]][[.x]], df_segments[[col_end_y]][[.x]]),
-                                               nrow = 2, ncol = 2) )
+               ~sf::st_linestring(x = matrix(  c(df_segments[[col_start_x]][[.x]],  df_segments[[col_start_y ]][[.x]] ,
+                                                 df_segments[[col_end_x]][[.x]],    df_segments[[col_end_y]][[.x]]),
+                                               nrow = 2, ncol = 2, byrow = T) ) # each row represents a point
   )
 
   #Convert to sf

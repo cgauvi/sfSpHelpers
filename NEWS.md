@@ -1,4 +1,14 @@
 
+
+sfSpHelpers v0.5 786f583d5a137f8c17a4beee263f938619fa5666 September 12 2022
+==============
+
+Changes:
+
+* Removed download zip shp file test (too long) + removed all osmisochrone code and moved to separate repo
+
+
+
 sfSpHelpers v0.4.2 b76ef3ae55790a05649d761036b99f618eb8fe0b June 20 2022
 ==============
 

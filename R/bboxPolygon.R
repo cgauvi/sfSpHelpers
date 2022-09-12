@@ -152,39 +152,6 @@ bbox_from_vector <- function(v,
 }
 
 
-#' Minimal wrapper over bbox_from_vector that takes a character representing a city/osm place and returns the bbox as a sf polygon
-#'
-#' Need to slipt the lng and lat for osm
-#'
-#' e.g. the lat,lng are when compared to sf::st_boox
-#'
-#' osmdata::opq(bbox = 'Atlanta')$bbox
-#' vs
-#' sf::st_bbox(osmdata::osmdata_sf(osmdata::opq(bbox = 'Atlanta')))
-#'
-#' @param osm_place
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' library (mapview)
-#' shp_bbox_disney_osm <- bbox_from_osm('Disney')
-#' mapview(shp_bbox_disney_osm)
-#' }
-bbox_from_osm <- function(osm_place){
-
-
-  opq <- osmdata::opq(bbox = osm_place)
-
-  bbox <- stringr::str_split(opq$bbox, pattern = ',' )[[1]] %>% as.double()
-  names(bbox) <- c( "ymin", "xmin" , "ymax", "xmax" )
-
-  bbox_from_vector(bbox,
-                   crs = 4326)
-}
-
 
 #' Util to check if the bbox polygon produced is valid or not
 #'

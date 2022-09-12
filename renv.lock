@@ -44,13 +44,6 @@
       "Repository": "CRAN",
       "Hash": "130c0caba175739d98f2963c6a407cf6"
     },
-    "PROJ": {
-      "Package": "PROJ",
-      "Version": "0.4.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "fa50a399b8c887285a1a02c748a4bfe8"
-    },
     "R6": {
       "Package": "R6",
       "Version": "2.5.1",
@@ -218,13 +211,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "6aa54f69598c32177e920eb3402e8293"
-    },
-    "crsmeta": {
-      "Package": "crsmeta",
-      "Version": "0.3.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "76ad515a0acb138c0e93f017c7aefd11"
     },
     "curl": {
       "Package": "curl",
@@ -653,13 +639,6 @@
       "Repository": "CRAN",
       "Hash": "cf4329aac12c2c44089974559c18e446"
     },
-    "osmdata": {
-      "Package": "osmdata",
-      "Version": "0.1.9",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "45b9f0603c0e8101a3ad5173989aad2d"
-    },
     "pillar": {
       "Package": "pillar",
       "Version": "1.7.0",
@@ -722,13 +701,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "14dc9f7a3c91ebb14ec5bb9208a07061"
-    },
-    "proj4": {
-      "Package": "proj4",
-      "Version": "1.0-11",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "1dc246e456885b1c652dfaafe97e93f6"
     },
     "promises": {
       "Package": "promises",
@@ -820,13 +792,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "911d101becedc0fde495bd910984bdc8"
-    },
-    "reproj": {
-      "Package": "reproj",
-      "Version": "0.4.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "7dce2d989b045462f0e45c140e8483aa"
     },
     "rgeos": {
       "Package": "rgeos",

@@ -35,9 +35,6 @@
       <a href="../articles/linestring_split.html">linestring_split</a>
     </li>
     <li>
-      <a href="../articles/osmIsochrone.html">osmIsochrone</a>
-    </li>
-    <li>
       <a href="../articles/spatialKMeans.html">spatialKMeans</a>
     </li>
     <li>
@@ -67,10 +64,6 @@
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="bbox_from_osm.html">bbox_from_osm()</a></code> </p>
-        </td>
-        <td><p>Minimal wrapper over bbox_from_vector that takes a character representing a city/osm place and returns the bbox as a sf polygon</p></td>
-      </tr><tr><td>
           <p><code><a href="bbox_from_points.html">bbox_from_points()</a></code> </p>
         </td>
         <td><p>Create an sf bounding box from a list of longitude and latitudes</p></td>
@@ -91,10 +84,6 @@
         </td>
         <td><p>Cache function that works with csvs of sf (SHP) files</p></td>
       </tr><tr><td>
-          <p><code><a href="create_opq_query_add_features.html">create_opq_query_add_features()</a></code> </p>
-        </td>
-        <td><p>Add feature, value pairs recursively to an osm overpass query</p></td>
-      </tr><tr><td>
           <p><code><a href="getCentroids.html">getCentroids()</a></code> </p>
         </td>
         <td><p>Get the long/lat of centroids of sf object (adds 2 new columns if they do not already exist)</p></td>
@@ -114,14 +103,6 @@
           <p><code><a href="hello.html">hello()</a></code> </p>
         </td>
         <td><p>Hello, World!</p></td>
-      </tr><tr><td>
-          <p><code><a href="is_within_cvx_hull.html">is_within_cvx_hull()</a></code> </p>
-        </td>
-        <td><p>Check to see if a dataframe of points lies within the convex hull of another dataframe of points</p></td>
-      </tr><tr><td>
-          <p><code><a href="osm_buffer_query_helper.html">osm_buffer_query_helper()</a></code> </p>
-        </td>
-        <td><p>Get osm objects within a fixed radius of a given point</p></td>
       </tr><tr><td>
           <p><code><a href="remove_line_endpoints.html">remove_line_endpoints()</a></code> </p>
         </td>
@@ -148,10 +129,6 @@ and then groups the line string by id</p></td>
         </td>
         <td><p>SfSpHelpers is an R package for routine spatial operations that can be reused in different contexts</p></td>
       </tr><tr><td>
-          <p><code><a href="sf_to_graph.html">sf_to_graph()</a></code> </p>
-        </td>
-        <td><p>Creates a weighted graph whose weight is given by the time required to travel along an edge given a certain mode</p></td>
-      </tr><tr><td>
           <p><code><a href="spatialKMeans.html">spatialKMeans()</a></code> </p>
         </td>
         <td><p>Smooth/thin out a large number of points or polygons by taking a spatially weighted k means</p></td>
@@ -164,10 +141,6 @@ and then groups the line string by id</p></td>
         </td>
         <td><p>Splits line into segments using SfSpHelpers::split_lines and then removes the first and last segments (if possible)</p></td>
       </tr><tr><td>
-          <p><code><a href="st_get_linestring_osm_by_mode.html">st_get_linestring_osm_by_mode()</a></code> </p>
-        </td>
-        <td><p>Creates a graph with weights given by the mode chosen</p></td>
-      </tr><tr><td>
           <p><code><a href="st_kde.html">st_kde()</a></code> </p>
         </td>
         <td><p>Produce a 2D kernel density estimate based on some POINTS geometry</p></td>
@@ -178,23 +151,13 @@ and then groups the line string by id</p></td>
       </tr><tr><td>
           <p><code><a href="st_linestring_to_sf_linestring_endpoints.html">st_linestring_to_sf_linestring_endpoints()</a></code> </p>
         </td>
-        <td><p>Uses st_linestring_add_endpoints to take a potentiall complicated linestring and convert it into a simple linestring based only on the endpoints of the initial linestring</p></td>
+        <td><p>Convenience function over  st_linestring_add_endpoints and st_sf_linestring_from_points
+Takes a potentially complicated linestring and converts it into a simple linestring based only on the *endpoints* of the initial linestring
+(keeps the geometry as LINESTRING)</p></td>
       </tr><tr><td>
-          <p><code><a href="st_make_isochrone.html">st_make_isochrone()</a></code> </p>
+          <p><code><a href="st_sf_linestring_from_points.html">st_sf_linestring_from_points()</a></code> </p>
         </td>
-        <td><p>Man function to call to get</p></td>
-      </tr><tr><td>
-          <p><code><a href="st_make_isochrone_concave_hull.html">st_make_isochrone_concave_hull()</a></code> </p>
-        </td>
-        <td><p>Compute isochrones based on a cppRouting graph (whose edges have weight given by time in minutes)</p></td>
-      </tr><tr><td>
-          <p><code><a href="st_make_isochrone_new_point.html">st_make_isochrone_new_point()</a></code> </p>
-        </td>
-        <td><p>Wrapper over st_make_isochrone_concave_hull that creates an isochrone based on the weighted graph computed and a starting point</p></td>
-      </tr><tr><td>
-          <p><code><a href="st_osm_city_centroid_from_string.html">st_osm_city_centroid_from_string()</a></code> </p>
-        </td>
-        <td><p>Simple helper to get the city centroid from a string (in 4326 geographic coordiantes)</p></td>
+        <td><p>From a df where each row represents an edge in 2D of the form (lng_1,lat_1),  (lng_2,lat_2), create an sf object with LINESTRING geometry</p></td>
       </tr><tr><td>
           <p><code><a href="unionShpBuffer.html">unionShpBuffer()</a></code> </p>
         </td>
@@ -216,7 +179,8 @@ and then groups the line string by id</p></td>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer></div>

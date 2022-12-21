@@ -151,6 +151,9 @@
     <loc>/reference/st_osm_city_centroid_from_string.html</loc>
   </url>
   <url>
+    <loc>/reference/st_sf_linestring_from_points.html</loc>
+  </url>
+  <url>
     <loc>/reference/unionShpBuffer.html</loc>
   </url>
   <url>

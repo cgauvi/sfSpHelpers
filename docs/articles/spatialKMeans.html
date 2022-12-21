@@ -53,9 +53,6 @@
       <a href="../articles/linestring_split.html">linestring_split</a>
     </li>
     <li>
-      <a href="../articles/osmIsochrone.html">osmIsochrone</a>
-    </li>
-    <li>
       <a href="../articles/spatialKMeans.html">spatialKMeans</a>
     </li>
     <li>
@@ -95,7 +92,6 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SfSpHelpers</span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: magrittr</span>
 <span class="co">#&gt; Warning: replacing previous import 'MASS::select' by 'dplyr::select' when</span>
 <span class="co">#&gt; loading 'SfSpHelpers'</span>
 <span class="co">#&gt; Warning: replacing previous import 'curl::handle_reset' by 'httr::handle_reset'</span>
@@ -230,7 +226,7 @@
 <span class="va">top_cat</span> <span class="op">&lt;-</span> <span class="va">shpBuildings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_drop_geometry</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">LIBELLE_UT</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/top_n.html" class="external-link">top_n</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">10</span><span class="op">)</span>
 <span class="co">#&gt; Selecting by n</span>
 
-<span class="va">shpBuildingsAgg_by_build_type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dfr</a></span><span class="op">(</span>
+<span class="va">shpBuildingsAgg_by_build_type</span> <span class="op">&lt;-</span> <span class="fu">map_dfr</span><span class="op">(</span>
   <span class="va">top_cat</span><span class="op">$</span><span class="va">LIBELLE_UT</span>,
   <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
     <span class="fu"><a href="../reference/spatialKMeans.html">spatialKMeans</a></span> <span class="op">(</span>shp <span class="op">=</span> <span class="va">shpBuildings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">LIBELLE_UT</span> <span class="op">==</span> <span class="va">x</span> <span class="op">)</span> ,
@@ -240,6 +236,9 @@
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>LIBELLE_UT <span class="op">=</span> <span class="va">x</span><span class="op">)</span>
   <span class="op">}</span>
 <span class="op">)</span>
+<span class="co">#&gt; Warning in st_centroid.sf(shp): st_centroid assumes attributes are constant over</span>
+<span class="co">#&gt; geometries of x</span>
+
 <span class="co">#&gt; Warning in st_centroid.sf(shp): st_centroid assumes attributes are constant over</span>
 <span class="co">#&gt; geometries of x</span>
  
@@ -270,7 +269,8 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer>

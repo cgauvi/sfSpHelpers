@@ -14,15 +14,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup,message=F  }
-library(SfSpHelpers)
-library(dplyr)
-library(ggplot2)
+```{r setup, message=F}
+suppressWarnings(library(SfSpHelpers))
+suppressWarnings(library(dplyr))
+suppressWarnings(library(ggplot2))
 ```
 
 
 # Data
-```{r,message=F  }
+```{r, message=F}
 
 shpBuildings <- cache_csv_sf_wrapper('eval_fonciere_mtl', 
                                        fun = get_zipped_remote_shapefile,

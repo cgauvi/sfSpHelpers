@@ -15,17 +15,17 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(SfSpHelpers)
-library(ggplot2)
-library(dplyr)
-library(magrittr)
+suppressWarnings(library(SfSpHelpers))
+suppressWarnings(library(ggplot2))
+suppressWarnings(library(dplyr))
+suppressWarnings(library(magrittr))
 ```
 
  
 # Data 
 
 ## Caches results to defaul cache + downloads a large zip 
-```{r}
+```{r, mes=F}
 
   shpBuildings <- cache_csv_sf_wrapper('eval_fonciere_mtl', 
                                        fun = get_zipped_remote_shapefile,

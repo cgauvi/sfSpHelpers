@@ -72,11 +72,11 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
 
-      - name: Check
+      - name: rcmdcheck::rcmdcheck without vignettes
         env:
           _R_CHECK_CRAN_INCOMING_: false
         run: |
           install.packages("rcmdcheck")
-          results = rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--no-multiarch"), error_on = "error", check_dir = "check")
+          results = rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--no-multiarch", "--no-build-vignettes"), error_on = "error", check_dir = "check")
           if (results$status == 0) file.create("run_ok")
         shell: Rscript {0}

@@ -62,7 +62,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages('renv')
           # CRAN packages
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}

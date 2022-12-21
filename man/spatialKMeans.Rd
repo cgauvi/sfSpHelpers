@@ -10,7 +10,9 @@ spatialKMeans(
   numCentroids = NULL,
   propToKeep = NULL,
   numClosestPoints = 10,
-  aggFct = function(x) {     median(x, na.rm = T) },
+  aggFct = function(x) {
+     median(x, na.rm = T)
+ },
   iter.max = 10^3
 )
 }

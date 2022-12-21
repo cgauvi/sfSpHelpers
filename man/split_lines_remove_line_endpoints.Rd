@@ -13,9 +13,6 @@ split_lines_remove_line_endpoints(
 \arguments{
 \item{min_distance_m_to_remove}{}
 }
-\value{
-
-}
 \description{
 Splits line into segments using SfSpHelpers::split_lines and then removes the first and last segments (if possible)
 }

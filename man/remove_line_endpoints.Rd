@@ -14,9 +14,6 @@ remove_line_endpoints(
 \arguments{
 \item{shp_lines}{sf object with multiple rows}
 }
-\value{
-
-}
 \description{
 Removes the endpoints for a collection of LINESTRINGS
 }

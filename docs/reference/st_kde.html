@@ -66,39 +66,48 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">st_kde</span><span class="op">(</span><span class="va">points</span>, <span class="va">cellsize</span>, <span class="va">bandwith</span>, extent <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">st_kde</span><span class="op">(</span><span class="va">points</span>, <span class="va">cellsize</span>, <span class="va">bandwith</span>, extent <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>points</dt>
 <dd><p>sf object with POINT geometry</p></dd>
+
+
 <dt>cellsize</dt>
 <dd><p>size of cell</p></dd>
+
+
 <dt>bandwith</dt>
 <dd><p>bandwith for 2D kde, larger: smoother, smaller: spikier</p></dd>
+
+
 <dt>extent</dt>
 <dd><p>allows cropping to a specific subregion of the map</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>raster</p>
+    
+
+<p>raster</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="fu">librarry</span><span class="op">(</span><span class="va">sf</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">libary</span><span class="op">(</span><span class="va">here</span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">shpBuildings</span> <span class="op">&lt;-</span> <span class="fu">SfSpHelpers</span><span class="fu">::</span><span class="fu"><a href="get_zipped_remote_shapefile.html">get_zipped_remote_shapefile</a></span> <span class="op">(</span><span class="st">"https://data.montreal.ca/dataset/4ad6baea-4d2c-460f-a8bf-5d000db498f7/resource/866a3dbc-8b59-48ff-866d-f2f9d3bbee9d/download/uniteevaluationfonciere.geojson.zip"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">shpCentroids</span> <span class="op">&lt;-</span> <span class="va">shpBuildings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">st_centroid</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">rasterKDECentroids</span> <span class="op">&lt;-</span> <span class="fu">st_kde</span><span class="op">(</span><span class="va">shpCentroids</span>,<span class="fl">0.01</span>,<span class="fl">0.01</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://r-spatial.github.io/sf/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rasterKDECentroids</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu">librarry</span><span class="op">(</span><span class="va">sf</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">libary</span><span class="op">(</span><span class="va">here</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">shpBuildings</span> <span class="op">&lt;-</span> <span class="fu">SfSpHelpers</span><span class="fu">::</span><span class="fu"><a href="get_zipped_remote_shapefile.html">get_zipped_remote_shapefile</a></span> <span class="op">(</span><span class="st">"https://data.montreal.ca/dataset/4ad6baea-4d2c-460f-a8bf-5d000db498f7/resource/866a3dbc-8b59-48ff-866d-f2f9d3bbee9d/download/uniteevaluationfonciere.geojson.zip"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">shpCentroids</span> <span class="op">&lt;-</span> <span class="va">shpBuildings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">st_centroid</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">rasterKDECentroids</span> <span class="op">&lt;-</span> <span class="fu">st_kde</span><span class="op">(</span><span class="va">shpCentroids</span>,<span class="fl">0.01</span>,<span class="fl">0.01</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rasterKDECentroids</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -113,8 +122,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

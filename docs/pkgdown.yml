@@ -1,10 +1,10 @@
 pandoc: 2.19.2
-pkgdown: 2.0.2
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   linestring_split: linestring_split.html
   spatialKMeans: spatialKMeans.html
   st_kde: st_kde.html
   voronoi: voronoi.html
-last_built: 2022-12-21T13:41Z
+last_built: 2022-12-21T21:42Z
 

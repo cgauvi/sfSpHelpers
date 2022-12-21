@@ -15,9 +15,6 @@ get_polygon_heatmap(df, crs_epsg = 4326, bw = 0.001, gsize = 500)
 
 \item{gsize}{gid size (same for both dimesions)}
 }
-\value{
-
-}
 \description{
 If using a sf object, will use st_centroids
 Otherwise, need to ensure lng and lat columns are available

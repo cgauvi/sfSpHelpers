@@ -14,15 +14,7 @@ remove_line_endpoints_from_split(
 \arguments{
 \item{min_distance_m_to_remove}{}
 }
-\value{
-
-
-
-}
 \description{
 Not exported, only kept as reference as it peforms the same function as remove_line_endpoints_lwgeom which
 is preferable
-}
-\examples{
-
 }

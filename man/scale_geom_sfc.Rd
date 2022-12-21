@@ -9,9 +9,6 @@ scale_geom_sfc(sf_to_scale, scale_factor = 0.75)
 \arguments{
 \item{scale_factor}{}
 }
-\value{
-
-}
 \description{
 Scale an individual sfc
 }

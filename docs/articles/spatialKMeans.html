@@ -91,36 +91,18 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SfSpHelpers</span><span class="op">)</span>
-<span class="co">#&gt; Warning: replacing previous import 'MASS::select' by 'dplyr::select' when</span>
-<span class="co">#&gt; loading 'SfSpHelpers'</span>
-<span class="co">#&gt; Warning: replacing previous import 'curl::handle_reset' by 'httr::handle_reset'</span>
-<span class="co">#&gt; when loading 'SfSpHelpers'</span>
-<span class="co">#&gt; Warning: replacing previous import 'dplyr::union' by 'raster::union' when</span>
-<span class="co">#&gt; loading 'SfSpHelpers'</span>
-<span class="co">#&gt; Warning: replacing previous import 'MASS::area' by 'raster::area' when loading</span>
-<span class="co">#&gt; 'SfSpHelpers'</span>
-<span class="co">#&gt; Warning: replacing previous import 'dplyr::select' by 'raster::select' when</span>
-<span class="co">#&gt; loading 'SfSpHelpers'</span>
-<span class="co">#&gt; Warning: replacing previous import 'glue::trim' by 'raster::trim' when loading</span>
-<span class="co">#&gt; 'SfSpHelpers'</span>
-<span class="co">#&gt; Warning: replacing previous import 'dplyr::intersect' by 'raster::intersect'</span>
-<span class="co">#&gt; when loading 'SfSpHelpers'</span>
-<span class="co">#&gt; Warning: replacing previous import 'dplyr::setdiff' by 'rgeos::setdiff' when</span>
-<span class="co">#&gt; loading 'SfSpHelpers'</span>
-<span class="co">#&gt; Warning: replacing previous import 'raster::select' by 'dplyr::select' when</span>
-<span class="co">#&gt; loading 'SfSpHelpers'</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'dplyr'</span>
-<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     filter, lag</span>
-<span class="co">#&gt; The following objects are masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     intersect, setdiff, setequal, union</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SfSpHelpers</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
 </h2>
@@ -128,46 +110,47 @@
 <h3 id="caches-results-to-defaul-cache-downloads-a-large-zip">Caches results to defaul cache + downloads a large zip<a class="anchor" aria-label="anchor" href="#caches-results-to-defaul-cache-downloads-a-large-zip"></a>
 </h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-  <span class="va">shpBuildings</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cache_csv_sf_wrapper.html">cache_csv_sf_wrapper</a></span><span class="op">(</span><span class="st">'eval_fonciere_mtl'</span>, 
-                                       fun <span class="op">=</span> <span class="va">get_zipped_remote_shapefile</span>,
-                                       url <span class="op">=</span> <span class="st">'https://data.montreal.ca/dataset/4ad6baea-4d2c-460f-a8bf-5d000db498f7/resource/43c2cccf-a439-429b-a3c8-5d4ebce53e1b/download/uniteevaluationfonciere.zip'</span>,
-                                       id_name<span class="op">=</span><span class="st">'ID_UEV'</span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: glue</span>
-<span class="co">#&gt; Loading required package: readr</span>
-<span class="co">#&gt; Loading required package: sf</span>
-<span class="co">#&gt; Linking to GEOS 3.9.1, GDAL 3.3.2, PROJ 7.2.1; sf_use_s2() is TRUE</span>
-<span class="co">#&gt; Loading required package: purrr</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'purrr'</span>
-<span class="co">#&gt; The following object is masked from 'package:magrittr':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     set_names</span>
-<span class="co">#&gt; [1] "Using default cache: /home/charles/.cache ..."</span>
-<span class="co">#&gt; Reading layer `eval_fonciere_mtl' from data source </span>
-<span class="co">#&gt;   `/home/charles/.cache/eval_fonciere_mtl.shp' using driver `ESRI Shapefile'</span>
-<span class="co">#&gt; Simple feature collection with 499864 features and 1 field</span>
-<span class="co">#&gt; Geometry type: MULTIPOLYGON</span>
-<span class="co">#&gt; Dimension:     XY</span>
-<span class="co">#&gt; Bounding box:  xmin: 267585.6 ymin: 5029232 xmax: 306671.1 ymax: 5062643</span>
-<span class="co">#&gt; Projected CRS: NAD83 / MTM zone 8</span>
-<span class="co">#&gt; Reading existing csv: </span>
-<span class="co">#&gt; /home/charles/.cache/eval_fonciere_mtl.csv</span>
-<span class="co">#&gt; /home/charles/.cache/eval_fonciere_mtl.shp...</span>
-<span class="co">#&gt; <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">499864</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">18</span></span>
-<span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span>
-<span class="co">#&gt; <span style="font-weight: bold;">Delimiter:</span> ","</span>
-<span class="co">#&gt; <span style="color: #BB0000;">chr</span> (12): ID_UEV, CIVIQUE_DE, CIVIQUE_FI, NOM_RUE, SUITE_DEBU, MUNICIPALI, L...</span>
-<span class="co">#&gt; <span style="color: #00BB00;">dbl</span>  (6): ETAGE_HORS, NOMBRE_LOG, ANNEE_CONS, CODE_UTILI, SUPERFICIE, SUPERF...</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span>
-<span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
-
-<span class="co">#Clean up </span>
-<span class="va">shpBuildings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/compound.html" class="external-link">%&lt;&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span> ANNEE_CONS <span class="op">=</span> <span class="fu">plyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyr/man/mapvalues.html" class="external-link">mapvalues</a></span><span class="op">(</span><span class="va">ANNEE_CONS</span>, from<span class="op">=</span><span class="fl">9999</span>, to<span class="op">=</span><span class="cn">NA</span><span class="op">)</span> <span class="op">)</span>
-
-<span class="co">#Sample</span>
-<span class="va">shpBuildings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/compound.html" class="external-link">%&lt;&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">sample_frac</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">0.001</span><span class="op">)</span> </code></pre></div>
+<code class="sourceCode R"><span></span>
+<span>  <span class="va">shpBuildings</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cache_csv_sf_wrapper.html">cache_csv_sf_wrapper</a></span><span class="op">(</span><span class="st">'eval_fonciere_mtl'</span>, </span>
+<span>                                       fun <span class="op">=</span> <span class="va">get_zipped_remote_shapefile</span>,</span>
+<span>                                       url <span class="op">=</span> <span class="st">'https://data.montreal.ca/dataset/4ad6baea-4d2c-460f-a8bf-5d000db498f7/resource/43c2cccf-a439-429b-a3c8-5d4ebce53e1b/download/uniteevaluationfonciere.zip'</span>,</span>
+<span>                                       id_name<span class="op">=</span><span class="st">'ID_UEV'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: glue</span></span>
+<span><span class="co">#&gt; Loading required package: readr</span></span>
+<span><span class="co">#&gt; Loading required package: sf</span></span>
+<span><span class="co">#&gt; Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE</span></span>
+<span><span class="co">#&gt; Loading required package: purrr</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'purrr'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:magrittr':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     set_names</span></span>
+<span><span class="co">#&gt; [1] "Using default cache: /sidecar/home/charles.gauvin/.cache ..."</span></span>
+<span><span class="co">#&gt; Reading layer `eval_fonciere_mtl' from data source </span></span>
+<span><span class="co">#&gt;   `/sidecar/home/charles.gauvin/.cache/eval_fonciere_mtl.shp' </span></span>
+<span><span class="co">#&gt;   using driver `ESRI Shapefile'</span></span>
+<span><span class="co">#&gt; Simple feature collection with 501591 features and 1 field</span></span>
+<span><span class="co">#&gt; Geometry type: MULTIPOLYGON</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 267585.6 ymin: 5029232 xmax: 306671.1 ymax: 5062643</span></span>
+<span><span class="co">#&gt; Projected CRS: NAD83 / MTM zone 8</span></span>
+<span><span class="co">#&gt; Reading existing csv: </span></span>
+<span><span class="co">#&gt; /sidecar/home/charles.gauvin/.cache/eval_fonciere_mtl.csv</span></span>
+<span><span class="co">#&gt; /sidecar/home/charles.gauvin/.cache/eval_fonciere_mtl.shp...</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">501591</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">18</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Delimiter:</span> ","</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">chr</span> (10): ID_UEV, NOM_RUE, SUITE_DEBU, MUNICIPALI, LETTRE_DEB, LETTRE_FIN, L...</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">dbl</span>  (8): CIVIQUE_DE, CIVIQUE_FI, ETAGE_HORS, NOMBRE_LOG, ANNEE_CONS, CODE_U...</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
+<span></span>
+<span><span class="co">#Clean up </span></span>
+<span><span class="va">shpBuildings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/compound.html" class="external-link">%&lt;&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span> ANNEE_CONS <span class="op">=</span> <span class="fu">plyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyr/man/mapvalues.html" class="external-link">mapvalues</a></span><span class="op">(</span><span class="va">ANNEE_CONS</span>, from<span class="op">=</span><span class="fl">9999</span>, to<span class="op">=</span><span class="cn">NA</span><span class="op">)</span> <span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Sample</span></span>
+<span><span class="va">shpBuildings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/compound.html" class="external-link">%&lt;&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">sample_frac</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">0.001</span><span class="op">)</span> </span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -177,76 +160,76 @@
 <h3 id="year-built">Year built<a class="anchor" aria-label="anchor" href="#year-built"></a>
 </h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-  <span class="co">#No need to get the centroids, spatialKMeans does it automatically</span>
-  <span class="va">shpBuildingsAgg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spatialKMeans.html">spatialKMeans</a></span> <span class="op">(</span><span class="va">shpBuildings</span>,
-                            numCentroids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">shpBuildings</span><span class="op">)</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span>,
-                            numClosestPoints <span class="op">=</span> <span class="fl">10</span>,
-                            var<span class="op">=</span><span class="st">"ANNEE_CONS"</span>,
-                            aggFct<span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">x</span>,na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">}</span> <span class="co">#remove NAs since we introduced some in the chunk above</span>
-  <span class="op">)</span>
-<span class="co">#&gt; Warning in st_centroid.sf(shp): st_centroid assumes attributes are constant over</span>
-<span class="co">#&gt; geometries of x</span>
-<span class="co">#&gt; Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.</span>
-<span class="co">#&gt; Using compatibility `.name_repair`.</span>
-<span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span>
-<span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</span></span>
-
-  <span class="co">#Check same crs</span>
-  <span class="fu">assertthat</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/assertthat/man/are_equal.html" class="external-link">are_equal</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="va">shpBuildingsAgg</span><span class="op">)</span>, <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="va">shpBuildings</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] TRUE</span>
-
-  <span class="co">#Number of centroids</span>
-  <span class="fu">assertthat</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/assertthat/man/are_equal.html" class="external-link">are_equal</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">shpBuildingsAgg</span><span class="op">)</span> , <span class="fl">10</span><span class="op">**</span><span class="fl">3</span><span class="op">)</span>
-<span class="co">#&gt; [1] FALSE</span>
-
-  <span class="co">#Plot to see the difference</span>
-  <span class="va">shpBuildingsAgg</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="st">'aggregated'</span>
-  <span class="va">shpBuildings</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="st">'raw'</span>
- 
-
-  <span class="va">shpBoth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">shpBuildingsAgg</span>,
-                   <span class="va">shpBuildings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">shpBuildingsAgg</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
- 
-
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">shpBoth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>col<span class="op">=</span><span class="va">ANNEE_CONS</span><span class="op">)</span> <span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">id</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span> 
-    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span>base_family<span class="op">=</span><span class="st">"Roboto Condensed"</span>, base_size<span class="op">=</span><span class="fl">11.5</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_color_viridis_c</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span>  <span class="co">#No need to get the centroids, spatialKMeans does it automatically</span></span>
+<span>  <span class="va">shpBuildingsAgg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spatialKMeans.html">spatialKMeans</a></span> <span class="op">(</span><span class="va">shpBuildings</span>,</span>
+<span>                            numCentroids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">shpBuildings</span><span class="op">)</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span>,</span>
+<span>                            numClosestPoints <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>                            var<span class="op">=</span><span class="st">"ANNEE_CONS"</span>,</span>
+<span>                            aggFct<span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">x</span>,na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">}</span> <span class="co">#remove NAs since we introduced some in the chunk above</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in st_centroid.sf(shp): st_centroid assumes attributes are constant over</span></span>
+<span><span class="co">#&gt; geometries of x</span></span>
+<span><span class="co">#&gt; Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.</span></span>
+<span><span class="co">#&gt; Using compatibility `.name_repair`.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</span></span></span>
+<span></span>
+<span>  <span class="co">#Check same crs</span></span>
+<span>  <span class="fu">assertthat</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/assertthat/man/are_equal.html" class="external-link">are_equal</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="va">shpBuildingsAgg</span><span class="op">)</span>, <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="va">shpBuildings</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span></span>
+<span>  <span class="co">#Number of centroids</span></span>
+<span>  <span class="fu">assertthat</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/assertthat/man/are_equal.html" class="external-link">are_equal</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">shpBuildingsAgg</span><span class="op">)</span> , <span class="fl">10</span><span class="op">**</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] FALSE</span></span>
+<span></span>
+<span>  <span class="co">#Plot to see the difference</span></span>
+<span>  <span class="va">shpBuildingsAgg</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="st">'aggregated'</span></span>
+<span>  <span class="va">shpBuildings</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="st">'raw'</span></span>
+<span> </span>
+<span></span>
+<span>  <span class="va">shpBoth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">shpBuildingsAgg</span>,</span>
+<span>                   <span class="va">shpBuildings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">shpBuildingsAgg</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span> </span>
+<span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">shpBoth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>col<span class="op">=</span><span class="va">ANNEE_CONS</span><span class="op">)</span> <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">id</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span>base_family<span class="op">=</span><span class="st">"Roboto Condensed"</span>, base_size<span class="op">=</span><span class="fl">11.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_color_viridis_c</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="spatialKMeans_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="area-grouped-by-type">Area grouped by type<a class="anchor" aria-label="anchor" href="#area-grouped-by-type"></a>
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="co">#Keep the most prevalent groups and make sure to have at least 10 observations so that propToKeep = 0.1 does not fail after</span>
-<span class="va">top_cat</span> <span class="op">&lt;-</span> <span class="va">shpBuildings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_drop_geometry</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">LIBELLE_UT</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/top_n.html" class="external-link">top_n</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">10</span><span class="op">)</span>
-<span class="co">#&gt; Selecting by n</span>
-
-<span class="va">shpBuildingsAgg_by_build_type</span> <span class="op">&lt;-</span> <span class="fu">map_dfr</span><span class="op">(</span>
-  <span class="va">top_cat</span><span class="op">$</span><span class="va">LIBELLE_UT</span>,
-  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-    <span class="fu"><a href="../reference/spatialKMeans.html">spatialKMeans</a></span> <span class="op">(</span>shp <span class="op">=</span> <span class="va">shpBuildings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">LIBELLE_UT</span> <span class="op">==</span> <span class="va">x</span> <span class="op">)</span> ,
-                 propToKeep <span class="op">=</span> <span class="fl">0.1</span>,
-                 numClosestPoints <span class="op">=</span> <span class="fl">10</span>,
-                 var<span class="op">=</span><span class="st">"SUPERFICIE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>LIBELLE_UT <span class="op">=</span> <span class="va">x</span><span class="op">)</span>
-  <span class="op">}</span>
-<span class="op">)</span>
-<span class="co">#&gt; Warning in st_centroid.sf(shp): st_centroid assumes attributes are constant over</span>
-<span class="co">#&gt; geometries of x</span>
-
-<span class="co">#&gt; Warning in st_centroid.sf(shp): st_centroid assumes attributes are constant over</span>
-<span class="co">#&gt; geometries of x</span>
- 
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">shpBuildingsAgg_by_build_type</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>col<span class="op">=</span><span class="va">SUPERFICIE</span><span class="op">)</span> <span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">LIBELLE_UT</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span>base_family<span class="op">=</span><span class="st">"Roboto Condensed"</span>, base_size<span class="op">=</span><span class="fl">11.5</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_color_viridis_c</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="co">#Keep the most prevalent groups and make sure to have at least 10 observations so that propToKeep = 0.1 does not fail after</span></span>
+<span><span class="va">top_cat</span> <span class="op">&lt;-</span> <span class="va">shpBuildings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_drop_geometry</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">LIBELLE_UT</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/top_n.html" class="external-link">top_n</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Selecting by n</span></span>
+<span></span>
+<span><span class="va">shpBuildingsAgg_by_build_type</span> <span class="op">&lt;-</span> <span class="fu">map_dfr</span><span class="op">(</span></span>
+<span>  <span class="va">top_cat</span><span class="op">$</span><span class="va">LIBELLE_UT</span>,</span>
+<span>  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="../reference/spatialKMeans.html">spatialKMeans</a></span> <span class="op">(</span>shp <span class="op">=</span> <span class="va">shpBuildings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">LIBELLE_UT</span> <span class="op">==</span> <span class="va">x</span> <span class="op">)</span> ,</span>
+<span>                 propToKeep <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>                 numClosestPoints <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>                 var<span class="op">=</span><span class="st">"SUPERFICIE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>LIBELLE_UT <span class="op">=</span> <span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in st_centroid.sf(shp): st_centroid assumes attributes are constant over</span></span>
+<span><span class="co">#&gt; geometries of x</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in st_centroid.sf(shp): st_centroid assumes attributes are constant over</span></span>
+<span><span class="co">#&gt; geometries of x</span></span>
+<span> </span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">shpBuildingsAgg_by_build_type</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>col<span class="op">=</span><span class="va">SUPERFICIE</span><span class="op">)</span> <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">LIBELLE_UT</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span>base_family<span class="op">=</span><span class="st">"Roboto Condensed"</span>, base_size<span class="op">=</span><span class="fl">11.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_color_viridis_c</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="spatialKMeans_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
 </div>
@@ -269,8 +252,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

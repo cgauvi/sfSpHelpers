@@ -9,9 +9,6 @@ scale_geom_df(df, scale_factor = 0.75, proj_new = NULL)
 \arguments{
 \item{scale_factor}{}
 }
-\value{
-
-}
 \description{
 Convert to projected coordinates before performing the affine transformation
 }

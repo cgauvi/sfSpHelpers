@@ -70,33 +70,46 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">spatialKMeans</span><span class="op">(</span>
-  <span class="va">shp</span>,
-  <span class="va">var</span>,
-  numCentroids <span class="op">=</span> <span class="cn">NULL</span>,
-  propToKeep <span class="op">=</span> <span class="cn">NULL</span>,
-  numClosestPoints <span class="op">=</span> <span class="fl">10</span>,
-  aggFct <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>     <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">}</span>,
-  iter.max <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="fl">3</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">spatialKMeans</span><span class="op">(</span></span>
+<span>  <span class="va">shp</span>,</span>
+<span>  <span class="va">var</span>,</span>
+<span>  numCentroids <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  propToKeep <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  numClosestPoints <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  aggFct <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span> <span class="op">}</span>,</span>
+<span>  iter.max <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="fl">3</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>var</dt>
 <dd><p>- string - variable to summarise</p></dd>
+
+
 <dt>numCentroids</dt>
 <dd><p>number of representative points to take (use EITHER numCentroids or numClosestPoints)</p></dd>
+
+
 <dt>numClosestPoints</dt>
 <dd><p>- analogous to bandwidth - larger number reduces the variance (use EITHER numCentroids or numClosestPoints)</p></dd>
+
+
 <dt>aggFct</dt>
 <dd><p>- function to use to summarise - e.g. median or mean</p></dd>
+
+
 <dt>iter.max</dt>
 <dd><p>max number of iterations for kmeans</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>shpCentroids with column var</p>
+    
+
+<p>shpCentroids with column var</p>
     </div>
 
   </div>
@@ -111,8 +124,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

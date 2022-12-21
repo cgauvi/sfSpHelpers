@@ -16,9 +16,6 @@ remove_line_endpoints_lwgeom(
 
 \item{min_proportion_remove}{proportion to remove EACH SIDE: so 2X for total removed}
 }
-\value{
-
-}
 \description{
 Wrapper over lwgeom::st_linesubstring with possibility to either use meters or
 }

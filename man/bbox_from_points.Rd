@@ -9,9 +9,6 @@ bbox_from_points(list_lng, list_lat, crs = 4326)
 \arguments{
 \item{crs}{}
 }
-\value{
-
-}
 \description{
 Can work with up to 2 points
 }

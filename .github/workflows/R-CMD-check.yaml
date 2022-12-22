@@ -70,6 +70,7 @@ jobs:
         if: github.event_name == 'pull_request'
         run: |
           # Run curl -- https://stackoverflow.com/questions/38906626/curl-to-return-http-status-code-along-with-the-response
+          echo "Trying with $GITHUB_PAT"
           http_response=$(curl -s -o response.txt -w "%{http_code}"  \
               -X POST \
               -H "Accept: application/vnd.github+json" \

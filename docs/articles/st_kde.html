@@ -134,7 +134,7 @@
 <span>  <span class="co">#Neighborhoods</span></span>
 <span>  <span class="va">shp_neigh</span> <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/get_zipped_remote_shapefile.html">get_zipped_remote_shapefile</a></span><span class="op">(</span><span class="st">"https://www.donneesquebec.ca/recherche/dataset/5b1ae6f2-6719-46df-bd2f-e57a7034c917/resource/508594dc-b090-407c-9489-73a1b46a8477/download/vdq-quartier.zip"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Downloading to tmp directory"</span></span>
-<span><span class="co">#&gt; Reading layer `vdq-quartier' from data source `/sidecar/tmp/Rtmp72DxFU' using driver `ESRI Shapefile'</span></span>
+<span><span class="co">#&gt; Reading layer `vdq-quartier' from data source `/sidecar/tmp/Rtmp8jmoFy' using driver `ESRI Shapefile'</span></span>
 <span><span class="co">#&gt; Simple feature collection with 35 features and 4 fields</span></span>
 <span><span class="co">#&gt; Geometry type: MULTIPOLYGON</span></span>
 <span><span class="co">#&gt; Dimension:     XYZ</span></span>
@@ -227,8 +227,12 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span> color <span class="op">=</span> <span class="st">'none'</span>, fill <span class="op">=</span> <span class="st">'none'</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Quebec city remakable tree density"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"2D kernel density estimate"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"Source: https://www.donneesquebec.ca"</span><span class="op">)</span></span></code></pre></div>
+<span>         caption <span class="op">=</span><span class="st">'Source: https://www.donneesquebec.ca - vdq-arbrepotentielremarquable.geojson'</span><span class="op">)</span></span></code></pre></div>
 <p><img src="st_kde_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggsave</a></span><span class="op">(</span><span class="st">'tree_kde.png'</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span>
+<span> </span></code></pre></div>
 </div>
 </div>
   </div>

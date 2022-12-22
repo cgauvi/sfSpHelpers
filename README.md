@@ -46,18 +46,18 @@ shp_polyons <- get_polygon_heatmap(shp_trees , bw=.001, gsize=500 )
  
 #Can use the colors produced automatically, but this is a red to yellow gradient 
 ggplot(shp_polyons)+
-    geom_sf(aes( fill = colors),lwd=0) +
-    scale_fill_viridis_d() +
-    geom_sf(data=shp_neigh, aes(col=NOM),alpha=0) + 
-    ggplot2::theme_minimal(base_family="Roboto Condensed", base_size=11.5) +
-    theme(legend.position = 'none') + 
-    ggtitle('Exceptional tree density') + 
-    coord_sf(datum=NA) + 
-    labs(subtitle = 'Quebec City neighborhoods',
+  geom_sf( aes(fill=colors) ,lwd=0) +
+  geom_sf(data=shp_neigh, aes(col=NOM),alpha=0) + 
+  scale_fill_viridis_d()+
+  coord_sf(datum = NA) + 
+  ggplot2::theme_minimal(base_family="Roboto Condensed", base_size=11.5) +
+  guides( color = 'none', fill = 'none') +
+  ggtitle("Quebec city remakable tree density") + 
+  labs(subtitle = "2D kernel density estimate",
          caption ='Source: https://www.donneesquebec.ca - vdq-arbrepotentielremarquable.geojson')
 ```
 
-<img src="https://github.com/cgauvi/sfSpHelpers/blob/master/tree_kde.png" width="100%" />
+<img src="https://github.com/cgauvi/sfSpHelpers/raw/master/tree_kde.png" width="50%" />
 
 See the [vignettes](https://cgauvi.github.io/sfSpHelpers/) for more
 details.

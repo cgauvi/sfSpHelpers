@@ -111,7 +111,9 @@ ggplot(shp_polyons)+
   guides( color = 'none', fill = 'none') +
   ggtitle("Quebec city remakable tree density") + 
   labs(subtitle = "2D kernel density estimate",
-       caption = "Source: https://www.donneesquebec.ca")
+         caption ='Source: https://www.donneesquebec.ca - vdq-arbrepotentielremarquable.geojson')
+
+ggsave('tree_kde.png', width = 7, height = 7)
  
 
 ```

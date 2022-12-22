@@ -62,15 +62,17 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           Rscript -e 'pkgdown::build_site()'
+
       - name: Clean errors and artefacts
         run: |
-          rm .github/depends.Rds
-          rm .github/R-version
-          rm docs/pull_request_template.html
+          [ ! -f .github/depends.Rds ] || rm .github/depends.Rds
+          [ ! -f .github/R-version ] || rm .github/R-version
+          [ ! -f docs/pull_request_template.html ] || rm docs/pull_request_template.html
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ env.GITHUB_PAT }}
           commit-message: Update package documentation
           title: 'Package documentation'
           body: >

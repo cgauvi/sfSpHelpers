@@ -47,6 +47,12 @@ jobs:
             website
             coverage
 
+      - name: Query dependencies
+        run: |
+          if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+        shell: Rscript {0}
 
       - name: Cache R packages
         uses: actions/cache@v2
@@ -62,16 +68,16 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # Install based on Imports in DESCRIPTIOn
-          if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")
+          install.packages('renv')
+          # CRAN packages
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
 
-      - name: rcmdcheck::rcmdcheck without vignettes
+      - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_: false
         run: |
-          if (!requireNamespace("rcmdcheck", quietly = TRUE)) install.packages("rcmdcheck")
-          results = rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--no-multiarch", "--no-build-vignettes"), error_on = "error", check_dir = "check")
+          install.packages("rcmdcheck")
+          results = rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--no-multiarch"), error_on = "error", check_dir = "check")
           if (results$status == 0) file.create("run_ok")
         shell: Rscript {0}

@@ -39,6 +39,7 @@ jobs:
             any::rmarkdown,
             any::testthat
             any::sessioninfo
+            any::pkgdown
           needs: |
             website
             coverage

@@ -33,7 +33,8 @@ Imports:
     assertthat,
     mapview,
     tidyverse,
-    stringr
+    stringr,
+    methods
 Suggests:
     knitr,
     rmarkdown,

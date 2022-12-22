@@ -1,15 +1,16 @@
 
 #' Download a (zipped) shp file from a url
 #'
-#' @param url
+#' @param url_download
 #' @param dirToDownload
 #'
 #' @return shp downloaded shp file
 #' @export
-get_zipped_remote_shapefile <- function(url, dirToDownload=NA){
+get_zipped_remote_shapefile <- function(url_download, dirToDownload=NA){
 
-  assertthat::assert_that(grepl('.tgz$|.tar.gz$|.zip$',url))
+  assertthat::assert_that(grepl('.tgz$|.tar.gz$|.zip$',url_download))
 
+  # Point to correct directory: might be temp
   delete_tmp_dir <- F
   if(is.na(dirToDownload) | is.null(dirToDownload) ){
     print('Downloading to tmp directory')
@@ -20,26 +21,38 @@ get_zipped_remote_shapefile <- function(url, dirToDownload=NA){
   }
   temp_file <- tempfile()
 
-  download.file(url,temp_file)
+  # Download zipped file
+  if(!file.exists(temp_file)){
+    warning("Warning! fuckup with tmp files: forcewriting to data dir")
+    temp_file <- here::here('data', 'fallback_temp_fuckup')
+  }
+  download.file(url_download,temp_file)
 
-
-  if(grepl('.tgz$|.tar.gz$',url)){
-    utils::untar(temp_file, exdir = dir_dl ) #overwrites by default: https://stackoverflow.com/questions/51050502/what-does-tar-overwrite-actually-do-or-not-do
-  } else if(grepl('.zip$',url)){
-    utils::unzip(temp_file, exdir =dir_dl,overwrite = T)
+  # Unzip
+  if(grepl('.tgz$|.tar.gz$',url_download)){
+    utils::untar(temp_file, exdir = dir_dl) #overwrites by default: https://stackoverflow.com/questions/51050502/what-does-tar-overwrite-actually-do-or-not-do
+  } else if(grepl('.zip$',url_download)){
+    utils::unzip(temp_file, exdir = dir_dl, overwrite = T)
   } else{
     stop('Unsupported filetype')
   }
 
-  # Try to get the file or dir to read
-  to_read <-  basename(url)
-  to_read_no_zip <- tools::file_path_sans_ext(to_read)
 
-  shp <- sf::st_read(to_read_no_zip)
+  shp <- tryCatch({
+    # Read the directory (e.g. shp folder)
+    sf::st_read(dir_dl)
+  },error = function(e){
+    # Read a single file (e.g. geojson)
+    file_donwloaded <-  basename(url_download) # basename
+    file_donwloaded <- gsub(x= file_donwloaded, pattern = '.tgz$|.tar.gz$|.zip$', replacement =  '')# remove the .zip at the end
+    sf::st_read(file.path(dir_dl,file_donwloaded))
+  })
+
 
   #Clean up: important, otherwise we might read in files we downloaded in the past
   unlink(temp_file)
-  if (delete_tmp_dir) unlink(dir_dl) #dont delete existing dir
+  if (delete_tmp_dir)  tryCatch(unlink(dir_dl, recursive = T), error = function(e) print("Error when deleting tmp dir") ) #dont delete existing dir
+
 
   return(shp)
 

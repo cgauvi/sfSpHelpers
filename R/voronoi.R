@@ -55,7 +55,7 @@ getVoronoiInterpolation <- function(shp,
     print(glue::glue("Warning! there are {dplyr::n_distinct(voronoi$id) - dplyr::n_distinct(shpByCell$id)} missing voronoi cells "))
   }
 
-  #Add back the average to the original polygons
+  #Add back the aggregated values to the original polygons
   voronoi %<>% dplyr::left_join(shpByCell %>% sf::st_set_geometry(NULL),
                                 by='id')
 

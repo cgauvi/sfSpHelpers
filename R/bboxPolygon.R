@@ -118,11 +118,11 @@ bbox_from_points <- function(list_lng, list_lat, crs=4326){
 #'
 #' }
 bbox_from_vector <- function(v,
-                        crs,
-                        x_name_min="xmin" ,
-                        y_name_min="ymin",
-                        x_name_max="xmax" ,
-                        y_name_max="ymax"){
+                             crs,
+                             x_name_min="xmin" ,
+                             y_name_min="ymin",
+                             x_name_max="xmax" ,
+                             y_name_max="ymax"){
 
   require(magrittr)
   require(sf)
@@ -160,14 +160,13 @@ bbox_from_vector <- function(v,
 #'
 #' @param shp_bbox
 #'
-#' @importFrom magrittr %<>%
 #'
 #' @return logical/boolean T for ok F for warning
 #'
 bbox_validation <- function(shp_bbox){
 
   #Make valid & check
-  shp_bbox %<>% st_make_valid()
+  shp_bbox <- sf::st_make_valid(shp_bbox)
 
   if(units::drop_units(st_area(shp_bbox)) == 0){
     warning('Waring! The bounding box has 0 area: are points unique? is affine dimension 2?')

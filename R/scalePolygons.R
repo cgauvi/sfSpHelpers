@@ -27,8 +27,18 @@ scale_geom_sfc <- function(sf_to_scale,
 #' @param df
 #' @param scale_factor
 #'
+#' @importFrom magrittr %<>%
+#'
 #' @return
 #' @export
+#'
+#' @example
+#' \dontrun{
+#'   library(SfSpHelpers)
+#'   file_name <- system.file("shape/nc.shp", package="sf")
+#'   nc <- sf::st_read(file_name)
+#'   nc_scaled <- scale_geom_df(nc, scale_factor = 0.5)
+#' }
 #'
 scale_geom_df <- function(df,
                           scale_factor=0.75,
@@ -88,7 +98,7 @@ scale_geom_df <- function(df,
 
   #Return the same structure as what was initially input
   if(is_multi_poly){
-    df %<>% sf::st_union() %>% sf::st_sf()
+    df %<>% sf::st_sf()
   }
 
   return(df)

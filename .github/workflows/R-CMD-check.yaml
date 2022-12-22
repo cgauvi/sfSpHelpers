@@ -65,7 +65,7 @@ jobs:
         run: |
           results = rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--no-multiarch", "--no-examples"), error_on = "error", check_dir = "check")
           if (results$status == 0) file.create("run_ok")
-          else print(results)
+          else tryCatch(cat('/home/runner/work/sfSpHelpers/sfSpHelpers/check/SfSpHelpers.Rcheck/00check.log'), error=function(e) print('cannot inspect logs'))
         shell: Rscript {0}
 
       - name: Trigger doc workflow

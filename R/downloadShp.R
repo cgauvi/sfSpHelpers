@@ -19,7 +19,7 @@ get_zipped_remote_shapefile <- function(url, dirToDownload=NA){
     dir_dl <- dirToDownload
   }
   temp_file <- tempfile()
-  
+
   download.file(url,temp_file)
 
 
@@ -31,11 +31,15 @@ get_zipped_remote_shapefile <- function(url, dirToDownload=NA){
     stop('Unsupported filetype')
   }
 
+  # Try to get the file or dir to read
+  to_read <-  basename(url)
+  to_read_no_zip <- tools::file_path_sans_ext(to_read)
 
-  shp <- sf::st_read(dir_dl)
+  shp <- sf::st_read(to_read_no_zip)
 
+  #Clean up: important, otherwise we might read in files we downloaded in the past
   unlink(temp_file)
-  if(delete_tmp_dir) unlink(dir_dl)
+  if (delete_tmp_dir) unlink(dir_dl) #dont delete existing dir
 
   return(shp)
 

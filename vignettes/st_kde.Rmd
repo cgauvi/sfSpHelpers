@@ -106,8 +106,12 @@ ggplot(shp_polyons)+
   geom_sf( aes(fill=colors) ,lwd=0) +
   geom_sf(data=shp_neigh, aes(col=NOM),alpha=0) + 
   scale_fill_viridis_d()+
+  coord_sf(datum = NA) + 
   ggplot2::theme_minimal(base_family="Roboto Condensed", base_size=11.5) +
-  theme(legend.position = 'none')
+  guides( color = 'none', fill = 'none') +
+  ggtitle("Quebec city remakable tree density") + 
+  labs(subtitle = "2D kernel density estimate",
+       caption = "Source: https://www.donneesquebec.ca")
  
 
 ```

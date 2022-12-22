@@ -4,7 +4,7 @@
 \alias{get_zipped_remote_shapefile}
 \title{Download a (zipped) shp file from a url}
 \usage{
-get_zipped_remote_shapefile(url, dirToDownload = NA)
+get_zipped_remote_shapefile(url_download, dirToDownload = NA)
 }
 \arguments{
 \item{dirToDownload}{}

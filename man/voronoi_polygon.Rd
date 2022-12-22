@@ -25,6 +25,7 @@ is messing up R CMD CHECK
 Create a Voronoi diagram for analysis or plotting with \code{\link[ggplot2]{geom_polygon}}.
 }
 \examples{
+\dontrun{
 set.seed(45056)
 x <- sample(1:200,100)
 y <- sample(1:200,100)
@@ -39,6 +40,7 @@ vor_df <- fortify_voronoi(vor_spdf)
 
 ggplot(vor_df) +
     geom_polygon(aes(x=x,y=y,fill=distance,group=group))
+}
 }
 \keyword{choropleth}
 \keyword{voronoi,}

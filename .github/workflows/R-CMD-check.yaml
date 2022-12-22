@@ -62,7 +62,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # CRAN packages
+          # Install based on Imports in DESCRIPTIOn
+          if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
 
@@ -70,7 +71,7 @@ jobs:
         env:
           _R_CHECK_CRAN_INCOMING_: false
         run: |
-          install.packages("rcmdcheck")
+          if (!requireNamespace("rcmdcheck", quietly = TRUE)) install.packages("rcmdcheck")
           results = rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--no-multiarch", "--no-build-vignettes"), error_on = "error", check_dir = "check")
           if (results$status == 0) file.create("run_ok")
         shell: Rscript {0}

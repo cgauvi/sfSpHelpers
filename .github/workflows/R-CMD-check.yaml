@@ -40,11 +40,11 @@ jobs:
         with:
           cache-version: 2
           extra-packages: |
-            local::rcmdcheck
-            local::knitr
-            local::rmarkdown,
-            local::testthat
-            local::sessioninfo
+            any::rcmdcheck
+            any::knitr
+            any::rmarkdown,
+            any::testthat
+            any::sessioninfo
           needs: |
             website
             coverage

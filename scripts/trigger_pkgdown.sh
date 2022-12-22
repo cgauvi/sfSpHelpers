@@ -15,5 +15,7 @@ if [ $http_response != "204" ]; then
   echo "Error with http response"
   cat response.txt >&2
   exit 1
+else
+  echo "Successfully pinged github api"
 fi
 

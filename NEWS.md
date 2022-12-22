@@ -1,4 +1,14 @@
 
+
+sfSpHelpers v0.6 17519c486aeda413707f8d59101df8b3d6f5b1d5  December 22 2022
+==============
+
+Changes:
+
+* Debugged download zip shp : should work when run multiple times with different files
+* More examples and documentation
+
+
 sfSpHelpers v0.5 786f583d5a137f8c17a4beee263f938619fa5666 September 12 2022
 ==============
 

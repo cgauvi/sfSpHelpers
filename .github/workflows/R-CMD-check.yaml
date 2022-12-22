@@ -66,18 +66,17 @@ jobs:
       - name: Pandoc setup
         uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Install dependencies
+      - name: Install dependencies using renv
         run: |
           install.packages('renv')
-          # CRAN packages
-          remotes::install_deps(dependencies = TRUE)
+          renv::activate()
+          renv::restore()
         shell: Rscript {0}
 
-      - name: Check
+      - name: Check (rcmdcheck should be in renv.lock)
         env:
           _R_CHECK_CRAN_INCOMING_: false
         run: |
-          install.packages("rcmdcheck")
           results = rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--no-multiarch"), error_on = "error", check_dir = "check")
           if (results$status == 0) file.create("run_ok")
         shell: Rscript {0}

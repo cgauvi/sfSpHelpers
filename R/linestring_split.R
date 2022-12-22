@@ -69,7 +69,6 @@ split_lines <- function(input_lines, max_length, id = "ID") {
 #'
 #' @return
 #'
-#' @examples
 split_lines_remove_line_endpoints <- function(shp_line,id_col, min_distance_m_to_remove=10){
 
   #Quick tests
@@ -109,7 +108,6 @@ split_lines_remove_line_endpoints <- function(shp_line,id_col, min_distance_m_to
 #'
 #' @return
 #'
-#' @examples
 #'
 #' @param shp_line
 #' @param id_col
@@ -118,8 +116,6 @@ split_lines_remove_line_endpoints <- function(shp_line,id_col, min_distance_m_to
 #' @importFrom dplyr group_by summarise
 #'
 #' @return
-#'
-#' @examples
 remove_line_endpoints_from_split <- function(shp_line,id_col, min_distance_m_to_remove=10){
 
   lines_return <- split_lines_remove_line_endpoints(shp_line,id_col, min_distance_m_to_remove=10)
@@ -150,7 +146,6 @@ remove_line_endpoints_from_split <- function(shp_line,id_col, min_distance_m_to_
 #'
 #' @return
 #'
-#' @examples
 remove_line_endpoints_lwgeom <- function(shp_line,
                                          id_col,
                                          min_distance_m_to_remove=NULL,
@@ -205,7 +200,6 @@ remove_line_endpoints_lwgeom <- function(shp_line,
 #' @return
 #' @export
 #'
-#' @examples
 remove_line_endpoints <- function(shp_lines,
                                   id_col,
                                   min_distance_m_to_remove=NULL,

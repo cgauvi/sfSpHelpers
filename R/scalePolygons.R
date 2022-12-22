@@ -6,7 +6,6 @@
 #'
 #' @return
 #'
-#' @examples
 scale_geom_sfc <- function(sf_to_scale,
                            scale_factor=0.75){
 
@@ -31,7 +30,6 @@ scale_geom_sfc <- function(sf_to_scale,
 #' @return
 #' @export
 #'
-#' @examples
 scale_geom_df <- function(df,
                           scale_factor=0.75,
                           proj_new = NULL

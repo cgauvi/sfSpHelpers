@@ -6,6 +6,9 @@
 #' @param shp sf or sfc object that we want to bound within some box
 #' @param buffer dist to add around the bounding box to avoid the weird boundary effects
 #'
+#'
+#' @importFrom magrittr %<>%
+#'
 #' @export
 #'
 #' @return st_polygon forming a box
@@ -156,6 +159,8 @@ bbox_from_vector <- function(v,
 #' Util to check if the bbox polygon produced is valid or not
 #'
 #' @param shp_bbox
+#'
+#' @importFrom magrittr %<>%
 #'
 #' @return logical/boolean T for ok F for warning
 #'

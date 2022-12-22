@@ -9,7 +9,6 @@
 #' @return voronoi, sf object with col varToInterpolate
 #' @export
 #'
-#' @examples
 getVoronoiInterpolation <- function(shp,
                                     varToInterpolate,
                                     fctToAggregate=mean){
@@ -82,6 +81,7 @@ getVoronoiInterpolation <- function(shp,
 #' @importFrom methods slot
 #' @export
 #' @examples
+#' \dontrun{
 #' set.seed(45056)
 #' x <- sample(1:200,100)
 #' y <- sample(1:200,100)
@@ -96,6 +96,7 @@ getVoronoiInterpolation <- function(shp,
 #'
 #' ggplot(vor_df) +
 #'     geom_polygon(aes(x=x,y=y,fill=distance,group=group))
+#'}
 voronoi_polygon = function(data, x = 'x', y = 'y', outline = NULL, data.frame=FALSE)
 {
   require(sp)

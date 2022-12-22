@@ -41,7 +41,8 @@ jobs:
           cache-version: 2
           extra-packages: |
             any::rcmdcheck
-            any::knitr
+            any
+            ::knitr
             any::rmarkdown,
             any::testthat
             any::sessioninfo
@@ -63,5 +64,5 @@ jobs:
         env:
           _R_CHECK_CRAN_INCOMING_: false
         run: |
-          results = rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--no-multiarch"), error_on = "error", check_dir = "check")
+          results = rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--no-multiarch", "--no-examples"), error_on = "error", check_dir = "check")
         shell: Rscript {0}

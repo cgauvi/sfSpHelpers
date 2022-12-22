@@ -2,9 +2,12 @@
 
 test_that("zipped geojson - tmp dir", {
 
+  existing_dir_to_dl <- "data_dl"
+  if(dir.exists(existing_dir_to_dl)) unlink(existing_dir_to_dl, recursive = T)
+  dir.create(existing_dir_to_dl)
 
   zippedShpFileUrl <- "https://data.montreal.ca/dataset/4ad6baea-4d2c-460f-a8bf-5d000db498f7/resource/866a3dbc-8b59-48ff-866d-f2f9d3bbee9d/download/uniteevaluationfonciere.geojson.zip"
-  shp <- get_zipped_remote_shapefile(zippedShpFileUrl)
+  shp <- get_zipped_remote_shapefile(zippedShpFileUrl, existing_dir_to_dl)
 
   expect_true( any(grepl('sf', class(shp))))
   expect_true(nrow(shp) >=4)

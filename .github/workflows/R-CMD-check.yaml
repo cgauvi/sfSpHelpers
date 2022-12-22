@@ -40,10 +40,11 @@ jobs:
         with:
           cache-version: 2
           extra-packages: |
-            any::rcmdcheck
-            any::knitr
-            any::rmarkdown,
-            any::testthat
+            local::rcmdcheck
+            local::knitr
+            local::rmarkdown,
+            local::testthat
+            local::sessioninfo
           needs: |
             website
             coverage
@@ -51,13 +52,16 @@ jobs:
       - name: Pandoc setup
         uses: r-lib/actions/setup-pandoc@v2
 
+      - name: Session info
+        run: |
+          options(width = 100)
+          pkgs <- installed.packages()[, "Package"]
+          sessioninfo::session_info(pkgs, include_base = TRUE)
+        shell: Rscript {0}
 
       - name: Check (rcmdcheck should be in renv.lock)
         env:
           _R_CHECK_CRAN_INCOMING_: false
         run: |
-          install.packages('renv')
-          renv::activate()
-          renv::restore()
           results = rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--no-multiarch"), error_on = "error", check_dir = "check")
         shell: Rscript {0}

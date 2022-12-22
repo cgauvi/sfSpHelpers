@@ -1,15 +1,10 @@
 on:
   workflow_dispatch
 
-
 name: pkgdown
 
 jobs:
   pkgdown:
-
-    runs-on: ${{ matrix.config.os }}
-
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
 
     strategy:
       fail-fast: false
@@ -17,8 +12,15 @@ jobs:
         config:
           - {os: ubuntu-22.04, r: 'release', renv: '~/.local/share/renv'}
 
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
     env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      RSPM: ${{ matrix.config.rspm }}
+      GITHUB_PAT: ${{ secrets.LA_CAP_GH_PAT_V3 }}
+      R_RENV_CACHE_DIR: ${{ matrix.config.renv }}
 
     steps:
       - uses: actions/checkout@v2
@@ -28,12 +30,10 @@ jobs:
           use-public-rspm: true
           r-version: ${{ matrix.config.r }}
 
-      - name: Lib dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
+      - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           cache-version: 2
           extra-packages: |
-            any::pkgdown
             any::rcmdcheck
             any::knitr
             any::rmarkdown,
@@ -43,21 +43,17 @@ jobs:
             website
             coverage
 
-      - name: Query dependencies
+      - name: Pandoc setup
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Session info
         run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+          options(width = 100)
+          pkgs <- installed.packages()[, "Package"]
+          sessioninfo::session_info(pkgs, include_base = TRUE)
         shell: Rscript {0}
 
-      - name: Cache R packages
-        uses: actions/cache@v1
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
-
-      - name: Install this (ben.R.utils) package
+      - name: Install this (sfSpHelpers) package
         run: R CMD INSTALL .
 
       - name: Deploy new doc

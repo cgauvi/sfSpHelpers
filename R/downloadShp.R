@@ -21,11 +21,18 @@ get_zipped_remote_shapefile <- function(url_download, dirToDownload=NA){
   }
   temp_file <- tempfile()
 
-  # Download zipped file
+  # make sure files exist
   if(!file.exists(temp_file)){
     warning("Warning! fuckup with tmp files: forcewriting to data dir")
-    temp_file <- here::here('data', 'fallback_temp_fuckup')
+    temp_file <- here::here('data', 'fallback_temp_file_fuckup')
   }
+
+  if(!dir.exists(dir_dl)){
+    warning("Warning! fuckup with tmp dir: forcewriting to data dir")
+    dir_dl <- here::here('data', 'fallback_temp_dir_fuckup')
+  }
+
+  # Download zipped file
   download.file(url_download,temp_file)
 
   # Unzip

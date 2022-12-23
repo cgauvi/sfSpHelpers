@@ -125,26 +125,22 @@
 <span><span class="co">#&gt; The following object is masked from 'package:magrittr':</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     set_names</span></span>
-<span><span class="co">#&gt; [1] "Using default cache: /sidecar/home/charles.gauvin/.cache ..."</span></span>
-<span><span class="co">#&gt; Reading layer `eval_fonciere_mtl' from data source </span></span>
-<span><span class="co">#&gt;   `/sidecar/home/charles.gauvin/.cache/eval_fonciere_mtl.shp' </span></span>
-<span><span class="co">#&gt;   using driver `ESRI Shapefile'</span></span>
-<span><span class="co">#&gt; Simple feature collection with 501591 features and 1 field</span></span>
+<span><span class="co">#&gt; [1] "Using default cache: /home/runner/.cache ..."</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/eval_fonciere_mtl.zip does not exist yet - running get_zipped_remote_shapefile ...</span></span>
+<span><span class="co">#&gt; [1] "Downloading to tmp directory"</span></span>
+<span><span class="co">#&gt; Warning in fun(...): Warning! fuckup with tmp files: forcewriting to data dir</span></span>
+<span><span class="co">#&gt; Reading layer `uniteevaluationfonciere' from data source `/tmp/RtmpuOs16u' using driver `ESRI Shapefile'</span></span>
+<span><span class="co">#&gt; Simple feature collection with 501591 features and 18 fields</span></span>
 <span><span class="co">#&gt; Geometry type: MULTIPOLYGON</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: 267585.6 ymin: 5029232 xmax: 306671.1 ymax: 5062643</span></span>
 <span><span class="co">#&gt; Projected CRS: NAD83 / MTM zone 8</span></span>
-<span><span class="co">#&gt; Reading existing csv: </span></span>
-<span><span class="co">#&gt; /sidecar/home/charles.gauvin/.cache/eval_fonciere_mtl.csv</span></span>
-<span><span class="co">#&gt; /sidecar/home/charles.gauvin/.cache/eval_fonciere_mtl.shp...</span></span>
-<span><span class="co">#&gt; <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">501591</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">18</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: bold;">Delimiter:</span> ","</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">chr</span> (10): ID_UEV, NOM_RUE, SUITE_DEBU, MUNICIPALI, LETTRE_DEB, LETTRE_FIN, L...</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">dbl</span>  (8): CIVIQUE_DE, CIVIQUE_FI, ETAGE_HORS, NOMBRE_LOG, ANNEE_CONS, CODE_U...</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
+<span><span class="co">#&gt; Writing layer `eval_fonciere_mtl' to data source </span></span>
+<span><span class="co">#&gt;   `/home/runner/.cache/eval_fonciere_mtl.shp' using driver `ESRI Shapefile'</span></span>
+<span><span class="co">#&gt; Writing 501591 features with 1 fields and geometry type Multi Polygon.</span></span>
+<span><span class="co">#&gt; Saving results: </span></span>
+<span><span class="co">#&gt; /home/runner/.cache/eval_fonciere_mtl.csv</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/eval_fonciere_mtl.shp...</span></span>
 <span></span>
 <span><span class="co">#Clean up </span></span>
 <span><span class="va">shpBuildings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/compound.html" class="external-link">%&lt;&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span> ANNEE_CONS <span class="op">=</span> <span class="fu">plyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyr/man/mapvalues.html" class="external-link">mapvalues</a></span><span class="op">(</span><span class="va">ANNEE_CONS</span>, from<span class="op">=</span><span class="fl">9999</span>, to<span class="op">=</span><span class="cn">NA</span><span class="op">)</span> <span class="op">)</span></span>
@@ -170,10 +166,11 @@
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in st_centroid.sf(shp): st_centroid assumes attributes are constant over</span></span>
 <span><span class="co">#&gt; geometries of x</span></span>
-<span><span class="co">#&gt; Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.</span></span>
-<span><span class="co">#&gt; Using compatibility `.name_repair`.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</span></span></span>
+<span><span class="co">#&gt; Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if</span></span>
+<span><span class="co">#&gt; `.name_repair` is omitted as of tibble 2.0.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Using compatibility `.name_repair`.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">SfSpHelpers</span> package.</span></span>
+<span><span class="co">#&gt;   Please report the issue to the authors.</span></span>
 <span></span>
 <span>  <span class="co">#Check same crs</span></span>
 <span>  <span class="fu">assertthat</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/assertthat/man/are_equal.html" class="external-link">are_equal</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="va">shpBuildingsAgg</span><span class="op">)</span>, <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="va">shpBuildings</span><span class="op">)</span><span class="op">)</span></span>
@@ -219,6 +216,9 @@
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>LIBELLE_UT <span class="op">=</span> <span class="va">x</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in st_centroid.sf(shp): st_centroid assumes attributes are constant over</span></span>
+<span><span class="co">#&gt; geometries of x</span></span>
+<span></span>
 <span><span class="co">#&gt; Warning in st_centroid.sf(shp): st_centroid assumes attributes are constant over</span></span>
 <span><span class="co">#&gt; geometries of x</span></span>
 <span></span>

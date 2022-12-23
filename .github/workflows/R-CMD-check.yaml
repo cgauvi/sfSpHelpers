@@ -1,8 +1,6 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/master/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
-  push:
-    branches: [main, master]
   pull_request:
     branches: [main, master]
 
@@ -25,7 +23,7 @@ jobs:
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: ${{ matrix.config.rspm }}
-      GITHUB_PAT: ${{ secrets.GIT_HUB_PAT_SECRET }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_RENV_CACHE_DIR: ${{ matrix.config.renv }}
 
     steps:
@@ -74,7 +72,7 @@ jobs:
           http_response=$(curl -s -o response.txt -w "%{http_code}"  \
               -X POST \
               -H "Accept: application/vnd.github+json" \
-              -H "Authorization:token $GITHUB_PAT" \
+              -H "Authorization:token ${{ secrets.GITHUB_TOKEN }} " \
               https://api.github.com/repos/cgauvi/sfSpHelpers/actions/workflows/24790528/dispatches \
               -d '{"ref":"master"}'
               )

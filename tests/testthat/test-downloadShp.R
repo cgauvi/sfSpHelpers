@@ -39,6 +39,7 @@ test_that("zipped geojson - tmp dir", {
 #
 #   expect_true(dir.exists(file.path(existing_dir_to_dl, dir_1)))
 #   expect_true(file.exists(file.path(existing_dir_to_dl, file_2)))
+#
 # })
 #
 

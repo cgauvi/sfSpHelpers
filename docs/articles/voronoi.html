@@ -103,18 +103,17 @@
 <span>                                       fun <span class="op">=</span> <span class="va">get_zipped_remote_shapefile</span>,</span>
 <span>                                       url <span class="op">=</span> <span class="st">'https://data.montreal.ca/dataset/4ad6baea-4d2c-460f-a8bf-5d000db498f7/resource/43c2cccf-a439-429b-a3c8-5d4ebce53e1b/download/uniteevaluationfonciere.zip'</span>,</span>
 <span>                                       id_name<span class="op">=</span><span class="st">'ID_UEV'</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Using default cache: /sidecar/home/charles.gauvin/.cache ..."</span></span>
+<span><span class="co">#&gt; [1] "Using default cache: /home/runner/.cache ..."</span></span>
 <span><span class="co">#&gt; Reading layer `eval_fonciere_mtl' from data source </span></span>
-<span><span class="co">#&gt;   `/sidecar/home/charles.gauvin/.cache/eval_fonciere_mtl.shp' </span></span>
-<span><span class="co">#&gt;   using driver `ESRI Shapefile'</span></span>
+<span><span class="co">#&gt;   `/home/runner/.cache/eval_fonciere_mtl.shp' using driver `ESRI Shapefile'</span></span>
 <span><span class="co">#&gt; Simple feature collection with 501591 features and 1 field</span></span>
 <span><span class="co">#&gt; Geometry type: MULTIPOLYGON</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: 267585.6 ymin: 5029232 xmax: 306671.1 ymax: 5062643</span></span>
 <span><span class="co">#&gt; Projected CRS: NAD83 / MTM zone 8</span></span>
 <span><span class="co">#&gt; Reading existing csv: </span></span>
-<span><span class="co">#&gt; /sidecar/home/charles.gauvin/.cache/eval_fonciere_mtl.csv</span></span>
-<span><span class="co">#&gt; /sidecar/home/charles.gauvin/.cache/eval_fonciere_mtl.shp...</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/eval_fonciere_mtl.csv</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/eval_fonciere_mtl.shp...</span></span>
 <span></span>
 <span></span>
 <span><span class="co">#Sample</span></span>
@@ -130,10 +129,11 @@
 <span><span class="va">shpVoronoi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getVoronoiInterpolation.html">getVoronoiInterpolation</a></span><span class="op">(</span><span class="va">shpBuildings</span>,  <span class="st">'ANNEE_CONS'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in st_centroid.sf(shp): st_centroid assumes attributes are constant over</span></span>
 <span><span class="co">#&gt; geometries of x</span></span>
-<span><span class="co">#&gt; Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.</span></span>
-<span><span class="co">#&gt; Using compatibility `.name_repair`.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</span></span></span>
+<span><span class="co">#&gt; Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if</span></span>
+<span><span class="co">#&gt; `.name_repair` is omitted as of tibble 2.0.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Using compatibility `.name_repair`.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">SfSpHelpers</span> package.</span></span>
+<span><span class="co">#&gt;   Please report the issue to the authors.</span></span>
 <span><span class="co">#&gt; Loading required package: sp</span></span>
 <span><span class="co">#&gt; Loading required package: deldir</span></span>
 <span><span class="co">#&gt; deldir 1.0-6      Nickname: "Mendacious Cosmonaut"</span></span>
@@ -154,8 +154,6 @@
 <span><span class="co">#&gt;      string "wpoints" ("which points") has been </span></span>
 <span><span class="co">#&gt;      replaced by the logical scalar "showpoints". </span></span>
 <span><span class="co">#&gt;      The user should consult the help files.</span></span>
-<span><span class="co">#&gt; Warning in sp::proj4string(shp %&gt;% sf::as_Spatial()): CRS object has comment, which is lost in output; in tests, see</span></span>
-<span><span class="co">#&gt; https://cran.r-project.org/web/packages/sp/vignettes/CRS_warnings.html</span></span>
 <span><span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant throughout all</span></span>
 <span><span class="co">#&gt; geometries</span></span>
 <span></span>

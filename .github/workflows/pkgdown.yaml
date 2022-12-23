@@ -19,7 +19,7 @@ jobs:
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: ${{ matrix.config.rspm }}
-      GITHUB_PAT: ${{ secrets.GIT_HUB_PAT_SECRET }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_RENV_CACHE_DIR: ${{ matrix.config.renv }}
 
     steps:
@@ -59,8 +59,8 @@ jobs:
 
       - name: Deploy new doc
         run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
           Rscript -e 'pkgdown::build_site()'
 
       - name: Clean errors and artefacts
@@ -72,7 +72,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ env.GITHUB_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Update package documentation
           title: 'Package documentation'
           body: >

@@ -23,6 +23,5 @@
 #' @import methods
 #' @import rgeos
 #' @import assertthat
-#' @import mapview
 #' @import tidyverse
 NULL

@@ -52,10 +52,28 @@
     <loc>/reference/cache_csv_sf_wrapper.html</loc>
   </url>
   <url>
+    <loc>/reference/check_turn_off_s2.html</loc>
+  </url>
+  <url>
     <loc>/reference/createBuffer.html</loc>
   </url>
   <url>
     <loc>/reference/create_opq_query_add_features.html</loc>
+  </url>
+  <url>
+    <loc>/reference/download_cd.html</loc>
+  </url>
+  <url>
+    <loc>/reference/download_econ_regions.html</loc>
+  </url>
+  <url>
+    <loc>/reference/download_fsa.html</loc>
+  </url>
+  <url>
+    <loc>/reference/download_generic_wrappee.html</loc>
+  </url>
+  <url>
+    <loc>/reference/download_prov.html</loc>
   </url>
   <url>
     <loc>/reference/getCentroids.html</loc>
@@ -67,7 +85,19 @@
     <loc>/reference/getVoronoiInterpolation.html</loc>
   </url>
   <url>
+    <loc>/reference/get_cd_url.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_econ_reg_url.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_fsa_url.html</loc>
+  </url>
+  <url>
     <loc>/reference/get_polygon_heatmap.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_prov_url.html</loc>
   </url>
   <url>
     <loc>/reference/get_zipped_remote_shapefile.html</loc>

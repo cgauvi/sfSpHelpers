@@ -31,12 +31,12 @@ Imports:
     methods,
     rgeos,
     assertthat,
-    mapview,
     tidyverse,
     stringr,
     methods
 Suggests:
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    mapview
 VignetteBuilder: knitr

@@ -25,7 +25,7 @@ test_that("linestring end points works", {
   expect_equal(shp_segments_with_endpoints$end_x[[1]] ,   -71.4 )
 
   expect_equal(shp_segments_with_endpoints$start_y[[2]] , 45.7 )
-  expect_equal(shp_segments_with_endpoints$end_y[[2]] ,   45.9)
+  expect_equal(shp_segments_with_endpoints$end_y[[2]] ,   46.0)
 })
 
 

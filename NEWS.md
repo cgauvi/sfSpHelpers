@@ -1,3 +1,12 @@
+sfSpHelpers v0.7.0
+==============
+
+Major changes:
+* Added the census polygon download
+
+Path
+* Cleaned up some dependencies
+* Debugged tests
 
 
 sfSpHelpers v0.6 17519c486aeda413707f8d59101df8b3d6f5b1d5  December 22 2022

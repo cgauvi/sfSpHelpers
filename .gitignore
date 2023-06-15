@@ -2,6 +2,8 @@
 .Rprofile
 renv/
 
+#data
+data/
 
 
 /**/Figures/

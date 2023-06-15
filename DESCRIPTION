@@ -1,7 +1,7 @@
 Package: SfSpHelpers
 Type: Package
 Title: Some functions to deal with sf/sp objects
-Version: 0.6
+Version: 0.7.0
 Author: Charles Gauvin
 Maintainer: Charles Gauvin <charles.gauvin123@gmail.com>
 Description: Basic utility functions such as adding centroids without changing the geometry, download zipped shp files, 
@@ -31,12 +31,12 @@ Imports:
     methods,
     rgeos,
     assertthat,
-    mapview,
     tidyverse,
     stringr,
     methods
 Suggests:
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    mapview
 VignetteBuilder: knitr
